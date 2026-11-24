@@ -15,7 +15,8 @@ import {
   User,
   ShieldAlert,
   LogOut,
-  Sprout
+  Sprout,
+  Plus
 } from 'lucide-react';
 import { ModalAuth } from './ModalAuth';
 
@@ -57,9 +58,9 @@ export const Header: React.FC = () => {
     // 2. Chủ Nhà Vườn (Farmer) Menu
     if (currentRole === 'farmer') {
       return [
+        { id: 'quick_post' as ScreenId, label: 'Thêm Sản Phẩm Mới', icon: <Plus className="w-4 h-4 shrink-0" /> },
         { id: 'orders' as ScreenId, label: 'Đơn Hàng Vườn Mình', icon: <Package className="w-4 h-4 shrink-0" /> },
         { id: 'garden' as ScreenId, label: 'Hồ Sơ Vườn Ba Tư', icon: <Store className="w-4 h-4 shrink-0" /> },
-        { id: 'quick_post' as ScreenId, label: 'Đăng Nhanh (Giọng Nói)', icon: <Mic className="w-4 h-4 shrink-0" /> },
         { id: 'home' as ScreenId, label: 'Mặt Trước Sàn', icon: <Home className="w-4 h-4 shrink-0" /> },
         { id: 'live' as ScreenId, label: 'Lịch Live Cùng Đoàn', icon: <Video className="w-4 h-4 shrink-0" /> }
       ];
@@ -68,11 +69,11 @@ export const Header: React.FC = () => {
     // 3. Thanh Niên Hỗ Trợ (Youth) Menu
     if (currentRole === 'youth') {
       return [
+        { id: 'quick_post' as ScreenId, label: 'Thêm Sản Phẩm (AI)', icon: <Plus className="w-4 h-4 shrink-0" /> },
         { id: 'live' as ScreenId, label: 'Lịch & Phòng Live', icon: <Video className="w-4 h-4 shrink-0" /> },
         { id: 'orders' as ScreenId, label: 'Xử Lý Đơn Hộ Vườn', icon: <Package className="w-4 h-4 shrink-0" /> },
         { id: 'volunteer' as ScreenId, label: 'Giờ Tình Nguyện', icon: <Award className="w-4 h-4 shrink-0" /> },
-        { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4 shrink-0" /> },
-        { id: 'garden' as ScreenId, label: 'Hồ Sơ Vườn', icon: <Store className="w-4 h-4 shrink-0" /> }
+        { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4 shrink-0" /> }
       ];
     }
 

@@ -108,7 +108,10 @@ interface AppContextType {
     image: string;
     description: string;
     origin?: string;
-  }) => void;
+    star?: number;
+    minOrder?: number;
+    inStock?: number;
+  }) => string;
 
   // Orders
   orders: Order[];
@@ -482,24 +485,27 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     image: string;
     description: string;
     origin?: string;
+    star?: number;
+    minOrder?: number;
+    inStock?: number;
   }) => {
     const id = `sp-${Date.now().toString().slice(-4)}`;
     const qrCodeId = `QR-${Date.now().toString().slice(-6)}`;
     const created: Product = {
       id,
       name: newProd.name,
-      star: 4,
+      star: newProd.star ?? 4,
       category: newProd.category || 'Nông sản OCOP Đồng Nai',
       price: newProd.price,
       unit: newProd.unit,
-      minOrder: 1,
+      minOrder: newProd.minOrder ?? 1,
       origin: newProd.origin || 'Nhà vườn Ba Tư, Long Khánh, Đồng Nai',
       image: newProd.image,
       description: newProd.description,
-      inStock: 500,
+      inStock: newProd.inStock ?? 500,
       qrCodeId,
       seasonDiary: [
-        { date: 'Hôm nay', stage: 'Số hóa sản phẩm & tạo mã QR truy xuất', note: 'Đoàn viên thanh niên hỗ trợ nhập bằng giọng nói & AI', status: 'completed' },
+        { date: 'Hôm nay', stage: 'Số hóa sản phẩm & tạo mã QR truy xuất', note: 'Đoàn viên thanh niên hỗ trợ nhập bằng AI', status: 'completed' },
         { date: 'Vừa thu hoạch', stage: 'Cắt hái tuyển chọn tại vườn', note: 'Đạt chuẩn trái cây tươi OCOP', status: 'active' }
       ]
     };
@@ -516,6 +522,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     );
 
     showNotification(`🎉 Đăng thành công "${newProd.name}" lên TRẠM VƯỜN SỐ! (+2 giờ tình nguyện)`);
+    return id;
   };
 
   const createOrder = (orderData: {

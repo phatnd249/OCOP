@@ -22,7 +22,8 @@ import {
   UserCheck,
   Eye,
   Heart,
-  Truck
+  Truck,
+  Plus
 } from 'lucide-react';
 import { Tag } from 'primereact/tag';
 import { Button } from 'primereact/button';
@@ -281,15 +282,15 @@ export const Home: React.FC = () => {
               <span>{isListening ? 'Đang lắng nghe...' : 'Nói để tìm'}</span>
             </button>
 
-            {/* Nút Đăng Đài Nhanh: Dành riêng cho Chủ vườn (farmer) */}
-            {currentUser?.role === 'farmer' && (
+            {/* Nút Thêm sản phẩm nhanh: Dành cho Chủ vườn (farmer) & Đoàn viên (youth) */}
+            {currentUser && (currentUser.role === 'farmer' || currentUser.role === 'youth' || currentUser.role === 'admin') && (
               <button
                 onClick={() => setActiveScreen('quick_post')}
                 className="hidden lg:flex items-center gap-1.5 px-3.5 py-2.5 rounded-full border border-green-300 bg-white hover:bg-green-50 text-green-800 text-xs font-bold shadow-sm transition ml-1"
-                title="Đăng sản phẩm mới bằng AI / Voice"
+                title="Thêm sản phẩm mới bằng AI / Voice"
               >
-                <Mic className="w-3.5 h-3.5" />
-                <span>Đăng bài</span>
+                <Plus className="w-3.5 h-3.5" />
+                <span>+ Thêm sản phẩm</span>
               </button>
             )}
           </div>
