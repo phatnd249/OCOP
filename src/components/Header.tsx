@@ -112,7 +112,7 @@ export const Header: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="font-black text-xl sm:text-2xl text-green-800 tracking-tight leading-none">
-                TRẠM VƯỜN SỐ
+                TRẠM NÔNG SẢN SỐ
               </span>
             </div>
             <p className="text-xs text-gray-500 font-medium mt-0.5">

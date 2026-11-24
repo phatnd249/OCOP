@@ -96,7 +96,7 @@ export const ModalAuth: React.FC<ModalAuthProps> = ({ visible, onHide, defaultMo
           <div className="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center text-green-700">
             <User className="w-5 h-5" />
           </div>
-          <span>{mode === 'login' ? 'ĐĂNG NHẬP TRẠM VƯỜN SỐ' : 'ĐĂNG KÝ TÀI KHOẢN MỚI'}</span>
+          <span>{mode === 'login' ? 'ĐĂNG NHẬP TRẠM NÔNG SẢN SỐ' : 'ĐĂNG KÝ TÀI KHOẢN MỚI'}</span>
         </div>
       }
       className="w-full max-w-lg"
@@ -216,7 +216,7 @@ export const ModalAuth: React.FC<ModalAuthProps> = ({ visible, onHide, defaultMo
 
             {/* Footer chuyển tab */}
             <div className="text-center pt-1 border-t border-gray-100">
-              <span className="text-xs text-gray-500">Chưa có tài khoản trên Trạm Vườn Số? </span>
+              <span className="text-xs text-gray-500">Chưa có tài khoản trên Trạm Nông Sản Số? </span>
               <button
                 type="button"
                 onClick={() => { setMode('register'); setErrorMessage(''); }}

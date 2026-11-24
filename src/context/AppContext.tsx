@@ -534,7 +534,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }))
     );
 
-    showNotification(`🎉 Đăng thành công "${newProd.name}" lên TRẠM VƯỜN SỐ! (+2 giờ tình nguyện)`);
+    showNotification(`🎉 Đăng thành công "${newProd.name}" lên TRẠM NÔNG SẢN SỐ! (+2 giờ tình nguyện)`);
     return id;
   };
 
@@ -562,7 +562,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       status: 'pending_harvest',
       statusText: 'Đang chờ hái tại vườn',
       supporter: 'Nguyễn Văn Nam',
-      farmerNote: orderData.farmerNote || 'Khách đặt qua TRẠM VƯỜN SỐ'
+      farmerNote: orderData.farmerNote || 'Khách đặt qua TRẠM NÔNG SẢN SỐ'
     };
 
     setOrders(prev => [newOrder, ...prev]);

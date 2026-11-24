@@ -71,7 +71,7 @@ export const YouthHonor: React.FC = () => {
       id: 'log-05',
       date: '18/11/2026 08:30',
       activity: 'Tập huấn chuyển đổi số',
-      detail: 'Cài đặt app Trạm Vườn Số và hướng dẫn gia đình Chú Ba Tư nhận thông báo đơn hàng',
+      detail: 'Cài đặt app Trạm Nông Sản Số và hướng dẫn gia đình Chú Ba Tư nhận thông báo đơn hàng',
       hoursAdded: 1.0,
       icon: <FileCheck className="w-4 h-4 text-purple-700" />,
       tagColor: 'bg-purple-100 text-purple-800'

@@ -321,7 +321,7 @@ export const OrderManagement: React.FC = () => {
                             <span>Gọi</span>
                           </a>
                           <a
-                            href={`sms:${order.phone}?body=Trạm Vườn Số chào bạn ${order.customerName}, đơn #${order.orderId} đang được hái chuẩn bị chuyển xe lạnh.`}
+                            href={`sms:${order.phone}?body=Trạm Nông Sản Số chào bạn ${order.customerName}, đơn #${order.orderId} đang được hái chuẩn bị chuyển xe lạnh.`}
                             className="flex items-center gap-1 bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-300 px-2.5 py-1.5 rounded-xl text-xs font-bold transition shadow-2xs"
                             title="Nhắn tin xác nhận"
                           >

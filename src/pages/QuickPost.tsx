@@ -767,7 +767,7 @@ export const QuickPost: React.FC = () => {
               <Button
                 type="submit"
                 icon="pi pi-check-circle"
-                label="Đăng Bán Ngay Lên TRẠM VƯỜN SỐ (+2 Giờ Đoàn Viên)"
+                label="Đăng Bán Ngay Lên TRẠM NÔNG SẢN SỐ (+2 Giờ Đoàn Viên)"
                 className="w-full sm:flex-1 p-button-success p-button-lg font-black text-sm sm:text-base shadow-sm"
               />
               <Button
