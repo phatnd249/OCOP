@@ -62,12 +62,13 @@ export const Header: React.FC = () => {
       ];
     }
 
-    // 3. Thanh Niên Hỗ Trợ (Youth) Menu (Bỏ "Lịch & Phòng Live" và "Trang Chủ")
+    // 3. Thanh Niên Hỗ Trợ (Youth) Menu
     if (currentRole === 'youth') {
       return [
         { id: 'orders' as ScreenId, label: '📦 Xử Lý Đơn Hộ Vườn', icon: <Package className="w-4 h-4" /> },
         { id: 'volunteer' as ScreenId, label: '🎖️ Giờ Tình Nguyện Của Tôi', icon: <Award className="w-4 h-4" /> },
-        { id: 'garden' as ScreenId, label: '🏡 Hồ Sơ Vườn', icon: <Store className="w-4 h-4" /> }
+        { id: 'garden' as ScreenId, label: '🏡 Hồ Sơ Vườn', icon: <Store className="w-4 h-4" /> },
+        { id: 'live' as ScreenId, label: '📹 Lịch Livestream Bán Hàng', icon: <Video className="w-4 h-4" /> }
       ];
     }
 
