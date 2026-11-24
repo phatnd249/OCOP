@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
+import { InputNumber } from 'primereact/inputnumber';
+import { InputTextarea } from 'primereact/inputtextarea';
+import { Dropdown } from 'primereact/dropdown';
+import { Tag } from 'primereact/tag';
 import {
   Mic,
   MicOff,
@@ -205,11 +211,10 @@ export const QuickPost: React.FC = () => {
               <label className="block text-xs font-bold text-gray-700 mb-1">
                 Tên sản phẩm nông sản:
               </label>
-              <input
-                type="text"
+              <InputText
                 value={name}
                 onChange={e => setName(e.target.value)}
-                className="w-full text-sm p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-600 outline-none"
+                className="w-full text-sm"
                 required
               />
             </div>
@@ -219,11 +224,13 @@ export const QuickPost: React.FC = () => {
                 <label className="block text-xs font-bold text-gray-700 mb-1">
                   Giá bán (VNĐ):
                 </label>
-                <input
-                  type="number"
+                <InputNumber
                   value={price}
-                  onChange={e => setPrice(Number(e.target.value))}
-                  className="w-full text-sm p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-600 outline-none"
+                  onValueChange={e => setPrice(e.value ?? 0)}
+                  className="w-full"
+                  mode="currency"
+                  currency="VND"
+                  locale="vi-VN"
                   required
                 />
               </div>
@@ -231,16 +238,17 @@ export const QuickPost: React.FC = () => {
                 <label className="block text-xs font-bold text-gray-700 mb-1">
                   Đơn vị tính:
                 </label>
-                <select
+                <Dropdown
                   value={unit}
-                  onChange={e => setUnit(e.target.value)}
-                  className="w-full text-sm p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-600 outline-none"
-                >
-                  <option value="kg">kg (kilôgam)</option>
-                  <option value="hộp 500g">hộp 500g</option>
-                  <option value="trái">trái</option>
-                  <option value="thùng 5kg">thùng 5kg</option>
-                </select>
+                  onChange={e => setUnit(e.value)}
+                  options={[
+                    { label: 'kg (kilôgam)', value: 'kg' },
+                    { label: 'hộp 500g', value: 'hộp 500g' },
+                    { label: 'trái', value: 'trái' },
+                    { label: 'thùng 5kg', value: 'thùng 5kg' }
+                  ]}
+                  className="w-full"
+                />
               </div>
             </div>
 
@@ -250,30 +258,29 @@ export const QuickPost: React.FC = () => {
                 <label className="block text-xs font-bold text-gray-700">
                   Mô tả sản phẩm chuẩn OCOP:
                 </label>
-                <button
+                <Button
                   type="button"
                   onClick={handleGenerateAiDescription}
-                  className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-xs px-3 py-1 rounded-full shadow hover:brightness-105 transition"
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>AI Tự Động Viết Mô Tả Từ Ảnh</span>
-                </button>
+                  icon="pi pi-sparkles"
+                  label="AI Tự Động Viết Mô Tả"
+                  className="p-button-warning text-xs p-button-sm font-bold text-ink"
+                />
               </div>
-              <textarea
+              <InputTextarea
                 rows={4}
                 value={description}
                 onChange={e => setDescription(e.target.value)}
                 placeholder="Bấm nút 'AI Tự Động Viết Mô Tả' ở trên để AI tạo nội dung tiếp thị cảm xúc từ câu chuyện vườn Ba Tư..."
-                className="w-full text-xs sm:text-sm p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-600 outline-none"
+                className="w-full text-xs sm:text-sm"
               />
             </div>
 
-            <button
+            <Button
               type="submit"
-              className="w-full py-4 rounded-2xl bg-green-700 hover:bg-green-800 text-white font-black text-base shadow transition flex items-center justify-center gap-2"
-            >
-              <span>🚀 Đăng Bán Lên Chợ OCOP Ngay (+2 Giờ Đoàn Viên)</span>
-            </button>
+              icon="pi pi-check"
+              label="Đăng Bán Lên TRẠM VƯỜN SỐ Ngay (+2 Giờ Đoàn Viên)"
+              className="w-full p-button-success p-button-lg font-black text-base shadow"
+            />
           </form>
         </div>
 
@@ -337,7 +344,7 @@ export const QuickPost: React.FC = () => {
             <div className="p-4 rounded-2xl bg-cream border border-green-200 text-xs text-green-900 space-y-1">
               <p className="font-bold">💡 Sức mạnh "Cầu nối số" của thanh niên:</p>
               <p className="text-gray-600 leading-relaxed">
-                Chú Ba Tư không cần thao tác gõ phím. Đoàn viên cầm điện thoại, chú nói xong AI điền thông tin, chú gật đầu là bài đăng hiển thị ngay trên Chợ OCOP.
+                Chú Ba Tư không cần thao tác gõ phím. Đoàn viên cầm điện thoại, chú nói xong AI điền thông tin, chú gật đầu là bài đăng hiển thị ngay trên TRẠM VƯỜN SỐ.
               </p>
             </div>
           </div>

@@ -177,7 +177,7 @@ function renderGardenProfile() {
             <button class="btn btn-secondary" onclick="switchScreen('map')">
               🗺️ Xem Bản Đồ Du Lịch Sinh Thái
             </button>
-            <button class="btn btn-outline" onclick="bookGardenTour()">
+            <button class="btn btn-cta" onclick="bookGardenTour()">
               📅 Đăng Ký Trải Nghiệm Vườn (${garden.ecoTourPrice})
             </button>
           </div>
@@ -931,7 +931,7 @@ function selectMapSpot(locId) {
       ${spot.desc}
     </p>
     <div style="display:flex; gap:10px; flex-wrap:wrap;">
-      <button class="btn btn-primary" onclick="bookGardenTour()">
+      <button class="btn btn-cta" onclick="bookGardenTour()">
         🎟️ Đăng Ký Trải Nghiệm Điểm Này (50.000 đ)
       </button>
       <button class="btn btn-outline" onclick="showNotification('Đã lưu tọa độ vào bản đồ dẫn đường GPS!')">
@@ -1014,11 +1014,12 @@ function showNotification(msg) {
     toast.style.position = 'fixed';
     toast.style.bottom = '24px';
     toast.style.right = '24px';
-    toast.style.background = '#065f46';
+    toast.style.background = '#1B5E20';
     toast.style.color = '#ffffff';
+    toast.style.border = '1px solid #66BB6A';
     toast.style.padding = '14px 22px';
     toast.style.borderRadius = '12px';
-    toast.style.boxShadow = '0 10px 25px rgba(0,0,0,0.2)';
+    toast.style.boxShadow = '0 10px 25px rgba(27, 94, 32, 0.3)';
     toast.style.zIndex = '9999';
     toast.style.fontWeight = '600';
     toast.style.fontSize = '0.95rem';

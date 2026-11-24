@@ -42,7 +42,8 @@ export const Header: React.FC = () => {
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2 font-medium">
             <span className="bg-sun text-earth-dark px-2 py-0.5 rounded font-black text-xs">ĐỀ 3</span>
-            <span>CHỢ OCOP THANH NIÊN • Cầu nối số Nông sản Đồng Nai</span>
+            <span className="font-bold">TRẠM VƯỜN SỐ</span>
+            <span>• Thanh niên Đồng Nai tiếp sức nông sản OCOP</span>
           </div>
 
           <div className="flex items-center gap-1.5 flex-wrap">
@@ -94,14 +95,14 @@ export const Header: React.FC = () => {
           <div>
             <div className="flex items-center gap-1.5">
               <span className="font-black text-lg sm:text-xl text-green-800 tracking-tight">
-                CHỢ OCOP THANH NIÊN
+                TRẠM VƯỜN SỐ
               </span>
               <span className="hidden sm:inline bg-green-100 text-green-800 text-[10px] font-bold px-1.5 py-0.5 rounded border border-green-200">
                 ĐỒNG NAI
               </span>
             </div>
             <p className="text-xs text-earth hidden md:block">
-              Nền tảng Kinh tế số & Khởi nghiệp Nông nghiệp
+              Thanh niên Đồng Nai tiếp sức nông sản OCOP
             </p>
           </div>
         </div>

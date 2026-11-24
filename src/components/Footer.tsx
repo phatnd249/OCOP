@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 mb-4">
             <span className="text-3xl">🌱</span>
-            <span className="text-xl font-black text-white tracking-tight">CHỢ OCOP THANH NIÊN</span>
+            <span className="text-xl font-black text-white tracking-tight">TRẠM VƯỜN SỐ</span>
             <span className="bg-sun text-earth-dark text-xs font-black px-2 py-0.5 rounded">ĐỒNG NAI</span>
           </div>
           <p className="text-green-200 text-sm leading-relaxed mb-4 max-w-lg">
@@ -69,7 +69,7 @@ export const Footer: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 pt-6 border-t border-green-800 text-center text-xs text-green-300 flex flex-col sm:flex-row items-center justify-between gap-2">
-        <p>© 2026 Chợ OCOP Thanh Niên – Nền tảng Kinh tế số & Khởi nghiệp Đổi mới sáng tạo Đồng Nai.</p>
+        <p>© 2026 TRẠM VƯỜN SỐ – Thanh niên Đồng Nai tiếp sức nông sản OCOP.</p>
         <p className="flex items-center gap-1">
           Thiết kế với <Heart className="w-3.5 h-3.5 text-red-400 fill-red-400" /> và Roboto Font chuẩn quốc gia
         </p>

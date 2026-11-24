@@ -35,7 +35,7 @@ export const Home: React.FC = () => {
         <div className="relative p-6 sm:p-10 md:p-14 max-w-3xl space-y-5">
           <div className="inline-flex items-center gap-2 bg-sun/20 border border-sun/50 text-sun px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold backdrop-blur">
             <Sparkles className="w-4 h-4 text-sun animate-spin" />
-            <span>ĐỀ 3: CẦU NỐI SỐ THANH NIÊN & NÔNG SẢN ĐỒNG NAI</span>
+            <span>TRẠM VƯỜN SỐ — THANH NIÊN ĐỒNG NAI TIẾP SỨC NÔNG SẢN OCOP</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tight">
