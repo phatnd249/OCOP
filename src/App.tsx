@@ -6,7 +6,7 @@ import { ModalQr } from './components/ModalQr';
 import { ModalTour } from './components/ModalTour';
 import { Toast } from './components/Toast';
 
-// 10 Screens
+// Screens
 import { Home } from './pages/Home';
 import { GardenProfile } from './pages/GardenProfile';
 import { ProductDetail } from './pages/ProductDetail';
@@ -17,6 +17,7 @@ import { OrderManagement } from './pages/OrderManagement';
 import { LiveStream } from './pages/LiveStream';
 import { EcoMap } from './pages/EcoMap';
 import { YouthHonor } from './pages/YouthHonor';
+import { Auth } from './pages/Auth';
 
 export const App: React.FC = () => {
   const { activeScreen } = useApp();
@@ -43,6 +44,8 @@ export const App: React.FC = () => {
         return <EcoMap />;
       case 'volunteer':
         return <YouthHonor />;
+      case 'auth':
+        return <Auth />;
       default:
         return <Home />;
     }

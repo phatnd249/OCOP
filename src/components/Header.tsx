@@ -105,8 +105,19 @@ export const Header: React.FC = () => {
           </strong>
         </div>
 
-        {/* Cart button */}
+        {/* Actions: Auth & Cart */}
         <div className="flex items-center gap-2">
+          <button
+            onClick={() => setActiveScreen('auth')}
+            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition ${
+              activeScreen === 'auth'
+                ? 'bg-green-700 text-white border-green-700 shadow-sm'
+                : 'bg-white hover:bg-green-50 text-green-900 border-green-300'
+            }`}
+          >
+            Đăng Nhập / Đăng Ký
+          </button>
+
           <button
             onClick={() => setActiveScreen('cart')}
             className="relative flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-sm transition"

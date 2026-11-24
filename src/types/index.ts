@@ -10,7 +10,8 @@ export type ScreenId =
   | 'orders'        // CV5: Quản lý đơn hàng (Bác Ba Tự)
   | 'live'          // TN7: Livestream & Bán hàng
   | 'map'           // K2: Bản đồ du lịch trải nghiệm
-  | 'volunteer';    // TN9: Bảng vàng giờ tình nguyện
+  | 'volunteer'     // TN9: Bảng vàng giờ tình nguyện
+  | 'auth';         // C1: Đăng nhập, đăng ký tài khoản các vai trò
 
 export interface SeasonDiaryItem {
   date: string;
