@@ -10,7 +10,11 @@ import {
   QrCode,
   ShieldCheck,
   CheckCircle,
-  Users
+  Users,
+  Video,
+  HeartHandshake,
+  Clock,
+  ArrowRight
 } from 'lucide-react';
 
 export const GardenProfile: React.FC = () => {
@@ -18,15 +22,49 @@ export const GardenProfile: React.FC = () => {
     garden,
     youthSupporters,
     products,
+    liveStreams,
     setActiveScreen,
     openProductDetail,
     addToCart,
     setQrModalProduct,
-    setTourModalOpen
+    setTourModalOpen,
+    showNotification
   } = useApp();
 
   return (
     <div className="space-y-10">
+      {/* Banner thông báo: Nhà vườn được thanh niên hỗ trợ số hoá toàn diện */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-600 via-green-700 to-green-800 text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0">
+            <HeartHandshake className="w-6 h-6 text-sun" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="bg-sun text-earth-dark text-[10px] font-black px-2 py-0.5 rounded uppercase">
+                Mô hình trọng điểm
+              </span>
+              <span className="text-xs font-bold text-green-100">
+                Dự án Thanh niên tiếp sức OCOP Long Khánh
+              </span>
+            </div>
+            <h3 className="font-black text-sm sm:text-base mt-0.5">
+              Nhà Vườn Đã Được Tiếp Sức & Hỗ Trợ Số Hóa Trực Tiếp
+            </h3>
+            <p className="text-xs text-green-100">
+              Đoàn viên thanh niên địa phương hỗ trợ trọn gói: Gắn mã QR truy xuất, phát trực tiếp bán tại vườn và đóng thùng giao xe lạnh.
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => setActiveScreen('volunteer')}
+          className="bg-white text-green-900 hover:bg-green-50 font-bold text-xs px-4 py-2 rounded-xl transition shadow-xs whitespace-nowrap shrink-0"
+        >
+          Xem Đội Hỗ Trợ ➔
+        </button>
+      </div>
+
       {/* Cover and Profile Header */}
       <div className="bg-white rounded-3xl overflow-hidden border border-green-200 shadow-soft">
         <div className="relative h-64 sm:h-80 w-full overflow-hidden">
@@ -52,11 +90,11 @@ export const GardenProfile: React.FC = () => {
               />
               <div>
                 <span className="text-xs uppercase tracking-wider text-sun font-bold">
-                  NHÀ VƯỜN TIÊU BIỂU OCOP ĐỒNG NAI
+                  NHÀ VƯỜN ĐƯỢC ĐOÀN THANH NIÊN TIẾP SỨC
                 </span>
                 <h1 className="text-2xl sm:text-3xl font-black">{garden.name}</h1>
                 <p className="text-sm text-green-200">
-                  {garden.owner} • {garden.area} chuyên canh
+                  {garden.owner} • {garden.area} chuyên canh • Tổ TN cắm chốt hỗ trợ
                 </p>
               </div>
             </div>
@@ -87,9 +125,94 @@ export const GardenProfile: React.FC = () => {
             <strong className="text-green-900 font-bold">Sầu riêng Ri6 & Chôm chôm</strong>
           </div>
           <div className="p-2 text-center">
-            <span className="text-gray-500 block text-xs">Số chứng nhận OCOP</span>
-            <strong className="text-green-900 font-bold">{garden.ocopCertNo}</strong>
+            <span className="text-gray-500 block text-xs">Tình trạng hỗ trợ</span>
+            <strong className="text-green-700 font-bold">✓ Đã tiếp sức 100%</strong>
           </div>
+        </div>
+      </div>
+
+      {/* LỊCH PHÁT SÓNG LIVESTREAM TẠI VƯỜN (THÊM MỚI THEO YÊU CẦU) */}
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-green-200 shadow-soft space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center">
+              <Video className="w-5 h-5 text-red-600" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-ink flex items-center gap-2">
+                <span>Lịch Livestream Bán Hàng Tại Vườn Cùng Đoàn Viên</span>
+                <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase animate-pulse">
+                  Phát trực tiếp
+                </span>
+              </h2>
+              <p className="text-xs text-gray-500">
+                Theo dõi phiên bán hàng trực tiếp tại gốc cây để chốt đơn tươi ngon cắt ngay trong ngày
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {liveStreams.map(live => (
+            <div
+              key={live.id}
+              className={`rounded-2xl border p-4 transition space-y-3 flex flex-col justify-between ${
+                live.isLiveNow
+                  ? 'border-red-400 bg-red-50/20 shadow-md ring-2 ring-red-300/40'
+                  : 'border-green-200 bg-gray-50/50 hover:border-green-300'
+              }`}
+            >
+              <div className="space-y-2.5">
+                <div className="relative rounded-xl overflow-hidden aspect-video bg-gray-200">
+                  <img
+                    src={live.cover}
+                    alt={live.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-2 left-2">
+                    {live.isLiveNow ? (
+                      <span className="bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase flex items-center gap-1 shadow">
+                        <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                        Đang Live ({live.viewers} xem)
+                      </span>
+                    ) : (
+                      <span className="bg-black/70 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                        {live.time}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-bold text-sm text-ink line-clamp-2">{live.title}</h4>
+                  <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                    <Users className="w-3.5 h-3.5 text-green-700" />
+                    <span>Host: {live.hostName}</span>
+                  </p>
+                  <p className="text-xs text-gray-400 mt-0.5 flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-amber-600" />
+                    <span>{live.location}</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
+                <span className="text-[11px] font-semibold text-green-800">
+                  {live.isLiveNow ? '🔴 Cắt hái tại chỗ' : '📅 Đã lên lịch'}
+                </span>
+                <button
+                  onClick={() => showNotification(`Đã đăng ký nhận thông báo buổi live: "${live.title}"`)}
+                  className={`px-3 py-1.5 rounded-xl font-bold text-xs transition ${
+                    live.isLiveNow
+                      ? 'bg-red-600 hover:bg-red-700 text-white shadow-xs'
+                      : 'bg-green-100 hover:bg-green-200 text-green-900 border border-green-200'
+                  }`}
+                >
+                  {live.isLiveNow ? 'Xem Ngay' : 'Nhắc Tôi'}
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
