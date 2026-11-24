@@ -360,11 +360,16 @@ export const ModalAuth: React.FC<ModalAuthProps> = ({ visible, onHide, defaultMo
 
               {/* Dòng gợi ý tâm lý dành riêng cho Chủ nhà vườn */}
               {regRole === 'farmer' && (
-                <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 leading-relaxed flex items-start gap-2 animate-fadeIn">
-                  <span className="text-base shrink-0">🤝</span>
-                  <span>
-                    <strong>Chưa rành thao tác?</strong> Chỉ cần nhập SĐT và mật khẩu, đoàn viên thanh niên xã sẽ trực tiếp đến vườn hỗ trợ tạo hồ sơ, chụp ảnh và đăng bán giúp chú.
-                  </span>
+                <div className="p-3.5 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-950 leading-relaxed flex items-start gap-2.5 animate-fadeIn">
+                  <span className="text-xl shrink-0">🤝</span>
+                  <div className="space-y-1">
+                    <p>
+                      <strong>Chưa rành thao tác?</strong> Chỉ cần nhập SĐT và mật khẩu, đoàn viên thanh niên xã sẽ trực tiếp đến tận vườn hỗ trợ tạo hồ sơ, chụp ảnh và đăng bán giúp chú.
+                    </p>
+                    <p className="text-[11px] font-bold text-amber-900 bg-white/80 px-2.5 py-1 rounded-lg border border-amber-300 inline-block">
+                      📞 Hotline Đoàn viên hỗ trợ tận vườn: <a href="tel:0982112334" className="text-green-800 underline font-black">0982.112.334</a> (Bạn Nam - Bí thư Đoàn)
+                    </p>
+                  </div>
                 </div>
               )}
 
