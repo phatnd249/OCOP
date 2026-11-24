@@ -11,13 +11,14 @@ export default {
       },
       colors: {
         green: {
-          50:  '#E8F5E9',
-          100: '#C8E6C9',
-          200: '#A5D6A7',
-          600: '#388E3C',
-          700: '#2E7D32', // Màu xanh chủ đạo
-          800: '#1B5E20', // Màu xanh rừng đậm
-          900: '#0F3E13',
+          50:  '#F0FDF4',
+          100: '#DCFCE7',
+          200: '#BBF7D0',
+          500: '#4ADE80',
+          600: '#43A047', // Xanh tươi sáng
+          700: '#388E3C', // Màu xanh chủ đạo mới (nhẹ nhàng, tươi sáng hơn)
+          800: '#2E7D32', // Xanh đậm vừa phải (thay thế mức siêu tối cũ)
+          900: '#1E5E24',
         },
         sun: {
           DEFAULT: '#F9A825', // Vàng nắng
@@ -31,7 +32,7 @@ export default {
         },
         cream: '#FAF8F1', // Kem nền dịu mắt
         alert: '#D84315',
-        ink: '#1B3A1E',
+        ink: '#1A3820',
       },
       boxShadow: {
         'soft': '0 4px 20px -2px rgba(46, 125, 50, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04)',

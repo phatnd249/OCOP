@@ -29,10 +29,10 @@ export const YouthHonor: React.FC = () => {
         <div>
           <div className="inline-flex items-center gap-1.5 bg-green-100 text-green-900 text-xs font-bold px-3 py-1 rounded-full mb-1">
             <Sparkles className="w-3.5 h-3.5 text-sun" />
-            <span>TÍNH NĂNG ĐIỂM CỘNG 3 CỦA ĐỀ BÀI</span>
+            <span>HOẠT ĐỘNG CHUYỂN ĐỔI SỐ NÔNG NGHIỆP</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-ink">
-            Sổ Tay Ghi Nhận Giờ Tình Nguyện Thanh Niên Số (TN9)
+            Sổ Tay Ghi Nhận Giờ Tình Nguyện Đoàn Viên
           </h1>
           <p className="text-xs text-gray-500">
             Vinh danh các đoàn viên thanh niên đóng vai trò "Cầu nối số" đưa nông sản Long Khánh vươn xa

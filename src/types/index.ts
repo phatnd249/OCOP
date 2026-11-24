@@ -21,16 +21,17 @@ export interface AppUser {
 }
 
 export type ScreenId =
-  | 'home'          // K1: Trang chủ Chợ OCOP Đồng Nai
-  | 'garden'        // K3: Hồ sơ nhà vườn Ba Tự
-  | 'product_detail'// K4: Chi tiết sản phẩm & QR truy xuất
-  | 'cart'          // K6: Giỏ hàng nông sản
-  | 'checkout'      // K7: Đặt hàng & Vận chuyển
-  | 'quick_post'    // TN4: Đăng sản phẩm nhanh (Voice + AI)
-  | 'orders'        // CV5: Quản lý đơn hàng (Bác Ba Tự)
-  | 'live'          // TN7: Livestream & Bán hàng
-  | 'map'           // K2: Bản đồ du lịch trải nghiệm
-  | 'volunteer'     // TN9: Bảng vàng giờ tình nguyện
+  | 'home'          // Trang chủ Chợ OCOP Đồng Nai
+  | 'products'      // Danh sách các sản phẩm OCOP
+  | 'garden'        // Hồ sơ nhà vườn Ba Tự
+  | 'product_detail'// Chi tiết sản phẩm & QR truy xuất
+  | 'cart'          // Giỏ hàng nông sản
+  | 'checkout'      // Đặt hàng & Vận chuyển
+  | 'quick_post'    // Đăng sản phẩm nhanh (Voice + AI)
+  | 'orders'        // Quản lý đơn hàng (Bác Ba Tự)
+  | 'live'          // Livestream & Bán hàng
+  | 'map'           // Bản đồ du lịch trải nghiệm
+  | 'volunteer'     // Bảng vàng giờ tình nguyện
   | 'admin_users';  // Admin: Quản lý tài khoản toàn hệ thống
 
 export interface SeasonDiaryItem {

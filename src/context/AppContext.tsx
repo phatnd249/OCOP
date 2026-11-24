@@ -74,6 +74,7 @@ interface AppContextType {
   setActiveScreen: (screen: ScreenId) => void;
   selectedProductId: string;
   setSelectedProductId: (id: string) => void;
+  openProductDetail: (productId: string) => void;
   qrModalProduct: Product | null;
   setQrModalProduct: (product: Product | null) => void;
   tourModalOpen: boolean;
@@ -162,7 +163,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return 'buyer';
   });
 
-  const [activeScreen, setActiveScreen] = useState<ScreenId>('home');
+  const [activeScreen, setActiveScreenState] = useState<ScreenId>('home');
   const [selectedProductId, setSelectedProductId] = useState<string>('sp-01');
   const [qrModalProduct, setQrModalProduct] = useState<Product | null>(null);
   const [tourModalOpen, setTourModalOpen] = useState<boolean>(false);
@@ -216,6 +217,68 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const saved = localStorage.getItem('ocop_lives');
     return saved ? JSON.parse(saved) : INITIAL_LIVESTREAMS;
   });
+
+  // URL Hash Sync for Real Routing
+  const parseHash = () => {
+    const rawHash = window.location.hash.replace(/^#\/?/, '').trim();
+    if (!rawHash || rawHash === 'home') {
+      return { screen: 'home' as ScreenId, productId: selectedProductId };
+    }
+    if (rawHash.startsWith('product/')) {
+      const pId = rawHash.replace('product/', '').trim();
+      return { screen: 'product_detail' as ScreenId, productId: pId || selectedProductId };
+    }
+    if (rawHash === 'products') return { screen: 'products' as ScreenId, productId: selectedProductId };
+    if (rawHash === 'garden') return { screen: 'garden' as ScreenId, productId: selectedProductId };
+    if (rawHash === 'cart') return { screen: 'cart' as ScreenId, productId: selectedProductId };
+    if (rawHash === 'checkout') return { screen: 'checkout' as ScreenId, productId: selectedProductId };
+    if (rawHash === 'quick-post' || rawHash === 'quick_post') return { screen: 'quick_post' as ScreenId, productId: selectedProductId };
+    if (rawHash === 'orders') return { screen: 'orders' as ScreenId, productId: selectedProductId };
+    if (rawHash === 'live') return { screen: 'live' as ScreenId, productId: selectedProductId };
+    if (rawHash === 'map') return { screen: 'map' as ScreenId, productId: selectedProductId };
+    if (rawHash === 'volunteer') return { screen: 'volunteer' as ScreenId, productId: selectedProductId };
+    if (rawHash === 'auth') return { screen: 'auth' as ScreenId, productId: selectedProductId };
+    return { screen: 'home' as ScreenId, productId: selectedProductId };
+  };
+
+  useEffect(() => {
+    const onHashChange = () => {
+      const { screen, productId } = parseHash();
+      setActiveScreenState(screen);
+      if (productId) {
+        setSelectedProductId(productId);
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    onHashChange();
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  const setActiveScreen = (screen: ScreenId) => {
+    setActiveScreenState(screen);
+    let targetHash: string = screen;
+    if (screen === 'product_detail') {
+      targetHash = `product/${selectedProductId}`;
+    } else if (screen === 'quick_post') {
+      targetHash = 'quick-post';
+    }
+    if (window.location.hash !== `#${targetHash}`) {
+      window.location.hash = targetHash;
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const openProductDetail = (productId: string) => {
+    setSelectedProductId(productId);
+    setActiveScreenState('product_detail');
+    const targetHash = `product/${productId}`;
+    if (window.location.hash !== `#${targetHash}`) {
+      window.location.hash = targetHash;
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Sync to LocalStorage
   useEffect(() => {
@@ -521,6 +584,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setActiveScreen,
         selectedProductId,
         setSelectedProductId,
+        openProductDetail,
         qrModalProduct,
         setQrModalProduct,
         tourModalOpen,

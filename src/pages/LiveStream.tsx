@@ -19,6 +19,7 @@ export const LiveStream: React.FC = () => {
     likeLiveStream,
     addLiveComment,
     addToCart,
+    openProductDetail,
     showNotification
   } = useApp();
 
@@ -48,10 +49,10 @@ export const LiveStream: React.FC = () => {
         <div>
           <div className="inline-flex items-center gap-1.5 bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full mb-1">
             <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
-            <span>MÀN HÌNH BẮT BUỘC SỐ 6 CỦA ĐỀ BÀI</span>
+            <span>PHÁT TRỰC TIẾP TẠI GỐC CÂY</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-ink">
-            Livestream Nông Sản OCOP Tại Vườn Ba Tư (TN7)
+            Livestream Bán Nông Sản Trực Tiếp Tại Vườn
           </h1>
           <p className="text-xs text-gray-500">
             Đoàn viên thanh niên hỗ trợ livestream trực tiếp tại gốc cây, chốt đơn hái tại vườn về TP.HCM
@@ -93,14 +94,15 @@ export const LiveStream: React.FC = () => {
 
             {/* Center Broadcast Badge */}
             <div className="absolute text-center text-white pointer-events-none p-4">
-              <div className="w-16 h-16 rounded-full bg-red-600/80 backdrop-blur mx-auto flex items-center justify-center text-3xl mb-2 animate-pulse">
-                📹
+              <div className="w-14 h-14 rounded-full bg-red-600/80 backdrop-blur mx-auto flex items-center justify-center text-white mb-2 animate-pulse">
+                <Video className="w-7 h-7" />
               </div>
               <h2 className="text-lg sm:text-2xl font-black max-w-md drop-shadow">
                 {activeLive.title}
               </h2>
-              <p className="text-xs text-green-200 mt-1">
-                📍 {activeLive.location}
+              <p className="text-xs text-green-200 mt-1 flex items-center justify-center gap-1">
+                <MapPin className="w-3.5 h-3.5" />
+                <span>{activeLive.location}</span>
               </p>
             </div>
 
@@ -123,9 +125,12 @@ export const LiveStream: React.FC = () => {
               <div className="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-md bg-white/95 backdrop-blur p-3.5 rounded-2xl shadow-xl flex items-center justify-between gap-4 border border-green-200">
                 <div className="space-y-0.5">
                   <span className="bg-red-100 text-red-700 text-[10px] font-black px-2 py-0.5 rounded uppercase">
-                    🔥 SẢN PHẨM ĐANG GHIM TRÊN LIVE
+                    SẢN PHẨM ĐANG GHIM TRÊN LIVE
                   </span>
-                  <h4 className="font-bold text-xs sm:text-sm text-ink line-clamp-1">
+                  <h4
+                    onClick={() => openProductDetail(activeLive.featuredProduct!.id)}
+                    className="font-bold text-xs sm:text-sm text-ink line-clamp-1 cursor-pointer hover:text-green-700"
+                  >
                     {activeLive.featuredProduct.name}
                   </h4>
                   <div className="flex items-center gap-2 text-xs">
@@ -154,7 +159,7 @@ export const LiveStream: React.FC = () => {
         <div className="bg-white rounded-3xl border border-green-200 shadow-soft flex flex-col h-[500px]">
           <div className="p-4 border-b border-gray-100 flex items-center justify-between">
             <h3 className="font-bold text-sm text-ink flex items-center gap-2">
-              <span>💬 Bình Luận & Chốt Số Lượng</span>
+              <span>Bình Luận & Chốt Số Lượng</span>
             </h3>
             <span className="text-[11px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded">
               Thời gian thực

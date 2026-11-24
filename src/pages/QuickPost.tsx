@@ -137,13 +137,13 @@ export const QuickPost: React.FC = () => {
         <div>
           <div className="inline-flex items-center gap-1.5 bg-green-100 text-green-900 text-xs font-bold px-3 py-1 rounded-full mb-1">
             <Award className="w-3.5 h-3.5 text-sun" />
-            <span>MÀN HÌNH BẮT BUỘC 2 & ĐIỂM CỘNG 1 TRÍ TUỆ NHÂN TẠO</span>
+            <span>CÔNG CỤ SỐ HÓA NÔNG SẢN CHO ĐOÀN VIÊN</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-ink">
-            Đăng Nhanh Nông Sản Bằng Ảnh & Giọng Nói (TN4)
+            Đăng Nhanh Nông Sản Bằng Ảnh & Giọng Nói
           </h1>
           <p className="text-xs text-gray-500">
-            Dành cho Chú Ba Tư (chỉ cần bấm nói không cần gõ chữ) và Đoàn viên thanh niên hỗ trợ số
+            Hỗ trợ nhà vườn tạo sản phẩm mới bằng công nghệ giọng nói tiếng Việt và AI viết mô tả
           </p>
         </div>
       </div>
@@ -188,7 +188,7 @@ export const QuickPost: React.FC = () => {
                 )}
               </div>
               <strong className="mt-3 text-sm text-green-950">
-                {isListening ? '🔴 Đang lắng nghe giọng nói...' : 'Bấm vào đây để Bắt đầu Thu âm'}
+                {isListening ? 'Đang lắng nghe giọng nói...' : 'Bấm vào đây để Bắt đầu Thu âm'}
               </strong>
               <span className="text-[11px] text-gray-500 mt-1">
                 (Hệ thống tự động chuyển thành văn bản và điền vào form bên dưới)
@@ -301,8 +301,8 @@ export const QuickPost: React.FC = () => {
               onClick={() => showNotification('Đã kích hoạt camera chụp ảnh trực tiếp tại vườn Long Khánh!')}
               className="border-2 border-dashed border-gray-300 hover:border-green-600 rounded-2xl p-8 text-center cursor-pointer bg-gray-50 hover:bg-green-50/40 transition space-y-2"
             >
-              <div className="w-14 h-14 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mx-auto text-2xl">
-                📷
+              <div className="w-12 h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center mx-auto">
+                <Camera className="w-6 h-6" />
               </div>
               <strong className="block text-sm text-green-900">
                 Chạm để Chụp ảnh mới hoặc Tải ảnh từ thư viện

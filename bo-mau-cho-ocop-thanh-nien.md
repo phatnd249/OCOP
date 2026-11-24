@@ -2,20 +2,20 @@
 
 Bảng màu xanh lá cho website nông nghiệp, kết hợp vàng nắng và nâu đất để gợi cảm giác vườn cây, nông sản và sự tin cậy.
 
-## Bảng mã màu
+## Bảng mã màu (Phiên bản tinh chỉnh: Xanh lá tươi sáng, dịu mắt hơn)
 
 | Tên màu | Mã HEX | RGB | Vai trò sử dụng |
 |---|---|---|---|
-| Xanh rừng | `#1B5E20` | 27, 94, 32 | Tiêu đề, thanh điều hướng, trạng thái hover của nút chính |
-| Xanh lá chủ đạo | `#2E7D32` | 46, 125, 50 | Nút chính, logo, liên kết |
-| Xanh lá tươi | `#66BB6A` | 102, 187, 106 | Biểu tượng, huy hiệu, điểm nhấn |
-| Xanh non | `#C8E6C9` | 200, 230, 201 | Thẻ, viền, nhãn OCOP |
-| Xanh sương | `#E8F5E9` | 232, 245, 233 | Nền khu vực, banner nhẹ |
-| Vàng nắng | `#F9A825` | 249, 168, 37 | Nút kêu gọi (đặt hàng, đặt tour), giảm giá, sao đánh giá |
+| Xanh chủ đạo | `#388E3C` | 56, 142, 60 | Nút chính, thẻ nổi bật, liên kết (xanh nhẹ nhàng hơn) |
+| Xanh đậm tiêu đề | `#2E7D32` | 46, 125, 50 | Thanh điều hướng, tiêu đề chính |
+| Xanh lá tươi | `#4ADE80` | 74, 222, 128 | Huy hiệu, trạng thái hoạt động |
+| Xanh non | `#DCFCE7` | 220, 252, 231 | Nền thẻ, viền, nhãn OCOP |
+| Xanh sương | `#F0FDF4` | 240, 253, 244 | Nền khu vực nhẹ, banner phụ |
+| Vàng nắng | `#F9A825` | 249, 168, 37 | Nút kêu gọi (đặt hàng, đặt tour), sao đánh giá |
 | Nâu đất | `#5D4037` | 93, 64, 55 | Chữ phụ, chi tiết nhật ký mùa vụ |
 | Kem nền | `#FAF8F1` | 250, 248, 241 | Nền trang chính |
-| Cam chôm chôm | `#D84315` | 216, 67, 21 | Cảnh báo, hết hàng, báo lỗi |
-| Xanh chữ | `#1B3A1E` | 27, 58, 30 | Chữ nội dung chính |
+| Cam cảnh báo | `#D84315` | 216, 67, 21 | Cảnh báo, hết hàng, báo lỗi |
+| Xanh chữ | `#1A3820` | 26, 56, 32 | Chữ nội dung chính |
 
 ## Quy tắc phối màu (60 – 30 – 10)
 

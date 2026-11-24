@@ -40,9 +40,9 @@ export const Checkout: React.FC = () => {
   };
 
   const shippingLabels = {
-    express_hcm: '⚡ Giao siêu tốc xe lạnh về TP.HCM (Nhận trong 3-4 tiếng)',
-    pickup_garden: '🌴 Nhận trực tiếp tại Nhà Vườn Ba Tư (Kết hợp Tour)',
-    standard: '📦 Chuyển phát bưu điện OCOP bảo quản mát (Giao ngày mai)'
+    express_hcm: 'Giao siêu tốc xe lạnh về TP.HCM (Nhận trong 3-4 tiếng)',
+    pickup_garden: 'Nhận trực tiếp tại Nhà Vườn Ba Tư (Kết hợp Tour)',
+    standard: 'Chuyển phát bưu điện OCOP bảo quản mát (Giao ngày mai)'
   };
 
   const deliveryFee = shippingCosts[shippingMethod];
@@ -78,16 +78,16 @@ export const Checkout: React.FC = () => {
   if (orderCreatedId) {
     return (
       <div className="bg-white rounded-3xl p-8 sm:p-12 border border-green-200 text-center max-w-xl mx-auto space-y-6 shadow-soft animate-fadeIn">
-        <div className="w-20 h-20 rounded-full bg-green-100 text-green-700 mx-auto flex items-center justify-center text-4xl shadow-inner">
-          ✓
+        <div className="w-16 h-16 rounded-full bg-green-100 text-green-700 mx-auto flex items-center justify-center shadow-inner">
+          <CheckCircle2 className="w-10 h-10" />
         </div>
 
         <div className="space-y-2">
           <span className="text-xs uppercase tracking-wider text-green-700 font-bold">
-            ĐẶT HÀNG THÀNH CÔNG • ĐỀ 3
+            ĐẶT HÀNG THÀNH CÔNG
           </span>
           <h2 className="text-2xl sm:text-3xl font-black text-ink">
-            Cảm Ơn Bạn Đã Ủng Hộ Nông Dân Ba Tư!
+            Cảm Ơn Bạn Đã Ủng Hộ Nông Sản Vườn Ba Tư!
           </h2>
           <p className="text-sm text-gray-600">
             Mã đơn hàng của bạn: <strong className="text-green-800 font-mono text-base">{orderCreatedId}</strong>
@@ -95,29 +95,22 @@ export const Checkout: React.FC = () => {
         </div>
 
         <div className="p-4 rounded-2xl bg-cream border border-green-200 text-left text-xs text-gray-700 space-y-2">
-          <p>📍 <strong>Địa chỉ nhận:</strong> {address}</p>
-          <p>🚚 <strong>Phương thức:</strong> {shippingLabels[shippingMethod]}</p>
-          <p>💰 <strong>Tổng thanh toán (COD):</strong> <strong className="text-green-800 text-sm">{grandTotal.toLocaleString('vi-VN')} đ</strong></p>
-          <p>🌾 <strong>Lời dặn nhà vườn:</strong> "{farmerNote}"</p>
+          <p><strong>Địa chỉ nhận hàng:</strong> {address}</p>
+          <p><strong>Phương thức vận chuyển:</strong> {shippingLabels[shippingMethod]}</p>
+          <p><strong>Tổng thanh toán (COD):</strong> <strong className="text-green-800 text-sm">{grandTotal.toLocaleString('vi-VN')} đ</strong></p>
+          <p><strong>Lời dặn gửi nhà vườn:</strong> "{farmerNote}"</p>
         </div>
 
-        <div className="p-4 rounded-2xl bg-sun-light/50 border border-amber-200 text-xs text-earth text-left">
-          💡 <strong>Liên thông hệ thống:</strong> Đơn hàng đã được chuyển ngay lập tức sang màn hình của <strong>Chú Ba Tư (50 tuổi)</strong> để chuẩn bị cắt hái tại gốc và thanh niên hỗ trợ đóng thùng!
+        <div className="p-4 rounded-2xl bg-green-50 border border-green-200 text-xs text-green-900 text-left">
+          Đơn hàng đã được chuyển đến <strong>Nhà vườn Ba Tư</strong> để chuẩn bị thu hái sáng sớm và xe lạnh chuyển thẳng đến địa chỉ của bạn.
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
           <button
-            onClick={() => setActiveScreen('orders')}
-            className="flex-1 py-3.5 px-4 rounded-xl bg-green-700 hover:bg-green-800 text-white font-bold text-sm shadow transition flex items-center justify-center gap-2"
-          >
-            <Package className="w-4 h-4" />
-            <span>Xem Đơn Bên Màn Hình Chú Ba Tư (CV5)</span>
-          </button>
-          <button
             onClick={() => setActiveScreen('home')}
-            className="py-3.5 px-4 rounded-xl border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold text-sm"
+            className="flex-1 py-3.5 px-4 rounded-xl bg-green-700 hover:bg-green-800 text-white font-bold text-sm shadow transition"
           >
-            Về Trang Chủ
+            Tiếp Tục Mua Sắm
           </button>
         </div>
       </div>
@@ -128,10 +121,10 @@ export const Checkout: React.FC = () => {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl sm:text-3xl font-black text-ink">
-          Xác Nhận Đặt Hàng & Chọn Hình Thức Nhận (K7)
+          Xác Nhận Đặt Hàng & Vận Chuyển
         </h1>
         <p className="text-xs text-gray-500">
-          Màn hình bắt buộc số 4: Điền thông tin giao nhận về TP.HCM hoặc nhận tại vườn
+          Giao nhanh xe lạnh về TP.HCM trong 4 giờ hoặc nhận trực tiếp tại nhà vườn
         </p>
       </div>
 
@@ -164,7 +157,7 @@ export const Checkout: React.FC = () => {
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-sm text-ink">
-                      ⚡ Giao siêu tốc xe lạnh về TP.HCM (3-4 tiếng)
+                      Giao siêu tốc xe lạnh về TP.HCM (3-4 tiếng)
                     </span>
                     <span className="font-bold text-sm text-green-800">35.000 đ</span>
                   </div>
@@ -192,7 +185,7 @@ export const Checkout: React.FC = () => {
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-sm text-ink">
-                      🌴 Nhận trực tiếp tại Nhà Vườn Ba Tư (Kết hợp Tour)
+                      Nhận trực tiếp tại Nhà Vườn Ba Tư (Kết hợp Tour)
                     </span>
                     <span className="font-bold text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">
                       Miễn phí 0 đ
@@ -222,7 +215,7 @@ export const Checkout: React.FC = () => {
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-sm text-ink">
-                      📦 Chuyển phát bưu điện OCOP bảo quản mát
+                      Chuyển phát bưu điện OCOP bảo quản mát
                     </span>
                     <span className="font-bold text-sm text-green-800">25.000 đ</span>
                   </div>

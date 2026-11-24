@@ -48,6 +48,7 @@ Hệ thống được thiết kế **Role Switcher** linh hoạt trên thanh đi
 | **08** | **TN7** | **Lịch Livestream & Phòng Live bán hàng** | Thanh niên / Khách | - **(Bắt buộc 6)**: Danh sách lịch phát sóng livestream hỗ trợ bà con.<br>- Đồng hồ đếm ngược giờ lên sóng.<br>- Giao diện mô phỏng phòng livestream: Khung video trực tiếp, thanh niên hỗ trợ livestream bán hàng, danh sách sản phẩm đang ghim (Pin) kèm nút "Chốt đơn trên Live". |
 | **09** | **K2** | **Bản đồ số Nhà vườn & Du lịch trải nghiệm** | Khách hàng | - **(Điểm cộng 2)**: Bản đồ tương tác định vị các cụm vườn OCOP tại Đồng Nai.<br>- Ghim thông tin vườn Bác Ba Tự kèm tính năng **"Đặt lịch tour tham quan hái quả"** (chọn ngày ghé, số lượng người, trải nghiệm ăn sầu riêng tại vườn). |
 | **10** | **TN9** | **Nhật ký & Bảng vàng Giờ tình nguyện** | Thanh niên | - **(Điểm cộng 3)**: Bảng theo dõi số giờ đóng góp của 02 đoàn viên hỗ trợ số.<br>- Ghi nhận số giờ tình nguyện tự động khi thanh niên: đăng sản phẩm (+2 giờ), livestream (+3 giờ), hỗ trợ đơn hàng (+1 giờ).<br>- Bộ huy hiệu số (*"Đoàn viên Tiên phong số"*, *"Đại sứ OCOP Đồng Nai"*). |
+| **11** | **C1** | **Đăng nhập & Đăng ký tài khoản** | Cả 3 vai trò | - **(Trang chung C1)**: Đăng nhập theo số điện thoại, khôi phục mật khẩu.<br>- Đăng ký theo từng vai trò: Khách mua (kích hoạt ngay), Chủ vườn & Thanh niên (hồ sơ gửi Admin duyệt).<br>- Hỗ trợ nút đăng nhập nhanh 1-chạm (demo test cho Ban giám khảo). |
 
 ---
 
@@ -56,8 +57,9 @@ Hệ thống được thiết kế **Role Switcher** linh hoạt trên thanh đi
 - **Framework**: `React` (Vite) + `TypeScript`.
 - **Giao diện & Thiết kế**: `Tailwind CSS`, tuân thủ chuẩn màu tại [bo-mau-cho-ocop-thanh-nien.md](file:///d:/Projects/OCOP/bo-mau-cho-ocop-thanh-nien.md):
   - **Font chữ chủ đạo**: `Roboto` (sans-serif) – tải từ Google Fonts, rõ ràng, hiện đại, chuẩn tiếng Việt và cực kỳ dễ đọc đối với người lớn tuổi.
-  - Xanh lá chủ đạo: `#2E7D32`
-  - Xanh rừng đậm: `#1B5E20`
+  - Xanh lá chủ đạo mới: `#388E3C` (Tươi sáng, dịu mắt hơn)
+  - Xanh đậm tiêu đề: `#2E7D32` (Đậm vừa vặn, không bị quá tối)
+  - Xanh non / nền nhẹ: `#DCFCE7` và `#F0FDF4`
   - Vàng nắng CTA: `#F9A825`
   - Kem nền dịu mắt: `#FAF8F1`
   - Tối ưu chế độ tiếp cận người cao tuổi (High-contrast, Large typography).

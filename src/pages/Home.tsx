@@ -38,7 +38,7 @@ export const Home: React.FC = () => {
     setRole,
     quickLogin,
     setActiveScreen,
-    setSelectedProductId,
+    openProductDetail,
     addToCart,
     setQrModalProduct,
     setTourModalOpen,
@@ -454,6 +454,13 @@ export const Home: React.FC = () => {
             >
               Nhiều lượt trải nghiệm nhất
             </button>
+            <button
+              onClick={() => setActiveScreen('products')}
+              className="px-3.5 py-1.5 rounded-xl whitespace-nowrap transition bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 font-bold flex items-center gap-1 shadow-sm"
+            >
+              <span>Xem toàn bộ ({products.length} sản phẩm)</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
 
@@ -746,7 +753,7 @@ export const Home: React.FC = () => {
                       className="bg-white rounded-3xl border border-green-200 hover:border-green-700 shadow-soft hover:shadow-card transition flex flex-col justify-between overflow-hidden group"
                     >
                       {/* Top Image + Badges */}
-                      <div className="relative aspect-[4/3] overflow-hidden bg-cream">
+                      <div onClick={() => openProductDetail(p.id)} className="relative aspect-[4/3] overflow-hidden bg-cream cursor-pointer">
                         <img
                           src={p.image}
                           alt={p.name}
@@ -772,8 +779,7 @@ export const Home: React.FC = () => {
 
                           <h3
                             onClick={() => {
-                              setSelectedProductId(p.id);
-                              setActiveScreen('product_detail');
+                              openProductDetail(p.id);
                             }}
                             className="font-bold text-sm sm:text-base text-ink line-clamp-2 hover:text-green-800 cursor-pointer leading-snug"
                           >

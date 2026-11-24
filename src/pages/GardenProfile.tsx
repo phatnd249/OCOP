@@ -19,7 +19,7 @@ export const GardenProfile: React.FC = () => {
     youthSupporters,
     products,
     setActiveScreen,
-    setSelectedProductId,
+    openProductDetail,
     addToCart,
     setQrModalProduct,
     setTourModalOpen
@@ -52,7 +52,7 @@ export const GardenProfile: React.FC = () => {
               />
               <div>
                 <span className="text-xs uppercase tracking-wider text-sun font-bold">
-                  HỒ SƠ CHỦ THỂ OCOP (ĐỀ 3)
+                  NHÀ VƯỜN TIÊU BIỂU OCOP ĐỒNG NAI
                 </span>
                 <h1 className="text-2xl sm:text-3xl font-black">{garden.name}</h1>
                 <p className="text-sm text-green-200">
@@ -66,7 +66,7 @@ export const GardenProfile: React.FC = () => {
                 onClick={() => setTourModalOpen(true)}
                 className="bg-sun hover:bg-amber-500 text-earth-dark font-black px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition"
               >
-                🌴 Đặt Lịch Ghé Vườn
+                Đặt Lịch Ghé Vườn
               </button>
             </div>
           </div>
@@ -98,8 +98,8 @@ export const GardenProfile: React.FC = () => {
         {/* Story Section */}
         <div className="lg:col-span-2 bg-white rounded-3xl p-6 sm:p-8 border border-green-200 shadow-soft space-y-5">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-green-100 text-green-800 flex items-center justify-center">
-              📖
+            <div className="w-9 h-9 rounded-xl bg-green-100 text-green-800 flex items-center justify-center font-bold">
+              <Award className="w-5 h-5 text-green-700" />
             </div>
             <div>
               <h2 className="text-xl font-bold text-ink">
@@ -218,14 +218,21 @@ export const GardenProfile: React.FC = () => {
               key={p.id}
               className="bg-white rounded-3xl overflow-hidden border border-green-200 shadow-soft flex flex-col justify-between"
             >
-              <div className="relative h-48 bg-gray-100">
+              <div
+                onClick={() => openProductDetail(p.id)}
+                className="relative h-48 bg-gray-100 cursor-pointer"
+              >
                 <img
                   src={p.image}
                   alt={p.name}
                   className="w-full h-full object-cover"
                 />
                 <button
-                  onClick={() => setQrModalProduct(p)}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setQrModalProduct(p);
+                  }}
                   className="absolute bottom-2 right-2 bg-white/95 backdrop-blur text-green-800 px-2.5 py-1.5 rounded-xl shadow text-xs font-bold flex items-center gap-1"
                 >
                   <QrCode className="w-3.5 h-3.5 text-green-700" />
@@ -242,10 +249,7 @@ export const GardenProfile: React.FC = () => {
                     <span className="text-[11px] text-gray-400">Kho: {p.inStock} {p.unit}</span>
                   </div>
                   <h3
-                    onClick={() => {
-                      setSelectedProductId(p.id);
-                      setActiveScreen('product_detail');
-                    }}
+                    onClick={() => openProductDetail(p.id)}
                     className="font-bold text-base text-ink hover:text-green-700 cursor-pointer"
                   >
                     {p.name}
