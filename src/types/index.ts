@@ -1,17 +1,18 @@
 export type UserRole = 'customer' | 'farmer' | 'youth';
 
 export type ScreenId =
-  | 'home'          // K1: Trang chủ Chợ OCOP Đồng Nai
-  | 'garden'        // K3: Hồ sơ nhà vườn Ba Tự
-  | 'product_detail'// K4: Chi tiết sản phẩm & QR truy xuất
-  | 'cart'          // K6: Giỏ hàng nông sản
-  | 'checkout'      // K7: Đặt hàng & Vận chuyển
-  | 'quick_post'    // TN4: Đăng sản phẩm nhanh (Voice + AI)
-  | 'orders'        // CV5: Quản lý đơn hàng (Bác Ba Tự)
-  | 'live'          // TN7: Livestream & Bán hàng
-  | 'map'           // K2: Bản đồ du lịch trải nghiệm
-  | 'volunteer'     // TN9: Bảng vàng giờ tình nguyện
-  | 'auth';         // C1: Đăng nhập, đăng ký tài khoản các vai trò
+  | 'home'          // Trang chủ Chợ OCOP Đồng Nai
+  | 'products'      // Danh sách các sản phẩm OCOP
+  | 'product_detail'// Chi tiết sản phẩm cụ thể & QR truy xuất
+  | 'garden'        // Hồ sơ nhà vườn Ba Tự
+  | 'cart'          // Giỏ hàng nông sản
+  | 'checkout'      // Đặt hàng & Vận chuyển
+  | 'quick_post'    // Đăng sản phẩm nhanh (Voice + AI)
+  | 'orders'        // Quản lý đơn hàng (Bác Ba Tự)
+  | 'live'          // Livestream & Bán hàng
+  | 'map'           // Bản đồ du lịch trải nghiệm
+  | 'volunteer'     // Bảng vàng giờ tình nguyện
+  | 'auth';         // Đăng nhập, đăng ký tài khoản các vai trò
 
 export interface SeasonDiaryItem {
   date: string;

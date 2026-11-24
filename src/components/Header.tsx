@@ -18,7 +18,7 @@ export const Header: React.FC = () => {
       return [
         { id: 'orders', label: 'Quản Lý Đơn Hàng' },
         { id: 'garden', label: 'Hồ Sơ Nhà Vườn' },
-        { id: 'product_detail', label: 'Danh Mục Sản Phẩm' },
+        { id: 'products', label: 'Danh Mục Sản Phẩm' },
         { id: 'live', label: 'Lịch Livestream Bán Hàng' }
       ];
     }
@@ -36,7 +36,7 @@ export const Header: React.FC = () => {
     // Default Customer navigation
     return [
       { id: 'home', label: 'Trang Chủ' },
-      { id: 'product_detail', label: 'Sản Phẩm OCOP' },
+      { id: 'products', label: 'Sản Phẩm OCOP' },
       { id: 'garden', label: 'Nhà Vườn Ba Tư' },
       { id: 'live', label: 'Livestream Nông Sản' },
       { id: 'map', label: 'Du Lịch Trải Nghiệm Vườn' }

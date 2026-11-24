@@ -21,7 +21,7 @@ export const Home: React.FC = () => {
     garden,
     liveStreams,
     setActiveScreen,
-    setSelectedProductId,
+    openProductDetail,
     addToCart,
     setQrModalProduct,
     setTourModalOpen
@@ -64,14 +64,11 @@ export const Home: React.FC = () => {
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <button
-              onClick={() => {
-                const el = document.getElementById('market-products');
-                el?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={() => setActiveScreen('products')}
               className="bg-sun hover:bg-amber-500 text-earth-dark font-black px-6 py-3.5 rounded-2xl shadow-md transition flex items-center gap-2 text-sm sm:text-base"
             >
               <ShoppingBag className="w-5 h-5" />
-              <span>Xem Sản Phẩm Vào Vụ</span>
+              <span>Xem Tất Cả Sản Phẩm</span>
             </button>
 
             <button
@@ -219,7 +216,10 @@ export const Home: React.FC = () => {
               className="bg-white rounded-3xl overflow-hidden border border-green-200 shadow-soft hover:shadow-card transition flex flex-col justify-between group"
             >
               {/* Image & Badges */}
-              <div className="relative h-56 overflow-hidden bg-gray-100">
+              <div
+                onClick={() => openProductDetail(p.id)}
+                className="relative h-56 overflow-hidden bg-gray-100 cursor-pointer"
+              >
                 <img
                   src={p.image}
                   alt={p.name}
@@ -229,7 +229,11 @@ export const Home: React.FC = () => {
                   OCOP {p.star} SAO
                 </span>
                 <button
-                  onClick={() => setQrModalProduct(p)}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setQrModalProduct(p);
+                  }}
                   className="absolute bottom-3 right-3 bg-white/95 backdrop-blur hover:bg-white text-green-800 px-2.5 py-1.5 rounded-xl shadow font-bold text-xs flex items-center gap-1 transition"
                   title="Xem mã QR truy xuất"
                 >
@@ -247,10 +251,7 @@ export const Home: React.FC = () => {
                   </div>
 
                   <h3
-                    onClick={() => {
-                      setSelectedProductId(p.id);
-                      setActiveScreen('product_detail');
-                    }}
+                    onClick={() => openProductDetail(p.id)}
                     className="font-bold text-base sm:text-lg text-ink hover:text-green-700 cursor-pointer line-clamp-1 leading-snug"
                   >
                     {p.name}

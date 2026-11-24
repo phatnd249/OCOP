@@ -19,6 +19,7 @@ export const LiveStream: React.FC = () => {
     likeLiveStream,
     addLiveComment,
     addToCart,
+    openProductDetail,
     showNotification
   } = useApp();
 
@@ -126,7 +127,10 @@ export const LiveStream: React.FC = () => {
                   <span className="bg-red-100 text-red-700 text-[10px] font-black px-2 py-0.5 rounded uppercase">
                     SẢN PHẨM ĐANG GHIM TRÊN LIVE
                   </span>
-                  <h4 className="font-bold text-xs sm:text-sm text-ink line-clamp-1">
+                  <h4
+                    onClick={() => openProductDetail(activeLive.featuredProduct!.id)}
+                    className="font-bold text-xs sm:text-sm text-ink line-clamp-1 cursor-pointer hover:text-green-700"
+                  >
                     {activeLive.featuredProduct.name}
                   </h4>
                   <div className="flex items-center gap-2 text-xs">

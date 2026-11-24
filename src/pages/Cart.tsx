@@ -17,7 +17,8 @@ export const Cart: React.FC = () => {
     updateCartQty,
     removeFromCart,
     clearCart,
-    setActiveScreen
+    setActiveScreen,
+    openProductDetail
   } = useApp();
 
   const cartDetails = cart.map(item => {
@@ -89,13 +90,17 @@ export const Cart: React.FC = () => {
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover shrink-0 border"
+                        onClick={() => openProductDetail(product.id)}
+                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover shrink-0 border cursor-pointer hover:opacity-90 transition"
                       />
                       <div>
                         <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded">
                           ⭐ OCOP {product.star} Sao
                         </span>
-                        <h3 className="font-bold text-sm sm:text-base text-ink line-clamp-1">
+                        <h3
+                          onClick={() => openProductDetail(product.id)}
+                          className="font-bold text-sm sm:text-base text-ink line-clamp-1 cursor-pointer hover:text-green-700"
+                        >
                           {product.name}
                         </h3>
                         <p className="text-xs text-green-800 font-bold mt-0.5">

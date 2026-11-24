@@ -8,8 +8,9 @@ import { Toast } from './components/Toast';
 
 // Screens
 import { Home } from './pages/Home';
-import { GardenProfile } from './pages/GardenProfile';
+import { ProductsList } from './pages/ProductsList';
 import { ProductDetail } from './pages/ProductDetail';
+import { GardenProfile } from './pages/GardenProfile';
 import { Cart } from './pages/Cart';
 import { Checkout } from './pages/Checkout';
 import { QuickPost } from './pages/QuickPost';
@@ -26,10 +27,12 @@ export const App: React.FC = () => {
     switch (activeScreen) {
       case 'home':
         return <Home />;
-      case 'garden':
-        return <GardenProfile />;
+      case 'products':
+        return <ProductsList />;
       case 'product_detail':
         return <ProductDetail />;
+      case 'garden':
+        return <GardenProfile />;
       case 'cart':
         return <Cart />;
       case 'checkout':

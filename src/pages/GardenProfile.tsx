@@ -19,7 +19,7 @@ export const GardenProfile: React.FC = () => {
     youthSupporters,
     products,
     setActiveScreen,
-    setSelectedProductId,
+    openProductDetail,
     addToCart,
     setQrModalProduct,
     setTourModalOpen
@@ -218,14 +218,21 @@ export const GardenProfile: React.FC = () => {
               key={p.id}
               className="bg-white rounded-3xl overflow-hidden border border-green-200 shadow-soft flex flex-col justify-between"
             >
-              <div className="relative h-48 bg-gray-100">
+              <div
+                onClick={() => openProductDetail(p.id)}
+                className="relative h-48 bg-gray-100 cursor-pointer"
+              >
                 <img
                   src={p.image}
                   alt={p.name}
                   className="w-full h-full object-cover"
                 />
                 <button
-                  onClick={() => setQrModalProduct(p)}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setQrModalProduct(p);
+                  }}
                   className="absolute bottom-2 right-2 bg-white/95 backdrop-blur text-green-800 px-2.5 py-1.5 rounded-xl shadow text-xs font-bold flex items-center gap-1"
                 >
                   <QrCode className="w-3.5 h-3.5 text-green-700" />
@@ -242,10 +249,7 @@ export const GardenProfile: React.FC = () => {
                     <span className="text-[11px] text-gray-400">Kho: {p.inStock} {p.unit}</span>
                   </div>
                   <h3
-                    onClick={() => {
-                      setSelectedProductId(p.id);
-                      setActiveScreen('product_detail');
-                    }}
+                    onClick={() => openProductDetail(p.id)}
                     className="font-bold text-base text-ink hover:text-green-700 cursor-pointer"
                   >
                     {p.name}
