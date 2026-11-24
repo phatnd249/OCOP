@@ -154,54 +154,40 @@ export const Home: React.FC = () => {
     <div className="space-y-10 pb-16">
       
       {/* =========================================================================
-          TẦNG 1: THANH TÌM KIẾM LỚN & CHUYỂN VAI TRÒ (HEADER BỀ MẶT)
+          TẦNG 1: THANH TÌM KIẾM LỚN & ĐĂNG BÁN NHANH (GIỐNG MẪU ẢNH)
           ========================================================================= */}
-      <section className="bg-white rounded-3xl p-4 sm:p-6 border border-green-200 shadow-soft space-y-4">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+      <section className="bg-gradient-to-r from-green-50/80 via-emerald-50/50 to-green-50/80 rounded-full p-2 sm:p-2.5 border border-green-200 shadow-sm">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
           
-          {/* Ô tìm kiếm lớn ở giữa kèm nút tìm giọng nói */}
-          <div className="relative w-full lg:max-w-2xl">
-            <div className="relative flex items-center">
-              <Search className="w-5 h-5 text-gray-400 absolute left-4 pointer-events-none" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                placeholder="Tìm chôm chôm, sầu riêng Long Khánh, bưởi Tân Triều, hạt điều..."
-                className="w-full pl-12 pr-28 py-3.5 text-sm sm:text-base rounded-2xl border-2 border-green-600 focus:border-green-800 focus:ring-4 focus:ring-green-100 outline-none transition shadow-inner bg-cream"
-              />
-              <button
-                type="button"
-                onClick={handleVoiceSearch}
-                className={`absolute right-2 px-3 py-2 rounded-xl flex items-center gap-1.5 text-xs font-bold transition ${
-                  isListening
-                    ? 'bg-red-600 text-white animate-pulse'
-                    : 'bg-green-100 text-green-900 hover:bg-green-200'
-                }`}
-                title="Hỗ trợ giọng nói cho chủ vườn và khách hàng"
-              >
-                <Mic className="w-4 h-4 text-green-800" />
-                <span className="hidden sm:inline">{isListening ? 'Đang nghe...' : 'Giọng nói'}</span>
-              </button>
-            </div>
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="text-xs text-gray-400 hover:text-gray-600 absolute right-32 top-4"
-              >
-                Xóa
-              </button>
-            )}
+          {/* Ô tìm kiếm lớn bo tròn kèm nút Gợi ý xanh lá */}
+          <div className="relative flex-1 w-full flex items-center">
+            <Search className="w-5 h-5 text-green-700 absolute left-4 pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Tìm kiếm: chôm chôm, sầu riêng Long Khánh, bưởi Tân Triều, hạt điều..."
+              className="w-full pl-11 pr-24 py-2.5 text-xs sm:text-sm rounded-full border border-green-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition bg-white text-gray-800 placeholder-gray-400"
+            />
+            <button
+              type="button"
+              onClick={handleVoiceSearch}
+              className="absolute right-1.5 px-3.5 py-1.5 rounded-full bg-green-700 hover:bg-green-800 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition"
+            >
+              <span>🌱 Gợi ý</span>
+            </button>
           </div>
 
-          {/* Nút Đăng bán nhanh */}
-          <div className="flex items-center gap-2 w-full lg:w-auto justify-end">
-            <Button
+          {/* Đường phân cách | và Nút Đăng Đài Nhanh (AI Voice) bo tròn */}
+          <div className="flex items-center gap-3 shrink-0 px-2">
+            <span className="hidden sm:inline text-gray-300 font-light">|</span>
+            <button
               onClick={() => setActiveScreen('quick_post')}
-              icon="pi pi-plus"
-              label="Đăng Bán Nhanh (AI/Voice)"
-              className="p-button-warning font-bold text-xs p-button-sm shadow-md text-ink whitespace-nowrap"
-            />
+              className="flex items-center gap-2 px-4 py-2 rounded-full border border-green-300 bg-white hover:bg-green-50 text-green-800 text-xs sm:text-sm font-bold shadow-sm transition"
+            >
+              <Mic className="w-4 h-4 text-green-600" />
+              <span>Đăng Đài Nhanh (AI Voice)</span>
+            </button>
           </div>
         </div>
       </section>
@@ -221,8 +207,8 @@ export const Home: React.FC = () => {
           </div>
 
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tight">
-            Nông Sản OCOP Long Khánh <br />
-            <span className="text-sun">Minh Bạch Từ Vườn Cây Ba Tư Đến Bàn Ăn</span>
+            Nông Sản OCOP <br />
+            <span className="text-sun">Minh Bạch Từ Vườn Đến Bàn Ăn</span>
           </h1>
 
           <p className="text-green-100 text-xs sm:text-sm leading-relaxed max-w-xl">
@@ -236,13 +222,6 @@ export const Home: React.FC = () => {
             >
               <MapPin className="w-4 h-4" />
               <span>Khám Phá Bản Đồ Nhà Vườn (Du Lịch Trải Nghiệm)</span>
-            </button>
-            <button
-              onClick={() => setActiveScreen('garden')}
-              className="bg-white/10 hover:bg-white/20 text-white font-bold px-5 py-3.5 rounded-2xl backdrop-blur transition flex items-center gap-2 text-xs sm:text-sm border border-white/20"
-            >
-              <span>Xem Hồ Sơ 2.5 ha Vườn Ba Tư</span>
-              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
