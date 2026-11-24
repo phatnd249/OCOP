@@ -56,6 +56,11 @@ export const Checkout: React.FC = () => {
       return;
     }
 
+    if (currentUser.role !== 'buyer' && currentUser.role !== 'youth') {
+      showNotification('ℹ️ Chỉ tài khoản Người mua và Đoàn viên mới có quyền hoàn tất đơn hàng!');
+      return;
+    }
+
     if (cartDetails.length === 0) {
       showNotification('Giỏ hàng trống, vui lòng chọn nông sản trước!');
       return;

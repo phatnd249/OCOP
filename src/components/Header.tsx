@@ -188,8 +188,8 @@ export const Header: React.FC = () => {
             </button>
           )}
 
-          {/* Cart button (Chỉ hiển thị cho người dùng đã đăng nhập và không phải Admin) */}
-          {currentUser && currentRole !== 'admin' && (
+          {/* Cart button (Sau khi đăng nhập: CHỈ Người Mua và Đoàn Viên mới có chức năng Giỏ hàng / Mua hàng) */}
+          {currentUser && (currentUser.role === 'buyer' || currentUser.role === 'youth') && (
             <button
               onClick={() => setActiveScreen('cart')}
               className="relative flex items-center gap-1.5 bg-green-800 text-white px-4 py-2 rounded-full font-bold text-xs sm:text-sm shadow hover:bg-green-900 transition"

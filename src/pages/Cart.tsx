@@ -188,6 +188,10 @@ export const Cart: React.FC = () => {
                   showNotification('⚠️ Vui lòng Đăng nhập hoặc Đăng ký tài khoản để tiến hành đặt hàng!');
                   return;
                 }
+                if (currentUser.role !== 'buyer' && currentUser.role !== 'youth') {
+                  showNotification('ℹ️ Chỉ tài khoản Người mua và Đoàn viên mới có quyền tiến hành đặt hàng!');
+                  return;
+                }
                 setActiveScreen('checkout');
               }}
               className="w-full py-4 rounded-2xl bg-sun hover:bg-amber-500 text-earth-dark font-black text-base shadow transition flex items-center justify-center gap-2"

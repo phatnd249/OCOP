@@ -203,6 +203,17 @@ export const ModalAuth: React.FC<ModalAuthProps> = ({ visible, onHide, defaultMo
               <span>ĐĂNG NHẬP NGAY</span>
             </button>
 
+            {/* Gợi ý tài khoản demo chuẩn đề bài */}
+            <div className="p-3 bg-green-50 rounded-xl border border-green-200 text-xs text-green-950 space-y-1">
+              <span className="font-bold block text-green-900">💡 4 Tài khoản demo hệ thống (Mật khẩu chung: 123)</span>
+              <div className="grid grid-cols-2 gap-1 text-[11px] text-gray-700">
+                <div>• <strong>admin</strong> (Quản trị viên)</div>
+                <div>• <strong>0903333333</strong> (Người mua TP.HCM)</div>
+                <div>• <strong>0902222222</strong> (Chú Ba Tư - Chủ vườn)</div>
+                <div>• <strong>0901111111</strong> (Đoàn viên thanh niên)</div>
+              </div>
+            </div>
+
             {/* Footer chuyển tab */}
             <div className="text-center pt-1 border-t border-gray-100">
               <span className="text-xs text-gray-500">Chưa có tài khoản trên Trạm Vườn Số? </span>
