@@ -62,14 +62,12 @@ export const Header: React.FC = () => {
       ];
     }
 
-    // 3. Thanh Niên Hỗ Trợ (Youth) Menu
+    // 3. Thanh Niên Hỗ Trợ (Youth) Menu (Bỏ "Lịch & Phòng Live" và "Trang Chủ")
     if (currentRole === 'youth') {
       return [
-        { id: 'live' as ScreenId, label: '📹 Lịch & Phòng Live', icon: <Video className="w-4 h-4" /> },
         { id: 'orders' as ScreenId, label: '📦 Xử Lý Đơn Hộ Vườn', icon: <Package className="w-4 h-4" /> },
         { id: 'volunteer' as ScreenId, label: '🎖️ Giờ Tình Nguyện Của Tôi', icon: <Award className="w-4 h-4" /> },
-        { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4" /> },
-        { id: 'garden' as ScreenId, label: 'Hồ Sơ Vườn', icon: <Store className="w-4 h-4" /> }
+        { id: 'garden' as ScreenId, label: '🏡 Hồ Sơ Vườn', icon: <Store className="w-4 h-4" /> }
       ];
     }
 
@@ -172,8 +170,8 @@ export const Header: React.FC = () => {
             </button>
           )}
 
-          {/* Cart button (Chỉ dành cho Người mua và Đoàn viên) */}
-          {currentUser && (currentUser.role === 'buyer' || currentUser.role === 'youth') && (
+          {/* Cart button (Chỉ dành riêng cho Người mua - Đoàn viên không có giỏ hàng) */}
+          {currentUser && currentUser.role === 'buyer' && (
             <button
               onClick={() => setActiveScreen('cart')}
               className="relative flex items-center gap-1.5 bg-green-800 text-white px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm shadow hover:bg-green-900 transition"

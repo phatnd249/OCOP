@@ -433,9 +433,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return false;
     }
 
-    // 2. Đã đăng nhập: Chỉ người mua ('buyer') và đoàn viên ('youth') mới có quyền mua
-    if (currentUser.role !== 'buyer' && currentUser.role !== 'youth') {
-      showNotification('ℹ️ Tài khoản Chủ nhà vườn / Quản trị viên không có quyền đặt mua nông sản. Vui lòng đăng nhập tài khoản Người mua hoặc Đoàn viên!');
+    // 2. Đã đăng nhập: Chỉ người mua ('buyer') mới có quyền mua
+    if (currentUser.role !== 'buyer') {
+      showNotification('ℹ️ Chức năng mua hàng chỉ dành riêng cho tài khoản Người mua (Khách hàng)!');
       return false;
     }
 
