@@ -1,6 +1,6 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
-import { Phone, MapPin, Award, Heart, CheckCircle2 } from 'lucide-react';
+import { Phone, MapPin, Award, Heart, CheckCircle2, Sprout } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const { setActiveScreen } = useApp();
@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
         {/* Col 1 */}
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 mb-4">
-            <span className="text-3xl">🌱</span>
+            <Sprout className="w-6 h-6 text-sun" />
             <span className="text-xl font-black text-white tracking-tight">CHỢ OCOP THANH NIÊN</span>
             <span className="bg-sun text-earth-dark text-xs font-black px-2 py-0.5 rounded">ĐỒNG NAI</span>
           </div>

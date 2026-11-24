@@ -95,8 +95,8 @@ export const Home: React.FC = () => {
       {/* Highlights 3 Pillars of Project */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white p-6 rounded-3xl border border-green-200 shadow-soft space-y-3">
-          <div className="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center text-2xl text-green-700">
-            🌾
+          <div className="text-xs font-bold uppercase tracking-wider text-green-700 bg-green-50 px-2.5 py-1 rounded inline-block">
+            Chủ Thể OCOP
           </div>
           <h3 className="font-bold text-lg text-ink">Chủ Vườn Ba Tư (50 tuổi)</h3>
           <p className="text-sm text-gray-600 leading-relaxed">
@@ -104,7 +104,7 @@ export const Home: React.FC = () => {
           </p>
           <button
             onClick={() => setActiveScreen('orders')}
-            className="text-green-700 font-bold text-xs hover:underline flex items-center gap-1"
+            className="text-green-700 font-bold text-xs hover:underline flex items-center gap-1 pt-1"
           >
             <span>Trải nghiệm màn hình Chú Ba Tư</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -112,16 +112,16 @@ export const Home: React.FC = () => {
         </div>
 
         <div className="bg-white p-6 rounded-3xl border border-green-200 shadow-soft space-y-3">
-          <div className="w-12 h-12 rounded-2xl bg-sun-light flex items-center justify-center text-2xl text-amber-600">
-            🌟
+          <div className="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded inline-block">
+            Cầu Nối Số
           </div>
-          <h3 className="font-bold text-lg text-ink">Đoàn Viên Làm Cầu Nối Số</h3>
+          <h3 className="font-bold text-lg text-ink">Đoàn Viên Thanh Niên Đồng Hành</h3>
           <p className="text-sm text-gray-600 leading-relaxed">
             Thanh niên hỗ trợ chụp ảnh, thu âm giọng nói, dùng AI viết bài mô tả và phát sóng livestream bán nông sản tận gốc.
           </p>
           <button
             onClick={() => setActiveScreen('quick_post')}
-            className="text-green-700 font-bold text-xs hover:underline flex items-center gap-1"
+            className="text-green-700 font-bold text-xs hover:underline flex items-center gap-1 pt-1"
           >
             <span>Thử đăng bài bằng Giọng nói & AI</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -129,8 +129,8 @@ export const Home: React.FC = () => {
         </div>
 
         <div className="bg-white p-6 rounded-3xl border border-green-200 shadow-soft space-y-3">
-          <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center text-2xl text-blue-700">
-            🔍
+          <div className="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-1 rounded inline-block">
+            Minh Bạch Canh Tác
           </div>
           <h3 className="font-bold text-lg text-ink">Mã QR Truy Xuất Nguồn Gốc</h3>
           <p className="text-sm text-gray-600 leading-relaxed">
@@ -141,7 +141,7 @@ export const Home: React.FC = () => {
               setSelectedProductId(products[0].id);
               setQrModalProduct(products[0]);
             }}
-            className="text-green-700 font-bold text-xs hover:underline flex items-center gap-1"
+            className="text-green-700 font-bold text-xs hover:underline flex items-center gap-1 pt-1"
           >
             <span>Quét thử mã QR mùa vụ mẫu</span>
             <ArrowRight className="w-3.5 h-3.5" />

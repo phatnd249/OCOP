@@ -74,7 +74,7 @@ export const EcoMap: React.FC = () => {
           </div>
 
           {/* Interactive Pins */}
-          {INITIAL_MAP_LOCATIONS.map(loc => {
+          {INITIAL_MAP_LOCATIONS.map((loc, idx) => {
             const isSelected = selectedSpot.id === loc.id;
             return (
               <div
@@ -84,19 +84,19 @@ export const EcoMap: React.FC = () => {
                 className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-20"
               >
                 <div
-                  className={`w-11 h-11 sm:w-13 sm:h-13 rounded-2xl flex items-center justify-center text-xl sm:text-2xl shadow-2xl transition-all duration-300 border-2 ${
+                  className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center font-black text-sm shadow-2xl transition-all duration-300 border-2 ${
                     isSelected
                       ? 'bg-sun text-earth-dark border-white scale-125 ring-4 ring-amber-400/50'
-                      : 'bg-white/90 text-green-900 border-green-300 hover:scale-110'
+                      : 'bg-white text-green-900 border-green-400 hover:scale-110'
                   }`}
                 >
-                  {loc.icon}
+                  {idx + 1}
                 </div>
                 <div
                   className={`absolute top-full mt-1.5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-md shadow backdrop-blur transition ${
                     isSelected
                       ? 'bg-sun text-earth-dark'
-                      : 'bg-black/70 text-white opacity-85 group-hover:opacity-100'
+                      : 'bg-black/75 text-white opacity-85 group-hover:opacity-100'
                   }`}
                 >
                   {loc.name.split('(')[0]}
@@ -109,8 +109,8 @@ export const EcoMap: React.FC = () => {
         {/* Selected Spot Details Card */}
         <div className="bg-cream rounded-2xl p-6 border border-green-200 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-start gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-white text-3xl flex items-center justify-center shrink-0 border border-green-200 shadow-sm">
-              {selectedSpot.icon}
+            <div className="w-14 h-14 rounded-2xl bg-white text-green-800 flex items-center justify-center shrink-0 border border-green-200 shadow-sm">
+              <MapPin className="w-7 h-7 text-green-700" />
             </div>
             <div className="space-y-1">
               <span className="text-[11px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">

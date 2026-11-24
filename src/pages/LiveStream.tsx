@@ -93,14 +93,15 @@ export const LiveStream: React.FC = () => {
 
             {/* Center Broadcast Badge */}
             <div className="absolute text-center text-white pointer-events-none p-4">
-              <div className="w-16 h-16 rounded-full bg-red-600/80 backdrop-blur mx-auto flex items-center justify-center text-3xl mb-2 animate-pulse">
-                📹
+              <div className="w-14 h-14 rounded-full bg-red-600/80 backdrop-blur mx-auto flex items-center justify-center text-white mb-2 animate-pulse">
+                <Video className="w-7 h-7" />
               </div>
               <h2 className="text-lg sm:text-2xl font-black max-w-md drop-shadow">
                 {activeLive.title}
               </h2>
-              <p className="text-xs text-green-200 mt-1">
-                📍 {activeLive.location}
+              <p className="text-xs text-green-200 mt-1 flex items-center justify-center gap-1">
+                <MapPin className="w-3.5 h-3.5" />
+                <span>{activeLive.location}</span>
               </p>
             </div>
 
@@ -123,7 +124,7 @@ export const LiveStream: React.FC = () => {
               <div className="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-md bg-white/95 backdrop-blur p-3.5 rounded-2xl shadow-xl flex items-center justify-between gap-4 border border-green-200">
                 <div className="space-y-0.5">
                   <span className="bg-red-100 text-red-700 text-[10px] font-black px-2 py-0.5 rounded uppercase">
-                    🔥 SẢN PHẨM ĐANG GHIM TRÊN LIVE
+                    SẢN PHẨM ĐANG GHIM TRÊN LIVE
                   </span>
                   <h4 className="font-bold text-xs sm:text-sm text-ink line-clamp-1">
                     {activeLive.featuredProduct.name}
@@ -154,7 +155,7 @@ export const LiveStream: React.FC = () => {
         <div className="bg-white rounded-3xl border border-green-200 shadow-soft flex flex-col h-[500px]">
           <div className="p-4 border-b border-gray-100 flex items-center justify-between">
             <h3 className="font-bold text-sm text-ink flex items-center gap-2">
-              <span>💬 Bình Luận & Chốt Số Lượng</span>
+              <span>Bình Luận & Chốt Số Lượng</span>
             </h3>
             <span className="text-[11px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded">
               Thời gian thực

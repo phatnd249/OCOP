@@ -37,15 +37,15 @@ export const OrderManagement: React.FC = () => {
       {/* Elderly Accessibility Banner */}
       <div className="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 text-white rounded-3xl p-6 sm:p-8 shadow-card flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-4xl shrink-0">
-            👴
+          <div className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center text-white shrink-0">
+            <Package className="w-7 h-7" />
           </div>
           <div>
             <span className="bg-white/20 text-white text-xs font-bold px-2.5 py-0.5 rounded uppercase">
-              MÀN HÌNH BẮT BUỘC SỐ 5 • THIẾT KẾ CHO NGƯỜI 50 TUỔI
+              MÀN HÌNH BẮT BUỘC SỐ 5 • GIAO DIỆN NGƯỜI LỚN TUỔI
             </span>
             <h1 className="text-xl sm:text-2xl font-black mt-1">
-              Giao Diện Quản Lý Đơn Hàng Của Chú Ba Tư
+              Quản Lý Đơn Hàng Của Nhà Vườn Ba Tư
             </h1>
             <p className="text-amber-100 text-xs sm:text-sm mt-0.5">
               Chữ to rõ ràng, nút bấm lớn một chạm, có trợ lý giọng nói đọc chi tiết đơn

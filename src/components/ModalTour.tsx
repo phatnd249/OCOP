@@ -22,7 +22,7 @@ export const ModalTour: React.FC = () => {
       <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-green-200">
         <div className="bg-gradient-to-r from-green-800 to-green-700 text-white p-5 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🌴</span>
+            <MapPin className="w-6 h-6 text-sun" />
             <div>
               <h3 className="font-bold text-lg leading-tight">
                 Đặt Lịch Tour Du Lịch Trải Nghiệm Vườn Ba Tư

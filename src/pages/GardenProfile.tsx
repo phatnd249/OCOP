@@ -66,7 +66,7 @@ export const GardenProfile: React.FC = () => {
                 onClick={() => setTourModalOpen(true)}
                 className="bg-sun hover:bg-amber-500 text-earth-dark font-black px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition"
               >
-                🌴 Đặt Lịch Ghé Vườn
+                Đặt Lịch Ghé Vườn
               </button>
             </div>
           </div>
@@ -98,8 +98,8 @@ export const GardenProfile: React.FC = () => {
         {/* Story Section */}
         <div className="lg:col-span-2 bg-white rounded-3xl p-6 sm:p-8 border border-green-200 shadow-soft space-y-5">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-green-100 text-green-800 flex items-center justify-center">
-              📖
+            <div className="w-9 h-9 rounded-xl bg-green-100 text-green-800 flex items-center justify-center font-bold">
+              <Award className="w-5 h-5 text-green-700" />
             </div>
             <div>
               <h2 className="text-xl font-bold text-ink">
