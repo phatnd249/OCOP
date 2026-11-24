@@ -165,13 +165,16 @@ export const GardenProfile: React.FC = () => {
                 </button>
               )}
 
-              <button
-                type="button"
-                onClick={() => setTourModalOpen(true)}
-                className="bg-sun hover:bg-amber-500 text-earth-dark font-black px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition"
-              >
-                Đặt Lịch Ghé Vườn
-              </button>
+              {/* Nút Đặt Lịch Ghé Vườn: Chỉ hiển thị cho khách hàng/người mua, vai trò nhà vườn không cần */}
+              {!isFarmer && (
+                <button
+                  type="button"
+                  onClick={() => setTourModalOpen(true)}
+                  className="bg-sun hover:bg-amber-500 text-earth-dark font-black px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition"
+                >
+                  Đặt Lịch Ghé Vườn
+                </button>
+              )}
             </div>
           </div>
         </div>
