@@ -129,6 +129,7 @@ interface AppContextType {
 
   // Data
   garden: GardenInfo;
+  updateGarden: (updated: Partial<GardenInfo>) => void;
   youthSupporters: YouthSupporter[];
   liveStreams: LiveStream[];
   likeLiveStream: (liveId: string) => void;
@@ -213,7 +214,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   // Garden
-  const [garden] = useState<GardenInfo>(INITIAL_GARDEN);
+  const [garden, setGarden] = useState<GardenInfo>(() => {
+    const saved = localStorage.getItem('ocop_garden');
+    return saved ? JSON.parse(saved) : INITIAL_GARDEN;
+  });
+
+  const updateGarden = (updated: Partial<GardenInfo>) => {
+    setGarden(prev => {
+      const next = { ...prev, ...updated };
+      localStorage.setItem('ocop_garden', JSON.stringify(next));
+      return next;
+    });
+    showNotification('Cập nhật hồ sơ nhà vườn thành công!');
+  };
 
   // LiveStreams
   const [liveStreams, setLiveStreams] = useState<LiveStream[]>(() => {
@@ -629,6 +642,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         createOrder,
         updateOrderStatus,
         garden,
+        updateGarden,
         youthSupporters,
         liveStreams,
         likeLiveStream,
