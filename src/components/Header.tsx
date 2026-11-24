@@ -36,53 +36,53 @@ export const Header: React.FC = () => {
     // 0. Khi chưa đăng ký / đăng nhập: chỉ hiện Trang chủ, Livestream, Bản đồ
     if (!currentUser) {
       return [
-        { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4" /> },
-        { id: 'live' as ScreenId, label: 'Livestream', icon: <Video className="w-4 h-4" /> },
-        { id: 'map' as ScreenId, label: 'Bản Đồ Tour', icon: <MapPin className="w-4 h-4" /> }
+        { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4 shrink-0" /> },
+        { id: 'live' as ScreenId, label: 'Livestream', icon: <Video className="w-4 h-4 shrink-0" /> },
+        { id: 'map' as ScreenId, label: 'Bản Đồ Tour', icon: <MapPin className="w-4 h-4 shrink-0" /> }
       ];
     }
 
     // 1. Admin Menu
     if (currentRole === 'admin') {
       return [
-        { id: 'admin_users' as ScreenId, label: 'Quản Lý Tài Khoản (Admin)', icon: <ShieldAlert className="w-4 h-4 text-red-600" /> },
-        { id: 'home' as ScreenId, label: 'Xem Trang Chủ', icon: <Home className="w-4 h-4" /> },
-        { id: 'orders' as ScreenId, label: 'Tổng Quan Đơn Hàng', icon: <Package className="w-4 h-4" /> },
-        { id: 'volunteer' as ScreenId, label: 'Tổng Giờ Tình Nguyện', icon: <Award className="w-4 h-4" /> },
-        { id: 'live' as ScreenId, label: 'Quản Lý Livestream', icon: <Video className="w-4 h-4" /> }
+        { id: 'admin_users' as ScreenId, label: 'Quản Lý Tài Khoản', icon: <ShieldAlert className="w-4 h-4 text-red-600 shrink-0" /> },
+        { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4 shrink-0" /> },
+        { id: 'orders' as ScreenId, label: 'Tổng Quan Đơn Hàng', icon: <Package className="w-4 h-4 shrink-0" /> },
+        { id: 'volunteer' as ScreenId, label: 'Giờ Tình Nguyện', icon: <Award className="w-4 h-4 shrink-0" /> },
+        { id: 'live' as ScreenId, label: 'Quản Lý Livestream', icon: <Video className="w-4 h-4 shrink-0" /> }
       ];
     }
 
     // 2. Chủ Nhà Vườn (Farmer) Menu
     if (currentRole === 'farmer') {
       return [
-        { id: 'orders' as ScreenId, label: '📦 Đơn Hàng Vườn Mình', icon: <Package className="w-4 h-4" /> },
-        { id: 'garden' as ScreenId, label: '🏡 Hồ Sơ Vườn Ba Tư', icon: <Store className="w-4 h-4" /> },
-        { id: 'quick_post' as ScreenId, label: '🎙️ Đăng Nhanh (Giọng Nói)', icon: <Mic className="w-4 h-4" /> },
-        { id: 'home' as ScreenId, label: 'Xem Mặt Trước Sàn', icon: <Home className="w-4 h-4" /> },
-        { id: 'live' as ScreenId, label: 'Xem Lịch Live Cùng Đoàn', icon: <Video className="w-4 h-4" /> }
+        { id: 'orders' as ScreenId, label: 'Đơn Hàng Vườn Mình', icon: <Package className="w-4 h-4 shrink-0" /> },
+        { id: 'garden' as ScreenId, label: 'Hồ Sơ Vườn Ba Tư', icon: <Store className="w-4 h-4 shrink-0" /> },
+        { id: 'quick_post' as ScreenId, label: 'Đăng Nhanh (Giọng Nói)', icon: <Mic className="w-4 h-4 shrink-0" /> },
+        { id: 'home' as ScreenId, label: 'Mặt Trước Sàn', icon: <Home className="w-4 h-4 shrink-0" /> },
+        { id: 'live' as ScreenId, label: 'Lịch Live Cùng Đoàn', icon: <Video className="w-4 h-4 shrink-0" /> }
       ];
     }
 
     // 3. Thanh Niên Hỗ Trợ (Youth) Menu
     if (currentRole === 'youth') {
       return [
-        { id: 'live' as ScreenId, label: '📹 Lịch & Phòng Live', icon: <Video className="w-4 h-4" /> },
-        { id: 'orders' as ScreenId, label: '📦 Xử Lý Đơn Hộ Vườn', icon: <Package className="w-4 h-4" /> },
-        { id: 'volunteer' as ScreenId, label: '🎖️ Giờ Tình Nguyện Của Tôi', icon: <Award className="w-4 h-4" /> },
-        { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4" /> },
-        { id: 'garden' as ScreenId, label: 'Hồ Sơ Vườn', icon: <Store className="w-4 h-4" /> }
+        { id: 'live' as ScreenId, label: 'Lịch & Phòng Live', icon: <Video className="w-4 h-4 shrink-0" /> },
+        { id: 'orders' as ScreenId, label: 'Xử Lý Đơn Hộ Vườn', icon: <Package className="w-4 h-4 shrink-0" /> },
+        { id: 'volunteer' as ScreenId, label: 'Giờ Tình Nguyện', icon: <Award className="w-4 h-4 shrink-0" /> },
+        { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4 shrink-0" /> },
+        { id: 'garden' as ScreenId, label: 'Hồ Sơ Vườn', icon: <Store className="w-4 h-4 shrink-0" /> }
       ];
     }
 
     // 4. Người Mua (Buyer) hoặc Khách vãng lai
     return [
-      { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4" /> },
-      { id: 'products' as ScreenId, label: 'Sản Phẩm OCOP', icon: <Package className="w-4 h-4" /> },
-      { id: 'garden' as ScreenId, label: 'Hồ Sơ Nhà Vườn', icon: <Store className="w-4 h-4" /> },
-      { id: 'live' as ScreenId, label: 'Livestream', icon: <Video className="w-4 h-4" /> },
-      { id: 'map' as ScreenId, label: 'Bản Đồ Tour', icon: <MapPin className="w-4 h-4" /> },
-      { id: 'volunteer' as ScreenId, label: 'Giờ Tình Nguyện', icon: <Award className="w-4 h-4" /> }
+      { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4 shrink-0" /> },
+      { id: 'products' as ScreenId, label: 'Sản Phẩm OCOP', icon: <Package className="w-4 h-4 shrink-0" /> },
+      { id: 'garden' as ScreenId, label: 'Hồ Sơ Nhà Vườn', icon: <Store className="w-4 h-4 shrink-0" /> },
+      { id: 'live' as ScreenId, label: 'Livestream', icon: <Video className="w-4 h-4 shrink-0" /> },
+      { id: 'map' as ScreenId, label: 'Bản Đồ Tour', icon: <MapPin className="w-4 h-4 shrink-0" /> },
+      { id: 'volunteer' as ScreenId, label: 'Giờ Tình Nguyện', icon: <Award className="w-4 h-4 shrink-0" /> }
     ];
   };
 
@@ -126,14 +126,14 @@ export const Header: React.FC = () => {
         </div>
 
         {/* Navigation tabs ở giữa trên cùng 1 hàng */}
-        <nav className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1">
+        <nav className="flex items-center justify-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar py-1 flex-1 min-w-0 px-2">
           {navItems.map(item => {
             const isActive = activeScreen === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => setActiveScreen(item.id)}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition whitespace-nowrap ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition whitespace-nowrap shrink-0 ${
                   isActive
                     ? 'bg-green-700 text-white shadow-sm'
                     : 'text-gray-700 hover:bg-green-50 hover:text-green-800'
