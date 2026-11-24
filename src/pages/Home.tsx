@@ -155,48 +155,7 @@ export const Home: React.FC = () => {
     <div className="space-y-10 pb-16">
 
       {/* =========================================================================
-          TẦNG 1: THANH TÌM KIẾM LỚN & ĐĂNG BÁN NHANH (GIỐNG MẪU ẢNH)
-          ========================================================================= */}
-      <section className="bg-gradient-to-r from-green-50/80 via-emerald-50/50 to-green-50/80 rounded-full p-2 sm:p-2.5 border border-green-200 shadow-sm">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
-
-          {/* Ô tìm kiếm lớn bo tròn kèm nút Gợi ý xanh lá */}
-          <div className="relative flex-1 w-full flex items-center">
-            <Search className="w-5 h-5 text-green-700 absolute left-4 pointer-events-none" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Tìm kiếm: chôm chôm, sầu riêng Long Khánh, bưởi Tân Triều, hạt điều..."
-              className="w-full pl-11 pr-24 py-2.5 text-xs sm:text-sm rounded-full border border-green-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition bg-white text-gray-800 placeholder-gray-400"
-            />
-            <button
-              type="button"
-              onClick={handleVoiceSearch}
-              className="absolute right-1.5 px-3.5 py-1.5 rounded-full bg-green-700 hover:bg-green-800 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition"
-            >
-              <span>🌱 Gợi ý</span>
-            </button>
-          </div>
-
-          {/* Nút Đăng Đài Nhanh: Chỉ hiển thị cho Nhà Vườn (farmer) */}
-          {currentUser?.role === 'farmer' && (
-            <div className="flex items-center gap-3 shrink-0 px-2">
-              <span className="hidden sm:inline text-gray-300 font-light">|</span>
-              <button
-                onClick={() => setActiveScreen('quick_post')}
-                className="flex items-center gap-2 px-4 py-2 rounded-full border border-green-300 bg-white hover:bg-green-50 text-green-800 text-xs sm:text-sm font-bold shadow-sm transition"
-              >
-                <Mic className="w-4 h-4 text-green-600" />
-                <span>Đăng Đài Nhanh (AI Voice)</span>
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* =========================================================================
-          TẦNG 2: BANNER CHIẾN DỊCH & THANH CHỈ SỐ MINH BẠCH
+          TẦNG 1: BANNER CHIẾN DỊCH & THANH CHỈ SỐ MINH BẠCH
           ========================================================================= */}
       <section className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-green-900 via-green-800 to-green-700 text-white shadow-card">
         <div
@@ -247,7 +206,86 @@ export const Home: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          TẦNG 3: DẢI LIVESTREAM "ĐANG PHÁT & SẮP LÊN SÓNG" (NẰM NGANG)
+          THANH TÌM KIẾM THÔNG MINH (NẰM TRÊN MỤC LIVESTREAM)
+          Tính năng: 🎤 Nói để tìm (Khuyên dùng cho người 50-60 tuổi) & 🔍 Tìm kiếm
+          ========================================================================= */}
+      <section className="bg-gradient-to-r from-green-50/90 via-emerald-50/60 to-green-50/90 rounded-2xl sm:rounded-full p-2.5 sm:p-3 border border-green-200 shadow-sm">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+          
+          {/* Ô nhập từ khóa tìm kiếm */}
+          <div className="relative flex-1 w-full flex items-center">
+            <Search className="w-5 h-5 text-gray-400 absolute left-4 pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  showNotification(`Đang tìm: "${searchQuery}"`);
+                }
+              }}
+              placeholder="Tìm kiếm: chôm chôm, sầu riêng Long Khánh, bưởi Tân Triều, hạt điều..."
+              className="w-full pl-11 pr-20 py-3 text-xs sm:text-sm rounded-full border border-green-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition bg-white text-gray-800 placeholder-gray-400 shadow-inner"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="text-xs text-gray-400 hover:text-gray-600 absolute right-4"
+              >
+                Xóa
+              </button>
+            )}
+          </div>
+
+          {/* Cụm 2 nút hành động: Nói để tìm & Tìm kiếm */}
+          <div className="flex items-center gap-2 w-full md:w-auto justify-end shrink-0">
+            {/* Nút 1: Nói để tìm (Icon Micro + chữ Nói để tìm - Khuyên dùng) */}
+            <button
+              type="button"
+              onClick={handleVoiceSearch}
+              className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-bold text-xs sm:text-sm transition shadow-sm border ${
+                isListening
+                  ? 'bg-red-600 text-white animate-pulse border-red-700'
+                  : 'bg-amber-500 hover:bg-amber-600 text-white border-amber-600'
+              }`}
+              title="Hỗ trợ giọng nói cho người lớn tuổi 50–60 tuổi ngại gõ chữ"
+            >
+              <Mic className="w-4 h-4 text-white" />
+              <span>{isListening ? 'Đang lắng nghe...' : '🎤 Nói để tìm'}</span>
+            </button>
+
+            {/* Nút 2: Tìm kiếm (Icon kính lúp + chữ Tìm kiếm nền xanh đậm) */}
+            <button
+              type="button"
+              onClick={() => {
+                if (searchQuery.trim()) {
+                  showNotification(`Đang tìm: "${searchQuery}"`);
+                } else {
+                  showNotification('Vui lòng nhập tên nông sản hoặc dùng "Nói để tìm"');
+                }
+              }}
+              className="flex-1 md:flex-initial flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-green-800 hover:bg-green-900 text-white font-bold text-xs sm:text-sm shadow-sm transition"
+            >
+              <Search className="w-4 h-4 text-white" />
+              <span>Tìm kiếm</span>
+            </button>
+
+            {/* Nút Đăng Đài Nhanh: Dành riêng cho Chủ vườn (farmer) */}
+            {currentUser?.role === 'farmer' && (
+              <button
+                onClick={() => setActiveScreen('quick_post')}
+                className="hidden lg:flex items-center gap-1.5 px-3.5 py-2.5 rounded-full border border-green-300 bg-white hover:bg-green-50 text-green-800 text-xs font-bold shadow-sm transition ml-1"
+                title="Đăng sản phẩm mới bằng AI / Voice"
+              >
+                <span>🎙️ Đăng bài</span>
+              </button>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          TẦNG 2: DẢI LIVESTREAM "ĐANG PHÁT & SẮP LÊN SÓNG" (NẰM NGANG)
           ========================================================================= */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
