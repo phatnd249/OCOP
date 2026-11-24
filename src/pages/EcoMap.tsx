@@ -44,9 +44,9 @@ export const EcoMap: React.FC = () => {
 
       {/* Main Map Box */}
       <div className="bg-white rounded-3xl p-6 sm:p-8 border border-green-200 shadow-soft space-y-6">
-        <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-green-800 via-green-900 to-emerald-950 aspect-[16/9] min-h-[380px] shadow-inner border border-green-700">
+        <div className="relative rounded-2xl overflow-hidden bg-green-900 aspect-[16/9] min-h-[380px] shadow-inner border border-green-700">
           {/* Subtle Grid / Farm Graphic Pattern */}
-          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#C8E6C9_1px,transparent_1px)] [background-size:24px_24px]"></div>
+          {/* Map canvas background */}
 
           {/* Natural Farm Landmarks SVG simulation */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">

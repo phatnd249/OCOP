@@ -77,7 +77,7 @@ export const ProductDetail: React.FC = () => {
           {/* Big QR Button */}
           <button
             onClick={() => setQrModalProduct(currentProduct)}
-            className="w-full bg-gradient-to-r from-green-800 to-green-700 hover:from-green-900 hover:to-green-800 text-white p-4 rounded-2xl shadow-md transition flex items-center justify-center gap-3 font-bold text-sm sm:text-base group"
+            className="w-full bg-green-800 hover:bg-green-900 text-white p-4 rounded-2xl shadow-md transition flex items-center justify-center gap-3 font-bold text-sm sm:text-base group"
           >
             <div className="w-9 h-9 rounded-xl bg-sun text-earth-dark flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
               <QrCode className="w-5 h-5" />

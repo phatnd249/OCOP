@@ -6,7 +6,7 @@ export const Footer: React.FC = () => {
   const { setActiveScreen } = useApp();
 
   return (
-    <footer className="bg-gradient-to-b from-green-900 to-green-950 text-white pt-12 pb-8 mt-16 border-t-4 border-sun">
+    <footer className="bg-green-900 text-white pt-12 pb-8 mt-16 border-t-4 border-sun">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
         {/* Col 1 */}
         <div className="md:col-span-2">

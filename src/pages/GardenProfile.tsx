@@ -35,7 +35,7 @@ export const GardenProfile: React.FC = () => {
             alt={garden.name}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+          <div className="absolute inset-0 bg-black/40"></div>
 
           <div className="absolute top-4 right-4 flex gap-2">
             <span className="bg-sun text-earth-dark font-black text-xs px-3 py-1.5 rounded-full shadow flex items-center gap-1">
@@ -122,7 +122,7 @@ export const GardenProfile: React.FC = () => {
           </div>
 
           {/* OCOP Certificate Card */}
-          <div className="p-5 rounded-2xl bg-gradient-to-r from-sun-light/50 to-amber-100/50 border border-amber-200 flex items-center justify-between gap-4">
+          <div className="p-5 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <ShieldCheck className="w-10 h-10 text-amber-600 shrink-0" />
               <div>

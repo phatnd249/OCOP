@@ -77,7 +77,7 @@ export const AdminUsers: React.FC = () => {
   return (
     <div className="space-y-8 pb-12">
       {/* Top Banner Admin */}
-      <div className="bg-gradient-to-r from-red-900 via-rose-900 to-red-800 text-white rounded-3xl p-6 sm:p-8 shadow-card flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-red-800 text-white rounded-3xl p-6 sm:p-8 shadow-card flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-1.5 bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-2">
             <ShieldAlert className="w-3.5 h-3.5 text-sun" />

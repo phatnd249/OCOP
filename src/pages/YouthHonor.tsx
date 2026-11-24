@@ -51,7 +51,7 @@ export const YouthHonor: React.FC = () => {
               className="rounded-3xl border border-green-200 shadow-soft overflow-hidden relative"
             >
               {/* Top gold badge corner */}
-              <div className="absolute top-0 right-0 bg-gradient-to-l from-sun to-amber-400 text-earth-dark text-[11px] font-black px-4 py-1.5 rounded-bl-2xl shadow-sm z-10">
+              <div className="absolute top-0 right-0 bg-sun text-earth-dark text-[11px] font-black px-4 py-1.5 rounded-bl-2xl shadow-sm z-10">
                 🏆 {yt.badge}
               </div>
 

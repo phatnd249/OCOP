@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { ScreenId, UserRole } from '../types';
 import {
@@ -102,7 +102,7 @@ export const Header: React.FC = () => {
           onClick={() => setActiveScreen('home')}
           className="flex items-center gap-3 cursor-pointer group"
         >
-          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center text-white text-2xl shadow-md group-hover:scale-105 transition-transform">
+          <div className="w-11 h-11 rounded-xl bg-green-700 flex items-center justify-center text-white text-2xl shadow-md group-hover:scale-105 transition-transform">
             🌱
           </div>
           <div>
@@ -166,7 +166,7 @@ export const Header: React.FC = () => {
           {currentRole !== 'admin' && (
             <button
               onClick={() => setActiveScreen('cart')}
-              className="relative flex items-center gap-2 bg-gradient-to-r from-green-700 to-green-800 text-white px-4 py-2 rounded-xl font-bold text-xs sm:text-sm shadow hover:from-green-800 hover:to-green-900 transition"
+              className="relative flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-xl font-bold text-xs sm:text-sm shadow transition"
             >
               <ShoppingBag className="w-4 h-4" />
               <span className="hidden sm:inline">Giỏ hàng</span>

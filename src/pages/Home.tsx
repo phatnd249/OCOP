@@ -254,7 +254,7 @@ export const Home: React.FC = () => {
       {/* =========================================================================
           TẦNG 2: BANNER CHIẾN DỊCH & THANH CHỈ SỐ MINH BẠCH
           ========================================================================= */}
-      <section className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-green-900 via-green-800 to-green-700 text-white shadow-card">
+      <section className="relative rounded-3xl overflow-hidden bg-green-800 text-white shadow-card">
         <div 
           className="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-30" 
           style={{ backgroundImage: `url(${garden.coverImage})` }}
@@ -339,7 +339,7 @@ export const Home: React.FC = () => {
               onClick={() => setActiveScreen('live')}
               className={`rounded-2xl p-4 border transition cursor-pointer flex flex-col justify-between space-y-3 relative overflow-hidden group shadow-sm ${
                 live.isLiveNow
-                  ? 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-300 ring-2 ring-amber-400'
+                  ? 'bg-amber-50 border-amber-300 ring-2 ring-amber-400'
                   : 'bg-white border-green-200 hover:border-green-400'
               }`}
             >
