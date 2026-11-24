@@ -56,7 +56,7 @@ export const ProductDetail: React.FC = () => {
       {/* Top Navigation & Back Button */}
       <div className="flex items-center justify-between">
         <button
-          onClick={() => setActiveScreen('products')}
+          onClick={() => setActiveScreen('home')}
           className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-green-800 hover:text-green-900 bg-white px-4 py-2.5 rounded-xl border border-green-200 shadow-sm transition hover:bg-green-50"
         >
           <ArrowLeft className="w-4 h-4" />
