@@ -52,7 +52,7 @@ export const Header: React.FC = () => {
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-green-100">
-              Cổng Thương Mại Điện Tử & Nông Sản OCOP Tỉnh Đồng Nai
+              TRẠM VƯỜN SỐ • Thanh niên Đồng Nai tiếp sức nông sản OCOP
             </span>
             <span className="hidden md:inline text-green-300">|</span>
             <span className="hidden md:inline text-green-200">
@@ -109,7 +109,7 @@ export const Header: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="font-black text-lg sm:text-xl text-green-900 tracking-tight">
-                CHỢ OCOP THANH NIÊN
+                TRẠM VƯỜN SỐ
               </span>
               <span className="bg-green-100 text-green-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-green-200">
                 ĐỒNG NAI

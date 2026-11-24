@@ -117,7 +117,7 @@ export const GardenProfile: React.FC = () => {
               Trước đây, chú Ba Tư chỉ quen bán xô cả vườn cho thương lái thu mua với giá bấp bênh. Chú không biết dùng điện thoại thông minh, không rành đăng ảnh lên mạng và người tiêu dùng ở TP.HCM thì khó lòng tìm mua được trái sầu riêng già chín cây nguyên chất.
             </p>
             <p>
-              Từ khi có <strong>Tổ công tác thanh niên số hóa</strong> của Đoàn xã về cắm chốt tại vườn, từng cây sầu riêng Ri6 đã được gắn mã số, chụp ảnh quy trình bón phân trùn quế và đưa lên nền tảng Chợ OCOP. Nhờ vậy, chú Ba Tư nay chỉ việc nghe chuông báo đơn mới và hái quả chuyển xe lạnh về Sài Gòn mỗi ngày.
+              Từ khi có <strong>Tổ công tác thanh niên số hóa</strong> của Đoàn xã về cắm chốt tại vườn, từng cây sầu riêng Ri6 đã được gắn mã số, chụp ảnh quy trình bón phân trùn quế và đưa lên nền tảng <strong>TRẠM VƯỜN SỐ</strong>. Nhờ vậy, chú Ba Tư nay chỉ việc nghe chuông báo đơn mới và hái quả chuyển xe lạnh về Sài Gòn mỗi ngày.
             </p>
           </div>
 

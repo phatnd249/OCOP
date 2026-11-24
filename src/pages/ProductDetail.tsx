@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
+import { Button } from 'primereact/button';
+import { Tag } from 'primereact/tag';
+import { Rating } from 'primereact/rating';
 import {
   QrCode,
   ShoppingBag,
@@ -155,19 +158,19 @@ export const ProductDetail: React.FC = () => {
             </div>
 
             <div className="flex gap-3">
-              <button
+              <Button
                 onClick={() => addToCart(currentProduct.id, qty)}
-                className="flex-1 py-3.5 px-4 rounded-xl border-2 border-green-700 text-green-800 font-bold text-sm hover:bg-green-50 transition flex items-center justify-center gap-2"
-              >
-                <ShoppingBag className="w-4 h-4" />
-                <span>Thêm Vào Giỏ</span>
-              </button>
-              <button
+                icon="pi pi-shopping-bag"
+                label="Thêm Vào Giỏ"
+                outlined
+                className="flex-1 p-button-success font-bold text-sm"
+              />
+              <Button
                 onClick={handleBuyNow}
-                className="flex-1 py-3.5 px-4 rounded-xl bg-sun hover:bg-amber-500 text-earth-dark font-black text-sm shadow transition flex items-center justify-center gap-2"
-              >
-                <span>Mua Ngay Tận Vườn</span>
-              </button>
+                icon="pi pi-check"
+                label="Mua Ngay Tận Vườn"
+                className="flex-1 p-button-warning font-black text-sm text-ink"
+              />
             </div>
           </div>
         </div>

@@ -1,37 +1,43 @@
 /* ==========================================================================
-   CHỢ OCOP THANH NIÊN - NỀN TẢNG KINH TẾ SỐ ĐỒNG NAI
-   File: css/style.css
-   Style: Hiện đại, tươi sáng, chuẩn Nông nghiệp số, Thân thiện nhà vườn 50 tuổi
+   CHỢ OCOP THANH NIÊN - BỘ MÀU CHỦ ĐẠO CHUẨN NÔNG NGHIỆP ĐỒNG NAI
+   Quy tắc phối màu 60 - 30 - 10:
+   - 60% Nền sáng: Kem nền #FAF8F1, Xanh sương #E8F5E9
+   - 30% Sắc xanh lá: Xanh lá chủ đạo #2E7D32, Xanh rừng #1B5E20
+   - 10% Màu nhấn: Vàng nắng #F9A825
    ========================================================================== */
 
 :root {
-  --primary: #059669;        /* Xanh nông sản tươi sạch */
-  --primary-dark: #047857;
-  --primary-light: #d1fae5;
-  --primary-hover: #10b981;
-  --secondary: #0284c7;      /* Xanh thanh niên tình nguyện */
-  --secondary-light: #e0f2fe;
-  --accent: #f59e0b;         /* Vàng OCOP & trái chín */
-  --accent-light: #fef3c7;
-  --danger: #ef4444;
-  --dark: #0f172a;
-  --gray-800: #1e293b;
-  --gray-600: #475569;
-  --gray-400: #94a3b8;
-  --gray-200: #e2e8f0;
-  --gray-100: #f1f5f9;
-  --light: #f8fafc;
+  /* BẢNG MÃ MÀU THEO YÊU CẦU */
+  --green-900: #1B5E20; /* Xanh rừng: Tiêu đề, thanh điều hướng, hover */
+  --green-700: #2E7D32; /* Xanh lá chủ đạo: Nút chính, logo, liên kết */
+  --green-400: #66BB6A; /* Xanh lá tươi: Biểu tượng, huy hiệu, điểm nhấn */
+  --green-200: #C8E6C9; /* Xanh non: Thẻ, viền, nhãn OCOP */
+  --green-50:  #E8F5E9; /* Xanh sương: Nền khu vực, banner nhẹ */
+  --sun:       #F9A825; /* Vàng nắng: Nút kêu gọi (CTA), đặt hàng, đặt tour, sao */
+  --sun-text:  #412402; /* Chữ tương phản chuẩn trên nền vàng nắng */
+  --earth:     #5D4037; /* Nâu đất: Chữ phụ, chi tiết nhật ký mùa vụ */
+  --cream:     #FAF8F1; /* Kem nền: Nền trang chính */
+  --alert:     #D84315; /* Cam chôm chôm: Cảnh báo, hết hàng, báo lỗi */
+  --text:      #1B3A1E; /* Xanh chữ: Chữ nội dung chính */
+
+  /* ALIAS VARIABLES CHO CÁC THÀNH PHẦN */
+  --primary: var(--green-700);
+  --primary-dark: var(--green-900);
+  --primary-light: var(--green-50);
+  --primary-border: var(--green-200);
+  --accent: var(--sun);
+  --accent-text: var(--sun-text);
+  --danger: var(--alert);
   --white: #ffffff;
-  
+
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 14px rgba(0,0,0,0.08);
-  --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
-  --shadow-glow: 0 0 20px rgba(16, 185, 129, 0.3);
+  --shadow-sm: 0 1px 4px rgba(27, 94, 32, 0.08);
+  --shadow-md: 0 4px 16px rgba(27, 94, 32, 0.12);
+  --shadow-lg: 0 10px 25px rgba(27, 94, 32, 0.16);
 
   --font-main: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -46,31 +52,43 @@
 
 body {
   font-family: var(--font-main);
-  background-color: #f3f6f4;
-  color: var(--gray-800);
+  background-color: var(--cream); /* Nền kem chính 60% */
+  color: var(--text);             /* Xanh chữ chuẩn độ tương phản */
   line-height: 1.6;
   overflow-x: hidden;
 }
 
 /* CHẾ ĐỘ CHỮ TO CHO CHÚ BA TƯ (50 TUỔI) */
 body.elderly-mode {
-  font-size: 18px;
+  font-size: 19px;
+  background-color: var(--cream);
 }
 body.elderly-mode .btn {
-  padding: 14px 24px;
-  font-size: 1.1rem;
+  padding: 16px 26px;
+  font-size: 1.15rem;
 }
 body.elderly-mode .card {
   border-width: 2px;
+  border-color: var(--green-700);
+}
+body.elderly-mode .form-label {
+  font-size: 1.1rem;
+}
+body.elderly-mode .form-input, 
+body.elderly-mode .form-select, 
+body.elderly-mode .form-textarea {
+  font-size: 1.15rem;
+  padding: 14px 16px;
 }
 
 /* TOP STATUS BAR & ROLE SWITCHER */
 .top-banner {
-  background: linear-gradient(135deg, #065f46 0%, #047857 50%, #0369a1 100%);
+  background: var(--green-900); /* Xanh rừng chuẩn */
   color: var(--white);
   padding: 8px 16px;
   font-size: 0.88rem;
   box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .top-banner-inner {
@@ -86,24 +104,25 @@ body.elderly-mode .card {
 .role-switcher {
   display: inline-flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(8px);
   padding: 3px 6px;
   border-radius: var(--radius-full);
   gap: 4px;
+  border: 1px solid rgba(200, 230, 201, 0.3);
 }
 
 .role-label {
-  font-weight: 600;
+  font-weight: 700;
   padding: 0 8px;
   font-size: 0.82rem;
-  color: #fef08a;
+  color: #fff9c4;
 }
 
 .role-btn {
   background: transparent;
   border: none;
-  color: #fff;
+  color: #e8f5e9;
   padding: 5px 12px;
   font-size: 0.82rem;
   font-weight: 600;
@@ -113,29 +132,31 @@ body.elderly-mode .card {
 }
 
 .role-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--white);
 }
 
 .role-btn.active {
-  background: var(--white);
-  color: var(--primary-dark);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  background: var(--sun);
+  color: var(--sun-text);
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-/* MAIN HEADER */
+/* THANH ĐIỀU HƯỚNG CHÍNH - XANH RỪNG #1B5E20 & CHỮ TRẮNG */
 .main-header {
-  background: var(--white);
-  border-bottom: 1px solid var(--gray-200);
+  background: var(--green-900);
+  border-bottom: 2px solid var(--green-700);
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 14px rgba(27, 94, 32, 0.25);
 }
 
 .header-container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 12px 20px;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -151,38 +172,39 @@ body.elderly-mode .card {
 }
 
 .brand-icon {
-  width: 46px;
-  height: 46px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  width: 44px;
+  height: 44px;
+  background: var(--green-700);
+  border: 2px solid var(--green-400);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 1.5rem;
-  box-shadow: 0 4px 10px rgba(5, 150, 105, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .brand-text h1 {
   font-size: 1.25rem;
   font-weight: 800;
-  color: var(--primary-dark);
-  letter-spacing: -0.5px;
+  color: var(--white);
+  letter-spacing: -0.3px;
   line-height: 1.2;
 }
 
 .brand-text span {
   font-size: 0.78rem;
-  color: var(--gray-600);
+  color: var(--green-200);
   font-weight: 500;
   display: block;
 }
 
-/* NAVIGATION TABS */
+/* NAVIGATION TABS - NỀN XANH RỪNG, CHỮ TRẮNG ĐẠT CHUẨN TƯƠNG PHẢN */
 .nav-tabs {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   list-style: none;
   overflow-x: auto;
   padding: 4px 0;
@@ -196,7 +218,7 @@ body.elderly-mode .card {
   border-radius: var(--radius-md);
   font-weight: 600;
   font-size: 0.9rem;
-  color: var(--gray-600);
+  color: #e8f5e9;
   text-decoration: none;
   border: 1px solid transparent;
   transition: var(--transition);
@@ -205,14 +227,15 @@ body.elderly-mode .card {
 }
 
 .nav-link:hover {
-  background: var(--primary-light);
-  color: var(--primary-dark);
+  background: var(--green-700);
+  color: var(--white);
 }
 
 .nav-link.active {
-  background: var(--primary-light);
-  color: var(--primary-dark);
-  border-color: #a7f3d0;
+  background: var(--green-700);
+  color: var(--white);
+  border-color: var(--green-400);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .nav-actions {
@@ -221,28 +244,31 @@ body.elderly-mode .card {
   gap: 10px;
 }
 
+/* NÚT GIỎ HÀNG - VÀNG NẮNG #F9A825 CHỮ TỐI #412402 */
 .cart-btn {
   position: relative;
-  background: var(--primary-light);
-  color: var(--primary-dark);
+  background: var(--sun);
+  color: var(--sun-text);
   border: none;
-  padding: 10px 16px;
+  padding: 9px 16px;
   border-radius: var(--radius-full);
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 8px;
   transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(249, 168, 37, 0.3);
 }
 
 .cart-btn:hover {
-  background: #a7f3d0;
+  background: #f57f17;
+  color: #ffffff;
   transform: translateY(-1px);
 }
 
 .cart-badge {
-  background: var(--danger);
+  background: var(--alert);
   color: var(--white);
   font-size: 0.75rem;
   padding: 2px 7px;
@@ -255,20 +281,21 @@ body.elderly-mode .card {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: var(--gray-100);
+  background: rgba(255, 255, 255, 0.15);
   padding: 6px 12px;
   border-radius: var(--radius-full);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
-  border: 1px solid var(--gray-200);
+  color: var(--white);
+  border: 1px solid rgba(200, 230, 201, 0.3);
 }
 
 .user-status-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--primary);
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  background: var(--green-400);
+  box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.3);
 }
 
 /* MAIN CONTAINER & SCREEN SYSTEM */
@@ -292,19 +319,21 @@ body.elderly-mode .card {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* CARDS & GENERAL UI */
+/* THẺ TRẮNG, VIỀN XANH NON #C8E6C9, CHỮ XANH #1B3A1E */
 .card {
   background: var(--white);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--gray-200);
+  border: 1px solid var(--green-200);
   box-shadow: var(--shadow-sm);
   padding: 24px;
   margin-bottom: 24px;
   transition: var(--transition);
+  color: var(--text);
 }
 
 .card:hover {
   box-shadow: var(--shadow-md);
+  border-color: var(--green-400);
 }
 
 .section-header {
@@ -317,21 +346,21 @@ body.elderly-mode .card {
 }
 
 .section-title {
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   font-weight: 800;
-  color: var(--gray-800);
+  color: var(--green-900);
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
 .section-subtitle {
-  color: var(--gray-600);
+  color: var(--earth);
   font-size: 0.95rem;
   margin-top: 4px;
 }
 
-/* BUTTONS */
+/* BUTTONS THEO QUY CHUẨN ĐỘ TƯƠNG PHẢN */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -347,44 +376,55 @@ body.elderly-mode .card {
   text-decoration: none;
 }
 
+/* Nút chính: #2E7D32, hover #1B5E20, Chữ trắng #FFFFFF */
 .btn-primary {
-  background: var(--primary);
+  background: var(--green-700);
   color: var(--white);
-  box-shadow: 0 3px 10px rgba(5, 150, 105, 0.25);
+  box-shadow: 0 3px 10px rgba(46, 125, 50, 0.25);
 }
 .btn-primary:hover {
-  background: var(--primary-dark);
+  background: var(--green-900);
+  color: var(--white);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(5, 150, 105, 0.35);
+  box-shadow: 0 5px 15px rgba(27, 94, 32, 0.35);
 }
 
+/* Nút kêu gọi (CTA) / Đặt hàng / Đặt tour: Vàng nắng #F9A825, Chữ #412402 */
+.btn-accent, .btn-cta {
+  background: var(--sun);
+  color: var(--sun-text);
+  font-weight: 800;
+  box-shadow: 0 3px 10px rgba(249, 168, 37, 0.3);
+}
+.btn-accent:hover, .btn-cta:hover {
+  background: #f57f17;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Nút phụ / Thứ cấp */
 .btn-secondary {
-  background: var(--secondary);
+  background: var(--green-900);
   color: var(--white);
 }
 .btn-secondary:hover {
-  background: #0369a1;
+  background: #0d3811;
   transform: translateY(-2px);
 }
 
-.btn-accent {
-  background: var(--accent);
-  color: var(--dark);
-}
-.btn-accent:hover {
-  background: #d97706;
-  color: var(--white);
-}
-
+/* Nút viền */
 .btn-outline {
-  background: transparent;
-  border-color: var(--gray-200);
-  color: var(--gray-800);
+  background: var(--white);
+  border: 1.5px solid var(--green-700);
+  color: var(--green-900);
+  font-weight: 700;
 }
 .btn-outline:hover {
-  background: var(--gray-100);
+  background: var(--green-50);
+  border-color: var(--green-900);
 }
 
+/* Nút chữ to dành cho Chú Ba Tư */
 .btn-elderly {
   padding: 16px 28px;
   font-size: 1.2rem;
@@ -392,17 +432,31 @@ body.elderly-mode .card {
   font-weight: 800;
 }
 
+/* NHÃN OCOP, TRUY XUẤT NGUỒN GỐC: NỀN XANH NON #C8E6C9, CHỮ XANH RỪNG #1B5E20 */
 .badge-ocop {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  color: white;
+  background: var(--green-200);
+  color: var(--green-900);
+  border: 1px solid #a5d6a7;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-weight: 800;
+  font-size: 0.82rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-sun {
+  background: #fff8e1;
+  color: var(--sun-text);
+  border: 1px solid #ffe082;
   padding: 4px 10px;
   border-radius: var(--radius-full);
-  font-weight: 700;
+  font-weight: 800;
   font-size: 0.8rem;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
 }
 
 /* ==========================================================================
@@ -414,14 +468,15 @@ body.elderly-mode .card {
   overflow: hidden;
   margin-bottom: 24px;
   color: white;
-  background: #1e293b;
+  background: var(--green-900);
+  border: 2px solid var(--green-200);
 }
 
 .garden-cover {
   width: 100%;
   height: 340px;
   object-fit: cover;
-  filter: brightness(0.7);
+  filter: brightness(0.65);
 }
 
 .garden-hero-overlay {
@@ -430,7 +485,7 @@ body.elderly-mode .card {
   left: 0;
   right: 0;
   padding: 30px;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+  background: linear-gradient(to top, rgba(27, 94, 32, 0.95) 0%, rgba(27, 94, 32, 0.4) 60%, rgba(0,0,0,0) 100%);
   display: flex;
   align-items: flex-end;
   gap: 24px;
@@ -449,6 +504,7 @@ body.elderly-mode .card {
   font-size: 2rem;
   font-weight: 800;
   text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  color: var(--white);
 }
 
 .garden-badges-row {
@@ -459,12 +515,14 @@ body.elderly-mode .card {
 }
 
 .pill-badge {
-  background: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.22);
   backdrop-filter: blur(6px);
   padding: 4px 12px;
   border-radius: var(--radius-full);
   font-size: 0.85rem;
   font-weight: 600;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.3);
 }
 
 .garden-grid-2col {
@@ -474,11 +532,12 @@ body.elderly-mode .card {
 }
 
 .story-box {
-  line-height: 1.8;
+  line-height: 1.85;
   font-size: 1.05rem;
-  color: var(--gray-800);
+  color: var(--text);
 }
 
+/* THỐNG KÊ NHÀ VƯỜN - NỀN XANH SƯƠNG #E8F5E9 */
 .garden-stats-strip {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -487,8 +546,8 @@ body.elderly-mode .card {
 }
 
 .stat-box {
-  background: var(--light);
-  border: 1px solid var(--gray-200);
+  background: var(--green-50);
+  border: 1px solid var(--green-200);
   border-radius: var(--radius-md);
   padding: 16px;
   text-align: center;
@@ -497,19 +556,19 @@ body.elderly-mode .card {
 .stat-number {
   font-size: 1.6rem;
   font-weight: 800;
-  color: var(--primary);
+  color: var(--green-900);
 }
 
 .stat-label {
   font-size: 0.85rem;
-  color: var(--gray-600);
+  color: var(--earth);
   font-weight: 600;
 }
 
-/* THANH NIÊN HỖ TRỢ CARD */
+/* ĐOÀN VIÊN HỖ TRỢ CARD */
 .youth-supporters-card {
-  background: #f0fdf4;
-  border: 2px dashed #86efac;
+  background: var(--green-50);
+  border: 2px solid var(--green-200);
 }
 
 .youth-item {
@@ -521,6 +580,7 @@ body.elderly-mode .card {
   border-radius: var(--radius-md);
   margin-bottom: 12px;
   box-shadow: var(--shadow-sm);
+  border: 1px solid var(--green-200);
 }
 
 .youth-avatar {
@@ -528,25 +588,25 @@ body.elderly-mode .card {
   height: 52px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--secondary);
+  border: 2px solid var(--green-700);
 }
 
 .youth-info h4 {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--gray-800);
+  color: var(--green-900);
 }
 
 .youth-info p {
   font-size: 0.82rem;
-  color: var(--gray-600);
+  color: var(--earth);
 }
 
 .volunteer-pill {
   margin-top: 4px;
   display: inline-block;
-  background: #e0f2fe;
-  color: #0369a1;
+  background: var(--green-200);
+  color: var(--green-900);
   font-size: 0.75rem;
   font-weight: 700;
   padding: 2px 8px;
@@ -563,8 +623,8 @@ body.elderly-mode .card {
 }
 
 .voice-ai-banner {
-  background: linear-gradient(135deg, #ecfdf5 0%, #eff6ff 100%);
-  border: 2px solid #a7f3d0;
+  background: var(--green-50);
+  border: 2px solid var(--green-200);
   border-radius: var(--radius-lg);
   padding: 20px;
   margin-bottom: 20px;
@@ -578,7 +638,7 @@ body.elderly-mode .card {
   padding: 24px;
   background: var(--white);
   border-radius: var(--radius-md);
-  border: 2px dashed var(--primary);
+  border: 2px dashed var(--green-700);
   cursor: pointer;
   transition: var(--transition);
   text-align: center;
@@ -590,36 +650,36 @@ body.elderly-mode .card {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary) 0%, #10b981 100%);
+  background: var(--green-700);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2.2rem;
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.35);
   margin-bottom: 12px;
   transition: var(--transition);
 }
 
 .mic-zone.recording .mic-btn-circle {
-  background: var(--danger);
+  background: var(--alert);
   animation: pulseMic 1.2s infinite;
 }
 
 @keyframes pulseMic {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-  70% { transform: scale(1.08); box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(216, 67, 21, 0.7); }
+  70% { transform: scale(1.08); box-shadow: 0 0 0 20px rgba(216, 67, 21, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(216, 67, 21, 0); }
 }
 
 .voice-transcript-box {
-  background: var(--light);
-  border: 1px solid var(--gray-200);
+  background: var(--white);
+  border: 1px solid var(--green-200);
   border-radius: var(--radius-md);
   padding: 14px;
   font-style: italic;
   font-size: 0.95rem;
-  color: var(--gray-800);
+  color: var(--text);
   margin-top: 12px;
   min-height: 50px;
 }
@@ -633,29 +693,31 @@ body.elderly-mode .card {
   font-weight: 700;
   font-size: 0.95rem;
   margin-bottom: 6px;
-  color: var(--gray-800);
+  color: var(--green-900);
 }
 
 .form-input, .form-select, .form-textarea {
   width: 100%;
   padding: 12px 14px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--gray-300);
+  border: 1.5px solid var(--green-200);
+  background: var(--white);
   font-family: inherit;
   font-size: 1rem;
+  color: var(--text);
   transition: var(--transition);
 }
 
 .form-input:focus, .form-select:focus, .form-textarea:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  border-color: var(--green-700);
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
 }
 
 .ai-sparkle-btn {
-  background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
-  color: white;
-  border: none;
+  background: var(--green-900);
+  color: var(--white);
+  border: 1px solid var(--green-400);
   font-weight: 700;
   padding: 8px 16px;
   border-radius: var(--radius-full);
@@ -668,8 +730,9 @@ body.elderly-mode .card {
 }
 
 .ai-sparkle-btn:hover {
+  background: var(--green-700);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
 }
 
 .image-upload-preview {
@@ -689,8 +752,8 @@ body.elderly-mode .card {
 }
 
 .img-preview-thumb.selected {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px var(--primary-light);
+  border-color: var(--green-700);
+  box-shadow: 0 0 0 2px var(--green-200);
 }
 
 /* ==========================================================================
@@ -708,17 +771,18 @@ body.elderly-mode .card {
   padding: 8px 16px;
   border-radius: var(--radius-full);
   background: var(--white);
-  border: 1px solid var(--gray-200);
-  font-weight: 600;
+  border: 1px solid var(--green-200);
+  font-weight: 700;
   font-size: 0.88rem;
+  color: var(--text);
   cursor: pointer;
   transition: var(--transition);
 }
 
 .filter-chip.active, .filter-chip:hover {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
+  background: var(--green-700);
+  color: var(--white);
+  border-color: var(--green-700);
 }
 
 .product-grid {
@@ -727,10 +791,11 @@ body.elderly-mode .card {
   gap: 24px;
 }
 
+/* THẺ SẢN PHẨM: TRẮNG, VIỀN XANH NON #C8E6C9, CHỮ #1B3A1E */
 .product-card {
   background: var(--white);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--gray-200);
+  border: 1.5px solid var(--green-200);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
@@ -740,6 +805,7 @@ body.elderly-mode .card {
 
 .product-card:hover {
   transform: translateY(-4px);
+  border-color: var(--green-700);
   box-shadow: var(--shadow-md);
 }
 
@@ -747,6 +813,7 @@ body.elderly-mode .card {
   position: relative;
   height: 200px;
   overflow: hidden;
+  background: var(--green-50);
 }
 
 .product-image {
@@ -779,14 +846,14 @@ body.elderly-mode .card {
 .product-title {
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--gray-800);
+  color: var(--green-900);
   margin-bottom: 8px;
   line-height: 1.35;
 }
 
 .product-desc {
   font-size: 0.88rem;
-  color: var(--gray-600);
+  color: var(--earth);
   margin-bottom: 14px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -800,18 +867,18 @@ body.elderly-mode .card {
   justify-content: space-between;
   margin-top: auto;
   padding-top: 12px;
-  border-top: 1px dashed var(--gray-200);
+  border-top: 1px dashed var(--green-200);
 }
 
 .product-price {
   font-size: 1.35rem;
   font-weight: 800;
-  color: var(--primary-dark);
+  color: var(--green-900);
 }
 
 .product-unit {
   font-size: 0.85rem;
-  color: var(--gray-600);
+  color: var(--earth);
 }
 
 .product-actions {
@@ -822,15 +889,16 @@ body.elderly-mode .card {
 }
 
 .btn-qr {
-  background: #f0fdf4;
-  color: var(--primary-dark);
-  border: 1px solid #bbf7d0;
+  background: var(--green-50);
+  color: var(--green-900);
+  border: 1px solid var(--green-200);
   padding: 8px;
   font-size: 0.85rem;
+  font-weight: 700;
 }
 
 .btn-qr:hover {
-  background: #dcfce7;
+  background: var(--green-200);
 }
 
 /* MODAL QR CODE & NHẬT KÝ MÙA VỤ */
@@ -840,7 +908,7 @@ body.elderly-mode .card {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(27, 58, 30, 0.75);
   backdrop-filter: blur(4px);
   z-index: 999;
   display: none;
@@ -863,14 +931,16 @@ body.elderly-mode .card {
   overflow-y: auto;
   box-shadow: var(--shadow-lg);
   position: relative;
+  border: 2px solid var(--green-200);
 }
 
 .modal-header {
   padding: 20px 24px;
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--green-200);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--green-50);
 }
 
 .modal-close {
@@ -878,7 +948,7 @@ body.elderly-mode .card {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: var(--gray-400);
+  color: var(--earth);
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -888,8 +958,8 @@ body.elderly-mode .card {
 }
 
 .modal-close:hover {
-  background: var(--gray-100);
-  color: var(--gray-800);
+  background: var(--green-200);
+  color: var(--green-900);
 }
 
 .modal-body {
@@ -902,9 +972,10 @@ body.elderly-mode .card {
   align-items: center;
   text-align: center;
   padding: 20px;
-  background: linear-gradient(135deg, #f8fafc 0%, #f0fdf4 100%);
+  background: var(--green-50);
   border-radius: var(--radius-md);
   margin-bottom: 24px;
+  border: 1px solid var(--green-200);
 }
 
 .qr-code-graphic {
@@ -918,10 +989,10 @@ body.elderly-mode .card {
   align-items: center;
   justify-content: center;
   position: relative;
-  border: 2px solid #86efac;
+  border: 2px solid var(--green-400);
 }
 
-/* TIMELINE NHẬT KÝ MÙA VỤ */
+/* TIMELINE NHẬT KÝ MÙA VỤ - CHI TIẾT DÙNG NÂU ĐẤT #5D4037 */
 .diary-timeline {
   position: relative;
   padding-left: 30px;
@@ -935,7 +1006,7 @@ body.elderly-mode .card {
   top: 8px;
   bottom: 8px;
   width: 3px;
-  background: #cbd5e1;
+  background: var(--green-200);
 }
 
 .timeline-item {
@@ -951,31 +1022,31 @@ body.elderly-mode .card {
   height: 14px;
   border-radius: 50%;
   background: var(--white);
-  border: 3px solid var(--primary);
+  border: 3px solid var(--green-700);
   box-shadow: 0 0 0 2px var(--white);
 }
 
 .timeline-item.active .timeline-dot {
-  background: var(--primary);
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.3);
+  background: var(--green-700);
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.3);
 }
 
 .timeline-date {
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--secondary);
+  color: var(--green-900);
 }
 
 .timeline-title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--gray-800);
+  color: var(--text);
   margin: 2px 0;
 }
 
 .timeline-note {
   font-size: 0.85rem;
-  color: var(--gray-600);
+  color: var(--earth); /* Nâu đất cho chi tiết nhật ký */
 }
 
 /* ==========================================================================
@@ -996,36 +1067,38 @@ body.elderly-mode .card {
   text-align: left;
   padding: 12px;
   font-size: 0.85rem;
-  color: var(--gray-600);
-  border-bottom: 2px solid var(--gray-200);
+  color: var(--green-900);
+  border-bottom: 2px solid var(--green-200);
+  background: var(--green-50);
 }
 
 .cart-table td {
   padding: 14px 12px;
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--green-200);
   vertical-align: middle;
 }
 
 .qty-control {
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--gray-300);
+  border: 1.5px solid var(--green-200);
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
 .qty-btn {
-  background: var(--gray-100);
+  background: var(--green-50);
   border: none;
   width: 32px;
   height: 32px;
   font-weight: 700;
+  color: var(--green-900);
   cursor: pointer;
   transition: var(--transition);
 }
 
 .qty-btn:hover {
-  background: var(--gray-200);
+  background: var(--green-200);
 }
 
 .qty-val {
@@ -1033,6 +1106,7 @@ body.elderly-mode .card {
   text-align: center;
   font-weight: 700;
   font-size: 0.9rem;
+  color: var(--text);
 }
 
 /* SHIPPING SELECTOR */
@@ -1044,7 +1118,7 @@ body.elderly-mode .card {
 }
 
 .shipping-card {
-  border: 2px solid var(--gray-200);
+  border: 1.5px solid var(--green-200);
   border-radius: var(--radius-md);
   padding: 14px;
   cursor: pointer;
@@ -1052,38 +1126,40 @@ body.elderly-mode .card {
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  background: var(--white);
 }
 
 .shipping-card:hover {
-  border-color: #93c5fd;
-  background: #f8fafc;
+  border-color: var(--green-400);
+  background: var(--green-50);
 }
 
 .shipping-card.selected {
-  border-color: var(--primary);
-  background: #f0fdf4;
+  border-color: var(--green-700);
+  background: var(--green-50);
+  box-shadow: 0 0 0 1px var(--green-700);
 }
 
 .shipping-radio {
   margin-top: 4px;
-  accent-color: var(--primary);
+  accent-color: var(--green-700);
 }
 
 .shipping-info h4 {
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--gray-800);
+  color: var(--green-900);
 }
 
 .shipping-info p {
   font-size: 0.82rem;
-  color: var(--gray-600);
+  color: var(--earth);
 }
 
 .shipping-price {
   margin-left: auto;
-  font-weight: 700;
-  color: var(--primary-dark);
+  font-weight: 800;
+  color: var(--green-900);
 }
 
 /* ORDER SUMMARY */
@@ -1092,30 +1168,30 @@ body.elderly-mode .card {
   justify-content: space-between;
   padding: 8px 0;
   font-size: 0.95rem;
-  color: var(--gray-600);
+  color: var(--earth);
 }
 
 .summary-row.total {
   font-size: 1.25rem;
   font-weight: 800;
-  color: var(--gray-800);
-  border-top: 2px solid var(--gray-200);
+  color: var(--text);
+  border-top: 2px solid var(--green-200);
   margin-top: 10px;
   padding-top: 14px;
 }
 
 .summary-row.total .total-price {
-  color: var(--danger);
+  color: var(--alert); /* Cam chôm chôm nhấn mạnh */
 }
 
 /* ==========================================================================
    SCREEN 5: QUẢN LÝ ĐƠN HÀNG NHÀ VƯỜN (CHẾ ĐỘ CHÚ BA TƯ)
    ========================================================================== */
 .elderly-toolbar {
-  background: #fef3c7;
-  border: 2px solid #fde047;
+  background: var(--green-50);
+  border: 2px solid var(--green-400);
   border-radius: var(--radius-lg);
-  padding: 16px 20px;
+  padding: 18px 22px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1127,10 +1203,10 @@ body.elderly-mode .card {
 .elderly-alert {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   font-weight: 700;
-  color: #854d0e;
-  font-size: 1.05rem;
+  color: var(--green-900);
+  font-size: 1.1rem;
 }
 
 .order-mgmt-grid {
@@ -1142,14 +1218,14 @@ body.elderly-mode .card {
 .order-card {
   background: var(--white);
   border-radius: var(--radius-lg);
-  border: 2px solid var(--gray-200);
+  border: 1.5px solid var(--green-200);
   padding: 22px;
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
 }
 
 .order-card:hover {
-  border-color: var(--primary);
+  border-color: var(--green-700);
   box-shadow: var(--shadow-md);
 }
 
@@ -1157,7 +1233,7 @@ body.elderly-mode .card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--green-200);
   padding-bottom: 12px;
   margin-bottom: 16px;
   flex-wrap: wrap;
@@ -1167,7 +1243,7 @@ body.elderly-mode .card {
 .order-id-badge {
   font-size: 1.15rem;
   font-weight: 800;
-  color: var(--primary-dark);
+  color: var(--green-900);
 }
 
 .status-badge {
@@ -1178,25 +1254,26 @@ body.elderly-mode .card {
 }
 
 .status-badge.pending_harvest {
-  background: #fef3c7;
-  color: #b45309;
-  border: 1px solid #fde68a;
+  background: #fff8e1;
+  color: var(--sun-text);
+  border: 1px solid #ffe082;
 }
 
 .status-badge.shipping {
-  background: #e0f2fe;
-  color: #0369a1;
-  border: 1px solid #bae6fd;
+  background: var(--green-50);
+  color: var(--green-900);
+  border: 1px solid var(--green-200);
 }
 
 .status-badge.completed {
-  background: #dcfce7;
-  color: #15803d;
-  border: 1px solid #bbf7d0;
+  background: var(--green-200);
+  color: var(--green-900);
+  border: 1px solid #a5d6a7;
 }
 
 .order-items-list {
-  background: var(--light);
+  background: var(--green-50);
+  border: 1px solid var(--green-200);
   border-radius: var(--radius-md);
   padding: 14px;
   margin: 14px 0;
@@ -1210,13 +1287,13 @@ body.elderly-mode .card {
 }
 
 .btn-tts {
-  background: #ede9fe;
-  color: #6d28d9;
-  border: 1px solid #ddd6fe;
+  background: var(--green-200);
+  color: var(--green-900);
+  border: 1px solid #a5d6a7;
   font-weight: 700;
 }
 .btn-tts:hover {
-  background: #ddd6fe;
+  background: #a5d6a7;
 }
 
 /* ==========================================================================
@@ -1235,6 +1312,7 @@ body.elderly-mode .card {
   position: relative;
   aspect-ratio: 16 / 9;
   box-shadow: var(--shadow-lg);
+  border: 2px solid var(--green-200);
 }
 
 .live-video-sim {
@@ -1256,7 +1334,7 @@ body.elderly-mode .card {
 }
 
 .live-tag {
-  background: var(--danger);
+  background: var(--alert);
   color: white;
   font-weight: 800;
   padding: 4px 12px;
@@ -1270,11 +1348,11 @@ body.elderly-mode .card {
 
 @keyframes blinkLive {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+  50% { opacity: 0.75; }
 }
 
 .live-viewer-count {
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.65);
   backdrop-filter: blur(4px);
   color: white;
   padding: 4px 10px;
@@ -1287,7 +1365,7 @@ body.elderly-mode .card {
   position: absolute;
   bottom: 16px;
   left: 16px;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(8px);
   padding: 10px 14px;
   border-radius: var(--radius-md);
@@ -1297,6 +1375,7 @@ body.elderly-mode .card {
   align-items: center;
   gap: 12px;
   z-index: 10;
+  border: 1px solid var(--green-200);
 }
 
 .pinned-prod-img {
@@ -1310,7 +1389,7 @@ body.elderly-mode .card {
 .live-chat-panel {
   background: var(--white);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--gray-200);
+  border: 1.5px solid var(--green-200);
   display: flex;
   flex-direction: column;
   height: 520px;
@@ -1319,8 +1398,10 @@ body.elderly-mode .card {
 
 .live-chat-header {
   padding: 16px;
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--green-200);
+  background: var(--green-50);
   font-weight: 700;
+  color: var(--green-900);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1336,33 +1417,36 @@ body.elderly-mode .card {
 }
 
 .chat-bubble {
-  background: var(--light);
+  background: var(--green-50);
+  border: 1px solid var(--green-200);
   padding: 8px 12px;
   border-radius: var(--radius-md);
   font-size: 0.88rem;
   line-height: 1.4;
+  color: var(--text);
 }
 
 .chat-bubble .chat-user {
   font-weight: 700;
-  color: var(--secondary);
+  color: var(--green-900);
   font-size: 0.8rem;
 }
 
 .live-chat-input-row {
   padding: 12px 16px;
-  border-top: 1px solid var(--gray-200);
+  border-top: 1px solid var(--green-200);
   display: flex;
   gap: 8px;
+  background: var(--white);
 }
 
 .heart-button {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid #fecdd3;
-  background: #ffe4e6;
-  color: #e11d48;
+  border: 1px solid #ffcc80;
+  background: #fff3e0;
+  color: var(--alert);
   font-size: 1.3rem;
   cursor: pointer;
   display: flex;
@@ -1373,12 +1457,12 @@ body.elderly-mode .card {
 
 .heart-button:hover {
   transform: scale(1.15);
-  background: #f43f5e;
+  background: var(--alert);
   color: white;
 }
 
 /* ==========================================================================
-   SCREEN 7: BẢN ĐỒ NHÀ VƯỜN KẾT HỢP DU LỊCH TRẢI NGHIỆM (ĐIỂM CỘNG)
+   SCREEN 7: BẢN ĐỒ NHÀ VƯỜN KẾT HỢP DU LỊCH TRẢI NGHIỆM
    ========================================================================== */
 .eco-map-wrapper {
   position: relative;
@@ -1387,7 +1471,7 @@ body.elderly-mode .card {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-md);
-  border: 2px solid #86efac;
+  border: 2px solid var(--green-200);
   background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&auto=format&fit=crop&q=80') center/cover no-repeat;
 }
 
@@ -1408,7 +1492,7 @@ body.elderly-mode .card {
   height: 44px;
   border-radius: 50%;
   background: var(--white);
-  border: 3px solid var(--primary);
+  border: 3px solid var(--green-700);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1421,7 +1505,7 @@ body.elderly-mode .card {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(15, 23, 42, 0.85);
+  background: var(--green-900);
   color: white;
   padding: 3px 8px;
   border-radius: var(--radius-sm);
@@ -1430,10 +1514,11 @@ body.elderly-mode .card {
   white-space: nowrap;
   pointer-events: none;
   margin-top: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 /* ==========================================================================
-   SCREEN 8: SỔ TAY TÌNH NGUYỆN THANH NIÊN SỐ (ĐIỂM CỘNG)
+   SCREEN 8: SỔ TAY TÌNH NGUYỆN THANH NIÊN SỐ
    ========================================================================== */
 .youth-honor-grid {
   display: grid;
@@ -1442,8 +1527,8 @@ body.elderly-mode .card {
 }
 
 .honor-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
-  border: 2px solid #86efac;
+  background: var(--white);
+  border: 2px solid var(--green-200);
   border-radius: var(--radius-lg);
   padding: 24px;
   position: relative;
@@ -1455,8 +1540,8 @@ body.elderly-mode .card {
   position: absolute;
   top: 14px;
   right: -30px;
-  background: var(--accent);
-  color: white;
+  background: var(--sun);
+  color: var(--sun-text);
   font-size: 0.7rem;
   font-weight: 800;
   padding: 4px 35px;
@@ -1475,12 +1560,13 @@ body.elderly-mode .card {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  border: 3px solid var(--secondary);
+  border: 3px solid var(--green-700);
   object-fit: cover;
 }
 
 .progress-bar-wrap {
-  background: var(--gray-200);
+  background: var(--green-50);
+  border: 1px solid var(--green-200);
   border-radius: var(--radius-full);
   height: 12px;
   overflow: hidden;
@@ -1488,18 +1574,19 @@ body.elderly-mode .card {
 }
 
 .progress-bar-fill {
-  background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+  background: linear-gradient(90deg, var(--green-400) 0%, var(--green-700) 100%);
   height: 100%;
   border-radius: var(--radius-full);
 }
 
-/* FOOTER */
+/* FOOTER - NỀN XANH RỪNG #1B5E20, CHỮ TRẮNG & XANH NON */
 .site-footer {
-  background: var(--gray-800);
+  background: var(--green-900);
   color: var(--white);
   padding: 40px 20px;
   margin-top: 60px;
   font-size: 0.9rem;
+  border-top: 4px solid var(--green-700);
 }
 
 .footer-inner {
@@ -1514,10 +1601,20 @@ body.elderly-mode .card {
   max-width: 1280px;
   margin: 30px auto 0;
   padding-top: 20px;
-  border-top: 1px solid var(--gray-600);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
   text-align: center;
-  color: var(--gray-400);
+  color: var(--green-200);
   font-size: 0.85rem;
+}
+
+/* THÔNG BÁO LỖI, HẾT HÀNG: NỀN #D84315, CHỮ TRẮNG */
+.alert-box {
+  background: var(--alert);
+  color: var(--white);
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  margin-bottom: 16px;
 }
 
 /* RESPONSIVE */

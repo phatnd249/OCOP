@@ -1,12 +1,15 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
+import { Card } from 'primereact/card';
+import { ProgressBar } from 'primereact/progressbar';
+import { Button } from 'primereact/button';
+import { Tag } from 'primereact/tag';
 import {
   Award,
   Clock,
   Video,
   FileCheck,
   CheckCircle,
-  Download,
   Sparkles,
   Phone,
   ShieldCheck
@@ -39,133 +42,113 @@ export const YouthHonor: React.FC = () => {
 
       {/* Youth Supporters Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {youthSupporters.map(yt => (
-          <div
-            key={yt.id}
-            className="bg-white rounded-3xl p-6 sm:p-8 border border-green-200 shadow-soft flex flex-col justify-between space-y-6 relative overflow-hidden"
-          >
-            {/* Top gold badge corner */}
-            <div className="absolute top-0 right-0 bg-gradient-to-l from-sun to-amber-400 text-earth-dark text-[11px] font-black px-4 py-1.5 rounded-bl-2xl shadow-sm">
-              {yt.badge}
-            </div>
+        {youthSupporters.map(yt => {
+          const progressPercent = Math.min(100, Math.round((yt.volunteerHours / 40) * 100));
 
-            <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <img
-                  src={yt.avatar}
-                  alt={yt.name}
-                  className="w-20 h-20 rounded-2xl object-cover border-4 border-green-100 shadow-md"
-                />
-                <div>
-                  <h3 className="font-bold text-xl text-ink">{yt.name}</h3>
-                  <p className="text-xs text-green-800 font-semibold">{yt.role}</p>
-                  <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
-                    <Phone className="w-3.5 h-3.5 text-green-700" />
-                    <span>{yt.phone}</span>
-                  </p>
-                </div>
+          return (
+            <Card
+              key={yt.id}
+              className="rounded-3xl border border-green-200 shadow-soft overflow-hidden relative"
+            >
+              {/* Top gold badge corner */}
+              <div className="absolute top-0 right-0 bg-gradient-to-l from-sun to-amber-400 text-earth-dark text-[11px] font-black px-4 py-1.5 rounded-bl-2xl shadow-sm z-10">
+                🏆 {yt.badge}
               </div>
 
-              {/* 3 Metric Counters */}
-              <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-cream border border-green-100 text-center">
-                <div>
-                  <span className="text-[11px] text-gray-500 block">Giờ tình nguyện</span>
-                  <strong className="text-2xl font-black text-green-800">
-                    {yt.volunteerHours}h
-                  </strong>
+              <div className="space-y-5">
+                <div className="flex items-center gap-4">
+                  <img
+                    src={yt.avatar}
+                    alt={yt.name}
+                    className="w-20 h-20 rounded-2xl object-cover border-4 border-green-100 shadow-md"
+                  />
+                  <div>
+                    <h3 className="font-bold text-xl text-ink">{yt.name}</h3>
+                    <p className="text-xs text-green-800 font-semibold">{yt.role}</p>
+                    <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                      <Phone className="w-3.5 h-3.5 text-green-700" />
+                      <span>{yt.phone}</span>
+                    </p>
+                  </div>
                 </div>
-                <div className="border-x border-green-200">
-                  <span className="text-[11px] text-gray-500 block">Buổi livestream</span>
-                  <strong className="text-2xl font-black text-amber-700">
-                    {yt.sessionsLive}
-                  </strong>
-                </div>
-                <div>
-                  <span className="text-[11px] text-gray-500 block">Sản phẩm số hóa</span>
-                  <strong className="text-2xl font-black text-blue-700">
-                    {yt.productsDigitized}
-                  </strong>
-                </div>
-              </div>
 
-              {/* Skills and contributions */}
-              <div className="space-y-2">
-                <span className="text-xs font-bold text-gray-700 block">Kỹ năng phụ trách:</span>
-                <div className="flex flex-wrap gap-1.5">
-                  {yt.skills.map((s, idx) => (
-                    <span
-                      key={idx}
-                      className="bg-green-50 text-green-900 border border-green-200 text-xs px-2.5 py-1 rounded-lg font-medium"
-                    >
-                      ✓ {s}
+                {/* 3 Metric Counters */}
+                <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-cream border border-green-100 text-center">
+                  <div>
+                    <span className="block font-black text-2xl text-green-800">
+                      {yt.volunteerHours}
                     </span>
-                  ))}
+                    <span className="text-[11px] text-gray-500 font-medium">Giờ tình nguyện</span>
+                  </div>
+                  <div>
+                    <span className="block font-black text-2xl text-sun">
+                      {yt.sessionsLive}
+                    </span>
+                    <span className="text-[11px] text-gray-500 font-medium">Buổi livestream</span>
+                  </div>
+                  <div>
+                    <span className="block font-black text-2xl text-green-700">
+                      {yt.productsDigitized}
+                    </span>
+                    <span className="text-[11px] text-gray-500 font-medium">Sản phẩm số hóa</span>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Action to export certificate */}
-            <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-              <span className="text-xs text-gray-400">
-                Chứng thực bởi Đoàn TNCS Hồ Chí Minh
-              </span>
-              <button
-                onClick={() => handleExportCert(yt.name)}
-                className="bg-green-700 hover:bg-green-800 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow transition flex items-center gap-1.5"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>Xuất Giấy Chứng Nhận Số</span>
-              </button>
-            </div>
-          </div>
-        ))}
+                {/* Progress toward 40 hours milestone using PrimeReact ProgressBar */}
+                <div className="space-y-1.5">
+                  <div className="flex justify-between text-xs font-bold text-ink">
+                    <span>Tiến độ huy hiệu "Chiến Sĩ Số Tiêu Biểu"</span>
+                    <span className="text-green-800">{yt.volunteerHours} / 40 Giờ ({progressPercent}%)</span>
+                  </div>
+                  <ProgressBar 
+                    value={progressPercent} 
+                    showValue={false} 
+                    style={{ height: '10px' }}
+                    className="bg-green-100"
+                  />
+                </div>
+
+                {/* Skills tags using PrimeReact Tag */}
+                <div>
+                  <span className="text-xs font-bold text-gray-500 block mb-2">Kỹ năng số hỗ trợ:</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {yt.skills.map((s, idx) => (
+                      <Tag 
+                        key={idx} 
+                        value={`✓ ${s}`} 
+                        severity="success" 
+                        className="text-xs font-medium"
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Action button using PrimeReact Button */}
+                <Button
+                  onClick={() => handleExportCert(yt.name)}
+                  icon="pi pi-download"
+                  label="Xuất Giấy Chứng Nhận Tình Nguyện Số"
+                  className="w-full p-button-success font-bold text-xs"
+                />
+              </div>
+            </Card>
+          );
+        })}
       </div>
 
-      {/* Volunteer Activity Log */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-green-200 shadow-soft space-y-4">
-        <h3 className="font-bold text-lg text-ink flex items-center gap-2">
-          <Clock className="w-5 h-5 text-green-700" />
-          <span>Nhật Ký Tích Lũy Giờ Tình Nguyện Số Gần Đây</span>
-        </h3>
-
-        <div className="space-y-3 text-xs sm:text-sm">
-          <div className="p-3.5 rounded-2xl bg-cream border border-green-100 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-green-600"></span>
-              <div>
-                <strong>Hỗ trợ Chú Ba Tư livestream bán sầu riêng Ri6 tại vườn</strong>
-                <span className="block text-xs text-gray-500">Đoàn viên: Nguyễn Văn Nam • Tối nay (19:30 - 21:00)</span>
-              </div>
-            </div>
-            <span className="font-bold text-green-800 bg-white px-2.5 py-1 rounded-lg border">
-              +3 Giờ
-            </span>
+      {/* Campaign Info */}
+      <div className="p-6 rounded-3xl bg-green-50 border border-green-200 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-2xl bg-green-700 text-white flex items-center justify-center shrink-0 shadow-md">
+            <Award className="w-8 h-8 text-sun" />
           </div>
-
-          <div className="p-3.5 rounded-2xl bg-cream border border-green-100 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-green-600"></span>
-              <div>
-                <strong>Chụp ảnh & dùng AI tạo mã QR truy xuất bón phân hữu cơ</strong>
-                <span className="block text-xs text-gray-500">Đoàn viên: Trần Thị Mai • Sáng nay (08:00 - 10:00)</span>
-              </div>
-            </div>
-            <span className="font-bold text-green-800 bg-white px-2.5 py-1 rounded-lg border">
-              +2 Giờ
-            </span>
-          </div>
-
-          <div className="p-3.5 rounded-2xl bg-cream border border-green-100 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-green-600"></span>
-              <div>
-                <strong>Hỗ trợ đóng thùng xe lạnh chuyển về TP.HCM cho Chị Thảo My</strong>
-                <span className="block text-xs text-gray-500">Đoàn viên: Nguyễn Văn Nam • Hôm qua</span>
-              </div>
-            </div>
-            <span className="font-bold text-green-800 bg-white px-2.5 py-1 rounded-lg border">
-              +1 Giờ
-            </span>
+          <div>
+            <h4 className="font-bold text-base text-ink">
+              Chương trình "Đoàn viên - Thanh niên đồng hành cùng Nông sản OCOP"
+            </h4>
+            <p className="text-xs text-gray-600 mt-0.5">
+              Phát động bởi Tỉnh Đoàn Đồng Nai và Hội Liên hiệp Thanh niên Việt Nam tỉnh. Ghi nhận minh bạch trên hệ thống sổ số hóa.
+            </p>
           </div>
         </div>
       </div>

@@ -49,7 +49,7 @@ export const Cart: React.FC = () => {
           className="bg-sun hover:bg-amber-500 text-earth-dark font-black px-6 py-3.5 rounded-2xl shadow transition inline-flex items-center gap-2 text-sm"
         >
           <ShoppingBag className="w-4 h-4" />
-          <span>Đi Chợ OCOP Ngay</span>
+          <span>Vào TRẠM VƯỜN SỐ Mua Hàng</span>
         </button>
       </div>
     );
