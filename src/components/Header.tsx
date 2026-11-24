@@ -60,7 +60,7 @@ export const Header: React.FC = () => {
       return [
         { id: 'quick_post' as ScreenId, label: 'Thêm Sản Phẩm Mới', icon: <Plus className="w-4 h-4 shrink-0" /> },
         { id: 'orders' as ScreenId, label: 'Đơn Hàng Vườn Mình', icon: <Package className="w-4 h-4 shrink-0" /> },
-        { id: 'garden' as ScreenId, label: 'Hồ Sơ Vườn Ba Tư', icon: <Store className="w-4 h-4 shrink-0" /> },
+        { id: 'garden' as ScreenId, label: 'Hồ Sơ Vườn', icon: <Store className="w-4 h-4 shrink-0" /> },
         { id: 'home' as ScreenId, label: 'Mặt Trước Sàn', icon: <Home className="w-4 h-4 shrink-0" /> },
         { id: 'live' as ScreenId, label: 'Lịch Live Cùng Đoàn', icon: <Video className="w-4 h-4 shrink-0" /> }
       ];

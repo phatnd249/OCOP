@@ -67,6 +67,18 @@ export const LiveStream: React.FC = () => {
   // Local list of streams allowing user to add new registered streams
   const [customStreams, setCustomStreams] = useState<LiveStreamType[]>([]);
 
+  // Clean ward options for creation modal to prevent truncation
+  const modalWardOptions = useMemo(() => [
+    { label: 'Phường Suối Tre', value: 'Phường Suối Tre' },
+    { label: 'Xã Bình Lộc', value: 'Xã Bình Lộc' },
+    { label: 'Phường Xuân An', value: 'Phường Xuân An' },
+    { label: 'Phường Xuân Bình', value: 'Phường Xuân Bình' },
+    { label: 'Phường Phú Bình', value: 'Phường Phú Bình' },
+    { label: 'Xã Hàng Gòn', value: 'Xã Hàng Gòn' },
+    { label: 'Xã Bảo Quang', value: 'Xã Bảo Quang' },
+    { label: 'Xã Tân Triều', value: 'Xã Tân Triều' }
+  ], []);
+
   // Combined streams list
   const allStreams = useMemo(() => {
     return [...customStreams, ...liveStreams];
@@ -755,28 +767,28 @@ export const LiveStream: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
-                <Store className="w-3.5 h-3.5 text-green-700" />
+              <label className="block text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-1.5">
+                <Store className="w-3.5 h-3.5 text-green-700 shrink-0" />
                 <span>Tên Nhà Vườn / Hợp Tác Xã:</span>
               </label>
               <InputText
                 value={newFarmName}
                 onChange={e => setNewFarmName(e.target.value)}
                 placeholder="Ví dụ: Vườn Sầu Riêng Chú Ba"
-                className="w-full text-xs rounded-xl"
+                className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
-                <User className="w-3.5 h-3.5 text-green-700" />
+              <label className="block text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-1.5">
+                <User className="w-3.5 h-3.5 text-green-700 shrink-0" />
                 <span>Tên Bác Chủ Vườn:</span>
               </label>
               <InputText
                 value={newFarmerName}
                 onChange={e => setNewFarmerName(e.target.value)}
                 placeholder="Ví dụ: Bác Ba Cần"
-                className="w-full text-xs rounded-xl"
+                className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
                 required
               />
             </div>
@@ -784,85 +796,85 @@ export const LiveStream: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-green-700" />
+              <label className="block text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-green-700 shrink-0" />
                 <span>Địa bàn Phường / Xã:</span>
               </label>
               <Dropdown
                 value={newWard}
                 onChange={e => setNewWard(e.value)}
-                options={availableWards.filter(w => w.value !== 'all')}
-                className="w-full text-xs font-medium rounded-xl"
+                options={modalWardOptions}
+                className="w-full text-sm rounded-xl border border-gray-300 bg-white focus:border-green-600 transition"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-green-700" />
+              <label className="block text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-1.5">
+                <Clock className="w-3.5 h-3.5 text-green-700 shrink-0" />
                 <span>Thời gian phát sóng:</span>
               </label>
               <InputText
                 value={newTime}
                 onChange={e => setNewTime(e.target.value)}
                 placeholder="Ví dụ: Tối nay 19:30"
-                className="w-full text-xs rounded-xl"
+                className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
-              <Radio className="w-3.5 h-3.5 text-green-700" />
+            <label className="block text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-1.5">
+              <Radio className="w-3.5 h-3.5 text-green-700 shrink-0" />
               <span>Tiêu đề buổi Livestream:</span>
             </label>
             <InputText
               value={newTitle}
               onChange={e => setNewTitle(e.target.value)}
               placeholder="Ví dụ: Cắt Sầu Riêng Chín Cây & Chôm Chôm Nhãn Mùa Vụ Mới"
-              className="w-full text-xs rounded-xl"
+              className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
               required
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
-                <ShoppingBag className="w-3.5 h-3.5 text-green-700" />
+              <label className="block text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-1.5">
+                <ShoppingBag className="w-3.5 h-3.5 text-green-700 shrink-0" />
                 <span>Sản phẩm OCOP ghim chốt:</span>
               </label>
               <InputText
                 value={newProduct}
                 onChange={e => setNewProduct(e.target.value)}
                 placeholder="Ví dụ: Sầu riêng Ri6 hạt lép"
-                className="w-full text-xs rounded-xl"
+                className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
-                <TagIcon className="w-3.5 h-3.5 text-green-700" />
+              <label className="block text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-1.5">
+                <TagIcon className="w-3.5 h-3.5 text-green-700 shrink-0" />
                 <span>Mức giá ưu đãi trên Live:</span>
               </label>
               <InputText
                 value={newDealPrice}
                 onChange={e => setNewDealPrice(e.target.value)}
                 placeholder="Ví dụ: 105.000 đ/kg"
-                className="w-full text-xs rounded-xl"
+                className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-green-700" />
+            <label className="block text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-green-700 shrink-0" />
               <span>Đoàn viên thanh niên phụ trách dẫn live:</span>
             </label>
             <InputText
               value={newYouthHost}
               onChange={e => setNewYouthHost(e.target.value)}
               placeholder="Ví dụ: Nguyễn Văn Nam (Chi đoàn P. Suối Tre)"
-              className="w-full text-xs rounded-xl"
+              className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
               required
             />
           </div>

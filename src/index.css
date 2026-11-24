@@ -39,6 +39,30 @@
   scrollbar-width: none !important;
 }
 
+/* Uniform font size and height for form controls & PrimeReact Dropdowns */
+.p-inputtext {
+  font-size: 0.875rem !important;
+}
+
+.p-dropdown {
+  min-height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.p-dropdown .p-dropdown-label {
+  font-size: 0.875rem !important;
+  padding: 0.5rem 0.75rem !important;
+  line-height: 1.25rem !important;
+  font-weight: 500 !important;
+  color: #1f2937 !important;
+}
+
+.p-dropdown-panel .p-dropdown-item {
+  font-size: 0.875rem !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
 /* Animations */
 @keyframes pulse-subtle {
   0%, 100% { opacity: 1; }
