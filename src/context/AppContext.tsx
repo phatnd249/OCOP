@@ -14,6 +14,7 @@ import {
 } from '../types';
 import {
   INITIAL_GARDEN,
+  INITIAL_GARDENS,
   INITIAL_YOUTH,
   INITIAL_PRODUCTS,
   INITIAL_ORDERS,
@@ -128,6 +129,10 @@ interface AppContextType {
   updateOrderStatus: (orderId: string, newStatus: OrderStatus) => void;
 
   // Data
+  gardens: GardenInfo[];
+  selectedGardenId: string;
+  setSelectedGardenId: (id: string) => void;
+  openGardenProfile: (gardenId: string) => void;
   garden: GardenInfo;
   updateGarden: (updated: Partial<GardenInfo>) => void;
   youthSupporters: YouthSupporter[];
@@ -213,19 +218,32 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return saved ? JSON.parse(saved) : INITIAL_YOUTH;
   });
 
-  // Garden
-  const [garden, setGarden] = useState<GardenInfo>(() => {
-    const saved = localStorage.getItem('ocop_garden');
-    return saved ? JSON.parse(saved) : INITIAL_GARDEN;
+  // Gardens & Garden detail
+  const [gardens, setGardens] = useState<GardenInfo[]>(() => {
+    const saved = localStorage.getItem('ocop_gardens');
+    return saved ? JSON.parse(saved) : INITIAL_GARDENS;
   });
+  const [selectedGardenId, setSelectedGardenId] = useState<string>('g-batu');
+
+  const garden = gardens.find(g => g.id === selectedGardenId) || gardens[0];
 
   const updateGarden = (updated: Partial<GardenInfo>) => {
-    setGarden(prev => {
-      const next = { ...prev, ...updated };
-      localStorage.setItem('ocop_garden', JSON.stringify(next));
+    setGardens(prev => {
+      const targetId = updated.id || selectedGardenId;
+      const next = prev.map(g => (g.id === targetId ? { ...g, ...updated } : g));
+      localStorage.setItem('ocop_gardens', JSON.stringify(next));
       return next;
     });
     showNotification('Cập nhật hồ sơ nhà vườn thành công!');
+  };
+
+  const openGardenProfile = (gardenId: string) => {
+    setSelectedGardenId(gardenId);
+    setActiveScreenState('garden');
+    const targetHash = `garden/${gardenId}`;
+    if (window.location.hash !== `#${targetHash}`) {
+      window.location.hash = targetHash;
+    }
   };
 
   // LiveStreams
@@ -244,7 +262,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const pId = rawHash.replace('product/', '').trim();
       return { screen: 'product_detail' as ScreenId, productId: pId || selectedProductId };
     }
+    if (rawHash.startsWith('garden/')) {
+      const gId = rawHash.replace('garden/', '').trim();
+      if (gId) setSelectedGardenId(gId);
+      return { screen: 'garden' as ScreenId, productId: selectedProductId };
+    }
     if (rawHash === 'products') return { screen: 'products' as ScreenId, productId: selectedProductId };
+    if (rawHash === 'gardens') return { screen: 'gardens' as ScreenId, productId: selectedProductId };
     if (rawHash === 'garden') return { screen: 'garden' as ScreenId, productId: selectedProductId };
     if (rawHash === 'cart') return { screen: 'cart' as ScreenId, productId: selectedProductId };
     if (rawHash === 'checkout') return { screen: 'checkout' as ScreenId, productId: selectedProductId };
@@ -642,6 +666,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         createOrder,
         updateOrderStatus,
         garden,
+        gardens,
+        selectedGardenId,
+        setSelectedGardenId,
+        openGardenProfile,
         updateGarden,
         youthSupporters,
         liveStreams,

@@ -75,7 +75,7 @@ export const Header: React.FC = () => {
     return [
       { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4" /> },
       { id: 'products' as ScreenId, label: 'Sản Phẩm OCOP', icon: <Package className="w-4 h-4" /> },
-      { id: 'garden' as ScreenId, label: 'Hồ Sơ Nhà Vườn', icon: <Store className="w-4 h-4" /> },
+      { id: 'gardens' as ScreenId, label: 'Hồ Sơ Nhà Vườn', icon: <Store className="w-4 h-4" /> },
       { id: 'live' as ScreenId, label: 'Livestream', icon: <Video className="w-4 h-4" /> },
       { id: 'map' as ScreenId, label: 'Bản Đồ Tour', icon: <MapPin className="w-4 h-4" /> },
       { id: 'volunteer' as ScreenId, label: 'Giờ Tình Nguyện', icon: <Award className="w-4 h-4" /> }
