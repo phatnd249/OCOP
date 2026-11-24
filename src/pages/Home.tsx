@@ -250,23 +250,9 @@ export const Home: React.FC = () => {
             )}
           </div>
 
-          {/* Cụm 2 nút hành động: Nói để tìm & Tìm kiếm */}
+          {/* Cụm 2 nút hành động: Tìm kiếm (trước) & Nói để tìm (sau, không icon mic) */}
           <div className="flex items-center gap-2 w-full md:w-auto justify-end shrink-0">
-            {/* Nút 1: Nói để tìm (Icon Micro + chữ Nói để tìm - Khuyên dùng) */}
-            <button
-              type="button"
-              onClick={handleVoiceSearch}
-              className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-bold text-xs sm:text-sm transition shadow-sm border ${isListening
-                  ? 'bg-red-600 text-white animate-pulse border-red-700'
-                  : 'bg-amber-500 hover:bg-amber-600 text-white border-amber-600'
-                }`}
-              title="Hỗ trợ giọng nói cho người lớn tuổi 50–60 tuổi ngại gõ chữ"
-            >
-              <Mic className="w-4 h-4 text-white" />
-              <span>{isListening ? 'Đang lắng nghe...' : '🎤 Nói để tìm'}</span>
-            </button>
-
-            {/* Nút 2: Tìm kiếm (Icon kính lúp + chữ Tìm kiếm nền xanh đậm) */}
+            {/* Nút 1: Tìm kiếm (Icon kính lúp + chữ Tìm kiếm nền xanh đậm) */}
             <button
               type="button"
               onClick={() => {
@@ -280,6 +266,19 @@ export const Home: React.FC = () => {
             >
               <Search className="w-4 h-4 text-white" />
               <span>Tìm kiếm</span>
+            </button>
+
+            {/* Nút 2: Nói để tìm (Bỏ icon mic) */}
+            <button
+              type="button"
+              onClick={handleVoiceSearch}
+              className={`flex-1 md:flex-initial flex items-center justify-center px-4 py-2.5 rounded-full font-bold text-xs sm:text-sm transition shadow-sm border ${isListening
+                  ? 'bg-red-600 text-white animate-pulse border-red-700'
+                  : 'bg-amber-500 hover:bg-amber-600 text-white border-amber-600'
+                }`}
+              title="Hỗ trợ giọng nói cho người lớn tuổi 50–60 tuổi ngại gõ chữ"
+            >
+              <span>{isListening ? 'Đang lắng nghe...' : 'Nói để tìm'}</span>
             </button>
 
             {/* Nút Đăng Đài Nhanh: Dành riêng cho Chủ vườn (farmer) */}
@@ -297,97 +296,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          TẦNG 2: DẢI LIVESTREAM "ĐANG PHÁT & SẮP LÊN SÓNG" (NẰM NGANG)
-          ========================================================================= */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
-            </span>
-            <h2 className="text-lg sm:text-xl font-black text-ink">
-              Phiên Chợ Livestream Tại Vườn Đang Phát & Sắp Lên Sóng
-            </h2>
-          </div>
-          <button
-            onClick={() => setActiveScreen('live')}
-            className="text-xs font-bold text-green-700 hover:underline flex items-center gap-1"
-          >
-            <span>Xem tất cả lịch live</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {liveStreams.map((live, idx) => (
-            <div
-              key={live.id}
-              onClick={() => setActiveScreen('live')}
-              className={`rounded-2xl p-4 border transition cursor-pointer flex flex-col justify-between space-y-3 relative overflow-hidden group shadow-sm ${live.isLiveNow
-                ? 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-300 ring-2 ring-amber-400'
-                : 'bg-white border-green-200 hover:border-green-400'
-                }`}
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 shadow">
-                  <img src={live.cover} alt={live.title} className="w-full h-full object-cover group-hover:scale-110 transition duration-300" />
-                  {live.isLiveNow ? (
-                    <span className="absolute top-1 left-1 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full flex items-center gap-1 animate-pulse">
-                      <span className="w-1.5 h-1.5 bg-white rounded-full"></span> LIVE
-                    </span>
-                  ) : (
-                    <span className="absolute top-1 left-1 bg-gray-900/80 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
-                      Sắp live
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex-1 space-y-1">
-                  <span className="text-[11px] font-bold text-amber-700 block">
-                    {live.time}
-                  </span>
-                  <h4 className="font-bold text-xs sm:text-sm text-ink line-clamp-2 leading-snug group-hover:text-green-800 transition">
-                    {live.title}
-                  </h4>
-                  <p className="text-[11px] text-gray-500">
-                    Host: <strong>{live.hostName}</strong>
-                  </p>
-                </div>
-              </div>
-
-              {live.isLiveNow ? (
-                <div className="pt-2 border-t border-amber-200 flex items-center justify-between text-xs">
-                  <span className="text-red-600 font-bold flex items-center gap-1">
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>{live.viewers} người xem</span>
-                  </span>
-                  <span className="bg-red-600 text-white font-bold text-[11px] px-2.5 py-1 rounded-lg">
-                    Vào Xem Ngay ➔
-                  </span>
-                </div>
-              ) : (
-                <div className="pt-2 border-t border-green-100 flex items-center justify-between text-xs">
-                  <span className="text-gray-500 text-[11px]">📍 {live.location.split('-')[0]}</span>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      showNotification(`🔔 Đã đặt lịch nhắc phiên live của bạn ${live.hostName}!`);
-                    }}
-                    className="text-green-800 font-bold bg-green-100 hover:bg-green-200 text-[11px] px-2 py-0.5 rounded flex items-center gap-1"
-                  >
-                    <Bell className="w-3 h-3" />
-                    <span>Đặt lịch nhắc</span>
-                  </button>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* =========================================================================
-          TẦNG 4: KHU VỰC LỌC & DANH SÁCH SẢN PHẨM OCOP (CHIA 2 CỘT 25% - 75%)
+          DANH SÁCH SẢN PHẨM OCOP (4 BÀI 1 HÀNG NGANG)
           ========================================================================= */}
       <section className="pt-4 space-y-6">
 
