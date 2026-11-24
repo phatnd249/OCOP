@@ -133,27 +133,27 @@ export const EcoMap: React.FC = () => {
           {/* KHUNG ĐẶT LỊCH HIỂN THỊ NGAY Ở CHÍNH GIỮA TRANG / BẢN ĐỒ KHI BẤM CHỌN SỐ */}
           {selectedSpot && (
             <div 
-              className="absolute inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 z-40 animate-fadeIn"
+              className="fixed sm:absolute inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 z-50 animate-fadeIn overflow-y-auto"
               onClick={() => setSelectedSpot(null)}
             >
               <div
-                className="w-full max-w-lg bg-white rounded-3xl p-5 sm:p-7 border-2 border-green-500 shadow-2xl text-ink z-50 animate-scaleUp"
+                className="w-full max-w-lg bg-white rounded-3xl p-4 sm:p-7 border-2 border-green-500 shadow-2xl text-ink z-50 animate-scaleUp my-auto max-h-[90vh] overflow-y-auto"
                 onClick={e => e.stopPropagation()}
               >
                 {/* Header Card giữa màn hình */}
-                <div className="flex items-start justify-between gap-3 pb-3.5 border-b border-gray-100">
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-2xl bg-sun text-earth-dark flex items-center justify-center font-black text-lg shadow-sm shrink-0">
+                <div className="flex items-start justify-between gap-2.5 pb-3 border-b border-gray-100">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-sun text-earth-dark flex items-center justify-center font-black text-base sm:text-lg shadow-sm shrink-0">
                       {selectedSpotIndex}
                     </div>
-                    <div>
-                      <span className="text-[10px] font-bold text-green-800 bg-green-100 px-2 py-0.5 rounded-full inline-block mb-0.5">
+                    <div className="min-w-0">
+                      <span className="text-[9px] sm:text-[10px] font-bold text-green-800 bg-green-100 px-2 py-0.5 rounded-full inline-block mb-0.5">
                         ĐIỂM NHÀ VƯỜN ĐANG CHỌN
                       </span>
-                      <h3 className="text-base sm:text-lg font-black text-ink leading-tight">
+                      <h3 className="text-sm sm:text-lg font-black text-ink leading-tight truncate">
                         {selectedSpot.name}
                       </h3>
-                      <p className="text-xs text-gray-500 line-clamp-2 mt-0.5">
+                      <p className="text-[11px] sm:text-xs text-gray-500 line-clamp-1 sm:line-clamp-2 mt-0.5">
                         {selectedSpot.desc}
                       </p>
                     </div>

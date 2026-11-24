@@ -104,41 +104,41 @@ export const Header: React.FC = () => {
         {/* Brand */}
         <div
           onClick={() => setActiveScreen('home')}
-          className="flex items-center gap-3 cursor-pointer group shrink-0"
+          className="flex items-center gap-2 sm:gap-3 cursor-pointer group shrink min-w-0"
         >
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center text-white text-2xl shadow-md group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center text-white text-xl sm:text-2xl shadow-md group-hover:scale-105 transition-transform shrink-0">
             🌱
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-black text-xl sm:text-2xl text-green-800 tracking-tight leading-none">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5">
+              <span className="font-black text-base sm:text-2xl text-green-800 tracking-tight leading-none truncate">
                 TRẠM NÔNG SẢN SỐ
               </span>
             </div>
-            <p className="text-xs text-gray-500 font-medium mt-0.5">
+            <p className="text-[10px] sm:text-xs text-gray-500 font-medium mt-0.5 truncate hidden xs:block">
               Nền tảng nông nghiệp thông minh Đồng Nai
             </p>
           </div>
         </div>
 
         {/* Right actions: Khung quản trị hệ thống admin / user badge & Nút đăng xuất đỏ nhẹ */}
-        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           {currentUser ? (
-            <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="flex items-center gap-1.5 sm:gap-2.5">
               {/* Khung quản trị hệ thống / thông tin tài khoản */}
-              <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl border border-green-200 bg-gradient-to-r from-green-50/70 to-emerald-50/40 shadow-sm hover:border-green-300 transition">
-                <div className="w-8 h-8 rounded-xl bg-white border border-green-200 flex items-center justify-center text-green-700 shadow-xs shrink-0">
-                  <User className="w-4 h-4" />
+              <div className="flex items-center gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-2xl border border-green-200 bg-gradient-to-r from-green-50/70 to-emerald-50/40 shadow-sm hover:border-green-300 transition max-w-[170px] sm:max-w-none">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-white border border-green-200 flex items-center justify-center text-green-700 shadow-xs shrink-0">
+                  <User className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
-                <div className="flex flex-col text-left">
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-bold text-xs sm:text-sm text-green-950 max-w-[140px] truncate leading-tight">
+                <div className="flex flex-col text-left min-w-0">
+                  <div className="flex items-center gap-1">
+                    <span className="font-bold text-xs sm:text-sm text-green-950 max-w-[80px] sm:max-w-[140px] truncate leading-tight">
                       {currentUser.name}
                     </span>
                     {getRoleBadge(currentUser.role)}
                   </div>
-                  <span className="text-[11px] text-gray-500 font-medium">
-                    {currentUser.role === 'admin' ? 'Quản trị viên Hệ thống' : currentUser.phone}
+                  <span className="text-[10px] sm:text-[11px] text-gray-500 font-medium truncate">
+                    {currentUser.role === 'admin' ? 'Admin' : currentUser.phone}
                   </span>
                 </div>
               </div>
@@ -150,7 +150,7 @@ export const Header: React.FC = () => {
                     logout();
                   }
                 }}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 border border-red-200/80 transition shadow-xs font-bold text-xs"
+                className="flex items-center gap-1 px-2.5 sm:px-3 py-2 rounded-2xl bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 border border-red-200/80 transition shadow-xs font-bold text-xs shrink-0"
                 title="Đăng xuất"
               >
                 <LogOut className="w-4 h-4 text-red-500" />
@@ -163,10 +163,10 @@ export const Header: React.FC = () => {
                 setAuthDefaultMode('login');
                 setAuthModalVisible(true);
               }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-2xl border border-green-700 text-green-800 hover:bg-green-50 text-xs sm:text-sm font-bold transition shadow-sm"
+              className="flex items-center gap-1.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-2xl border border-green-700 text-green-800 hover:bg-green-50 text-xs sm:text-sm font-bold transition shadow-sm whitespace-nowrap"
             >
-              <User className="w-4 h-4" />
-              <span>Đăng nhập / Đăng ký</span>
+              <User className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span>Đăng nhập</span>
             </button>
           )}
 
@@ -174,12 +174,12 @@ export const Header: React.FC = () => {
           {currentUser && currentUser.role === 'buyer' && (
             <button
               onClick={() => setActiveScreen('cart')}
-              className="relative flex items-center gap-1.5 bg-green-800 text-white px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm shadow hover:bg-green-900 transition"
+              className="relative flex items-center gap-1.5 bg-green-800 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl font-bold text-xs sm:text-sm shadow hover:bg-green-900 transition shrink-0"
             >
               <ShoppingBag className="w-4 h-4" />
-              <span className="hidden sm:inline">Giỏ hàng</span>
+              <span className="hidden md:inline">Giỏ hàng</span>
               {cartCount > 0 && (
-                <span className="bg-sun text-earth-dark text-xs px-2 py-0.5 rounded-full font-black ml-1 shadow-sm">
+                <span className="bg-sun text-earth-dark text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full font-black ml-0.5 sm:ml-1 shadow-sm">
                   {cartCount}
                 </span>
               )}
@@ -189,16 +189,16 @@ export const Header: React.FC = () => {
       </div>
 
       {/* Hàng 2: Các nút chuyển trang / chức năng quản lý dàn đều bên dưới Header */}
-      <div className="bg-green-50/50 border-t border-green-100/80 px-4 py-2">
-        <div className="max-w-7xl mx-auto">
-          <nav className="grid grid-flow-col auto-cols-fr gap-2 w-full overflow-x-auto scrollbar-none">
+      <div className="bg-green-50/50 border-t border-green-100/80 px-2 sm:px-4 py-2 overflow-x-auto scrollbar-none">
+        <div className="max-w-7xl mx-auto min-w-max sm:min-w-0">
+          <nav className="flex sm:grid sm:grid-flow-col sm:auto-cols-fr gap-2 w-full">
             {navItems.map(item => {
               const isActive = activeScreen === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => setActiveScreen(item.id)}
-                  className={`flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap shadow-xs text-center ${
+                  className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap shadow-xs text-center shrink-0 sm:shrink ${
                     isActive
                       ? 'bg-green-700 text-white shadow-sm ring-2 ring-green-600/30'
                       : 'bg-white text-gray-700 hover:bg-green-100/70 hover:text-green-800 border border-green-200/60'
