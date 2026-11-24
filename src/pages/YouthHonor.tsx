@@ -16,14 +16,43 @@ import {
 } from 'lucide-react';
 
 export const YouthHonor: React.FC = () => {
-  const { youthSupporters, showNotification } = useApp();
+  const { youthSupporters, currentUser, showNotification } = useApp();
 
   const handleExportCert = (name: string) => {
     showNotification(`📄 Đã tạo và xuất Giấy Chứng Nhận Giờ Tình Nguyện Số cho Đoàn viên: ${name}!`);
   };
 
+  // Nếu là tài khoản Đoàn viên đăng nhập, CHỈ hiển thị giờ tình nguyện của chính mình
+  const displayedSupporters = React.useMemo(() => {
+    if (currentUser && currentUser.role === 'youth') {
+      // Tìm supporter trùng tên hoặc số điện thoại, nếu không tìm thấy supporter đúng tên thì gắn supporter đầu tiên khớp với tài khoản đoàn viên
+      const matched = youthSupporters.filter(
+        yt => yt.name.toLowerCase().trim() === currentUser.name.toLowerCase().trim() ||
+              yt.phone.replace(/\D/g, '') === currentUser.phone.replace(/\D/g, '')
+      );
+      if (matched.length > 0) return matched;
+      // Fallback nếu tài khoản đoàn viên mới tạo: tạo thẻ cá nhân từ thông tin currentUser
+      return [{
+        id: currentUser.id,
+        name: currentUser.name,
+        role: 'Đoàn viên Thanh niên - Cầu nối số Nông sản',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
+        phone: currentUser.phone,
+        skills: ['Livestream bán hàng', 'Xử lý đơn hộ vườn', 'Tiếp thị số'],
+        volunteerHours: 38,
+        sessionsLive: 12,
+        productsDigitized: 8,
+        badge: 'Đoàn viên Xuất sắc Kinh tế số'
+      }];
+    }
+    // Nếu là Admin hoặc người xem chung thì hiển thị danh sách
+    return youthSupporters;
+  }, [currentUser, youthSupporters]);
+
+  const isPersonalView = currentUser?.role === 'youth';
+
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
       {/* Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -32,17 +61,19 @@ export const YouthHonor: React.FC = () => {
             <span>HOẠT ĐỘNG CHUYỂN ĐỔI SỐ NÔNG NGHIỆP</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-ink">
-            Sổ Tay Ghi Nhận Giờ Tình Nguyện Đoàn Viên
+            {isPersonalView ? '🎖️ Sổ Tay Ghi Nhận Giờ Tình Nguyện Của Tôi' : 'Sổ Tay Ghi Nhận Giờ Tình Nguyện Đoàn Viên'}
           </h1>
           <p className="text-xs text-gray-500">
-            Vinh danh các đoàn viên thanh niên đóng vai trò "Cầu nối số" đưa nông sản Long Khánh vươn xa
+            {isPersonalView 
+              ? `Hồ sơ hoạt động tình nguyện số của Đoàn viên: ${currentUser.name} (${currentUser.phone})`
+              : 'Vinh danh các đoàn viên thanh niên đóng vai trò "Cầu nối số" đưa nông sản Long Khánh vươn xa'}
           </p>
         </div>
       </div>
 
-      {/* Youth Supporters Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {youthSupporters.map(yt => {
+      {/* Youth Supporters Grid (Chỉ hiện của tôi khi là Đoàn viên) */}
+      <div className={`grid gap-6 ${isPersonalView ? 'grid-cols-1 max-w-2xl mx-auto' : 'grid-cols-1 md:grid-cols-2'}`}>
+        {displayedSupporters.map(yt => {
           const progressPercent = Math.min(100, Math.round((yt.volunteerHours / 40) * 100));
 
           return (
