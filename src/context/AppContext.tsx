@@ -427,9 +427,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const addToCart = (productId: string, qty = 1) => {
-    // Ràng buộc bảo vệ: Chỉ người dùng đã đăng ký / đăng nhập mới được thêm giỏ hàng
+    // 1. Chưa đăng nhập: Bắt buộc người dùng phải đăng nhập tài khoản mới được mua
     if (!currentUser) {
       showNotification('⚠️ Vui lòng Đăng nhập hoặc Đăng ký tài khoản để thêm vào giỏ và mua hàng!');
+      return false;
+    }
+
+    // 2. Đã đăng nhập: Chỉ người mua ('buyer') và đoàn viên ('youth') mới có quyền mua
+    if (currentUser.role !== 'buyer' && currentUser.role !== 'youth') {
+      showNotification('ℹ️ Tài khoản Chủ nhà vườn / Quản trị viên không có quyền đặt mua nông sản. Vui lòng đăng nhập tài khoản Người mua hoặc Đoàn viên!');
       return false;
     }
 

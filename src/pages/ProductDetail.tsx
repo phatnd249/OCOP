@@ -39,6 +39,10 @@ export const ProductDetail: React.FC = () => {
       showNotification('⚠️ Vui lòng Đăng nhập hoặc Đăng ký tài khoản để mua hàng!');
       return;
     }
+    if (currentUser.role !== 'buyer' && currentUser.role !== 'youth') {
+      showNotification('ℹ️ Tài khoản Chủ nhà vườn / Quản trị viên không có quyền đặt mua nông sản. Vui lòng dùng tài khoản Người mua hoặc Đoàn viên!');
+      return;
+    }
     const added = addToCart(currentProduct.id, qty);
     if (added) {
       setActiveScreen('cart');
