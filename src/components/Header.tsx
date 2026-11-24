@@ -42,14 +42,12 @@ export const Header: React.FC = () => {
       ];
     }
 
-    // 1. Admin Menu
+    // 1. Admin Menu (Bỏ Tổng Quan Đơn Hàng và Quản Lý Livestream theo yêu cầu)
     if (currentRole === 'admin') {
       return [
         { id: 'admin_users' as ScreenId, label: 'Quản Lý Tài Khoản (Admin)', icon: <ShieldAlert className="w-4 h-4 text-red-600" /> },
         { id: 'home' as ScreenId, label: 'Xem Trang Chủ', icon: <Home className="w-4 h-4" /> },
-        { id: 'orders' as ScreenId, label: 'Tổng Quan Đơn Hàng', icon: <Package className="w-4 h-4" /> },
-        { id: 'volunteer' as ScreenId, label: 'Tổng Giờ Tình Nguyện', icon: <Award className="w-4 h-4" /> },
-        { id: 'live' as ScreenId, label: 'Quản Lý Livestream', icon: <Video className="w-4 h-4" /> }
+        { id: 'volunteer' as ScreenId, label: 'Tổng Giờ Tình Nguyện', icon: <Award className="w-4 h-4" /> }
       ];
     }
 
@@ -102,77 +100,63 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur shadow-sm border-b border-gray-100">
-      {/* Main Bar: Logo bên trái - Menu căn giữa - Tài khoản & Giỏ hàng bên phải */}
-      <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3">
+    <header className="sticky top-0 z-40 bg-white shadow-sm border-b border-gray-100">
+      {/* Hàng 1: Logo & Slogan bên trái | Khung quản trị hệ thống / Profile & Nút đăng xuất bên phải */}
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
         {/* Brand */}
         <div
           onClick={() => setActiveScreen('home')}
-          className="flex items-center gap-2.5 cursor-pointer group shrink-0"
+          className="flex items-center gap-3 cursor-pointer group shrink-0"
         >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center text-white text-xl shadow-md group-hover:scale-105 transition-transform">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center text-white text-2xl shadow-md group-hover:scale-105 transition-transform">
             🌱
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-black text-lg sm:text-xl text-green-800 tracking-tight leading-none">
+            <div className="flex items-center gap-2">
+              <span className="font-black text-xl sm:text-2xl text-green-800 tracking-tight leading-none">
                 TRẠM VƯỜN SỐ
               </span>
             </div>
-            <p className="text-[11px] text-gray-500 font-medium">
-              Nền tảng nông nghiệp thông minh
+            <p className="text-xs text-gray-500 font-medium mt-0.5">
+              Nền tảng nông nghiệp thông minh Đồng Nai
             </p>
           </div>
         </div>
 
-        {/* Navigation tabs ở giữa trên cùng 1 hàng */}
-        <nav className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1">
-          {navItems.map(item => {
-            const isActive = activeScreen === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => setActiveScreen(item.id)}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition whitespace-nowrap ${
-                  isActive
-                    ? 'bg-green-700 text-white shadow-sm'
-                    : 'text-gray-700 hover:bg-green-50 hover:text-green-800'
-                }`}
-              >
-                {item.icon}
-                <span>{item.label}</span>
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* Right actions: Account Button + Cart */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          {/* Nút Tài khoản / Đăng nhập / Đăng ký */}
+        {/* Right actions: Khung quản trị hệ thống admin / user badge & Nút đăng xuất đỏ nhẹ */}
+        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
           {currentUser ? (
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-green-300 bg-cream text-xs font-bold text-green-950 shadow-sm">
-                <User className="w-4 h-4 text-green-700 shrink-0" />
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              {/* Khung quản trị hệ thống / thông tin tài khoản */}
+              <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl border border-green-200 bg-gradient-to-r from-green-50/70 to-emerald-50/40 shadow-sm hover:border-green-300 transition">
+                <div className="w-8 h-8 rounded-xl bg-white border border-green-200 flex items-center justify-center text-green-700 shadow-xs shrink-0">
+                  <User className="w-4 h-4" />
+                </div>
                 <div className="flex flex-col text-left">
-                  <div className="flex items-center gap-1">
-                    <span className="max-w-[120px] truncate leading-tight">{currentUser.name}</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold text-xs sm:text-sm text-green-950 max-w-[140px] truncate leading-tight">
+                      {currentUser.name}
+                    </span>
                     {getRoleBadge(currentUser.role)}
                   </div>
-                  <span className="text-[10px] text-gray-400 font-normal">{currentUser.phone}</span>
+                  <span className="text-[11px] text-gray-500 font-medium">
+                    {currentUser.role === 'admin' ? 'Quản trị viên Hệ thống' : currentUser.phone}
+                  </span>
                 </div>
               </div>
 
-              {/* Nút Đăng xuất */}
+              {/* Nút Đăng xuất nổi bật với màu đỏ nhẹ */}
               <button
                 onClick={() => {
                   if (window.confirm('Bạn có chắc chắn muốn đăng xuất khỏi tài khoản này?')) {
                     logout();
                   }
                 }}
-                className="p-2 rounded-full text-gray-400 hover:text-red-600 hover:bg-red-50 transition border border-gray-200"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 border border-red-200/80 transition shadow-xs font-bold text-xs"
                 title="Đăng xuất"
               >
-                <LogOut className="w-4 h-4" />
+                <LogOut className="w-4 h-4 text-red-500" />
+                <span className="hidden sm:inline">Đăng xuất</span>
               </button>
             </div>
           ) : (
@@ -181,18 +165,18 @@ export const Header: React.FC = () => {
                 setAuthDefaultMode('login');
                 setAuthModalVisible(true);
               }}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-green-700 text-green-800 hover:bg-green-50 text-xs sm:text-sm font-semibold transition shadow-sm"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-2xl border border-green-700 text-green-800 hover:bg-green-50 text-xs sm:text-sm font-bold transition shadow-sm"
             >
               <User className="w-4 h-4" />
               <span>Đăng nhập / Đăng ký</span>
             </button>
           )}
 
-          {/* Cart button (Sau khi đăng nhập: CHỈ Người Mua và Đoàn Viên mới có chức năng Giỏ hàng / Mua hàng) */}
+          {/* Cart button (Chỉ dành cho Người mua và Đoàn viên) */}
           {currentUser && (currentUser.role === 'buyer' || currentUser.role === 'youth') && (
             <button
               onClick={() => setActiveScreen('cart')}
-              className="relative flex items-center gap-1.5 bg-green-800 text-white px-4 py-2 rounded-full font-bold text-xs sm:text-sm shadow hover:bg-green-900 transition"
+              className="relative flex items-center gap-1.5 bg-green-800 text-white px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm shadow hover:bg-green-900 transition"
             >
               <ShoppingBag className="w-4 h-4" />
               <span className="hidden sm:inline">Giỏ hàng</span>
@@ -203,6 +187,31 @@ export const Header: React.FC = () => {
               )}
             </button>
           )}
+        </div>
+      </div>
+
+      {/* Hàng 2: Các nút chuyển trang / chức năng quản lý dàn đều bên dưới Header */}
+      <div className="bg-green-50/50 border-t border-green-100/80 px-4 py-2">
+        <div className="max-w-7xl mx-auto">
+          <nav className="grid grid-flow-col auto-cols-fr gap-2 w-full overflow-x-auto scrollbar-none">
+            {navItems.map(item => {
+              const isActive = activeScreen === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveScreen(item.id)}
+                  className={`flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap shadow-xs text-center ${
+                    isActive
+                      ? 'bg-green-700 text-white shadow-sm ring-2 ring-green-600/30'
+                      : 'bg-white text-gray-700 hover:bg-green-100/70 hover:text-green-800 border border-green-200/60'
+                  }`}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
+          </nav>
         </div>
       </div>
 
