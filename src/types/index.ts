@@ -1,4 +1,24 @@
-export type UserRole = 'customer' | 'farmer' | 'youth';
+export type UserRole = 'admin' | 'youth' | 'farmer' | 'buyer';
+
+export type UserStatus = 'active' | 'pending' | 'locked';
+
+export interface AppUser {
+  id: string;
+  name: string;
+  phone: string;
+  pass: string;
+  role: UserRole;
+  status: UserStatus;
+  // Specific fields based on role
+  address?: string;      // Cho buyer
+  gardenName?: string;   // Cho farmer
+  gardenArea?: string;   // Cho farmer
+  crops?: string;        // Cho farmer
+  unit?: string;         // Cho youth (Đơn vị đoàn)
+  skills?: string;       // Cho youth
+  volunteerHours?: number; // Cho youth
+  createdAt?: string;
+}
 
 export type ScreenId =
   | 'home'          // K1: Trang chủ Chợ OCOP Đồng Nai
@@ -10,7 +30,8 @@ export type ScreenId =
   | 'orders'        // CV5: Quản lý đơn hàng (Bác Ba Tự)
   | 'live'          // TN7: Livestream & Bán hàng
   | 'map'           // K2: Bản đồ du lịch trải nghiệm
-  | 'volunteer';    // TN9: Bảng vàng giờ tình nguyện
+  | 'volunteer'     // TN9: Bảng vàng giờ tình nguyện
+  | 'admin_users';  // Admin: Quản lý tài khoản toàn hệ thống
 
 export interface SeasonDiaryItem {
   date: string;

@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import {
   UserRole,
+  UserStatus,
+  AppUser,
   ScreenId,
   Product,
   CartItem,
@@ -18,6 +20,53 @@ import {
   INITIAL_LIVESTREAMS
 } from '../data/ocopData';
 
+export const DEFAULT_USERS: AppUser[] = [
+  {
+    id: "U_ADMIN",
+    name: "Quản trị viên Hệ thống (Admin)",
+    phone: "admin",
+    pass: "123",
+    role: "admin",
+    status: "active",
+    createdAt: "2026-11-20"
+  },
+  {
+    id: "U_YOUTH_1",
+    name: "Nguyễn Văn Nam",
+    phone: "0901111111",
+    pass: "123",
+    role: "youth",
+    unit: "Đoàn xã Bình Lộc, TP. Long Khánh",
+    skills: "Livestream bán hàng, Chụp ảnh sản phẩm, Số hóa QR",
+    volunteerHours: 38,
+    status: "active",
+    createdAt: "2026-11-21"
+  },
+  {
+    id: "U_FARMER_1",
+    name: "Chú Ba Tư (Nguyễn Văn Tư)",
+    phone: "0902222222",
+    pass: "123",
+    role: "farmer",
+    gardenName: "Nhà vườn Ba Tư - 2,5 ha",
+    gardenArea: "2.5 ha",
+    crops: "Sầu riêng Ri6, Chôm chôm nhãn, Chôm chôm Java",
+    address: "Ấp Suối Tre, TP. Long Khánh, Đồng Nai",
+    status: "active",
+    createdAt: "2026-11-21"
+  },
+  {
+    id: "U_BUYER_1",
+    name: "Lê Hoàng Nam (Khách TP.HCM)",
+    phone: "0903333333",
+    pass: "123",
+    role: "buyer",
+    address: "Quận 1, TP. Hồ Chí Minh",
+    status: "active",
+    createdAt: "2026-11-22"
+  }
+];
+
 interface AppContextType {
   currentRole: UserRole;
   setRole: (role: UserRole) => void;
@@ -29,6 +78,16 @@ interface AppContextType {
   setQrModalProduct: (product: Product | null) => void;
   tourModalOpen: boolean;
   setTourModalOpen: (open: boolean) => void;
+
+  // RBAC User & Auth
+  currentUser: AppUser | null;
+  users: AppUser[];
+  login: (phone: string, pass: string) => { success: boolean; message: string; user?: AppUser };
+  quickLogin: (role: UserRole) => void;
+  logout: () => void;
+  registerUser: (userData: Omit<AppUser, 'id' | 'status' | 'createdAt'>) => { success: boolean; message: string };
+  updateUserStatus: (userId: string, newStatus: UserStatus) => void;
+  deleteUser: (userId: string) => void;
   
   // Cart
   cart: CartItem[];
@@ -79,13 +138,48 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // State
-  const [currentRole, setCurrentRole] = useState<UserRole>('customer');
+  // Users list in localStorage
+  const [users, setUsers] = useState<AppUser[]>(() => {
+    const saved = localStorage.getItem('ocop_users');
+    return saved ? JSON.parse(saved) : DEFAULT_USERS;
+  });
+
+  // Current logged in user
+  const [currentUser, setCurrentUser] = useState<AppUser | null>(() => {
+    const saved = localStorage.getItem('ocop_current_user');
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  // Role state (bắt đầu bằng buyer nếu chưa đăng nhập, hoặc lấy role của currentUser)
+  const [currentRole, setCurrentRole] = useState<UserRole>(() => {
+    const saved = localStorage.getItem('ocop_current_user');
+    if (saved) {
+      try {
+        const u: AppUser = JSON.parse(saved);
+        return u.role;
+      } catch {}
+    }
+    return 'buyer';
+  });
+
   const [activeScreen, setActiveScreen] = useState<ScreenId>('home');
   const [selectedProductId, setSelectedProductId] = useState<string>('sp-01');
   const [qrModalProduct, setQrModalProduct] = useState<Product | null>(null);
   const [tourModalOpen, setTourModalOpen] = useState<boolean>(false);
   const [notification, setNotification] = useState<string | null>(null);
+
+  // Sync users & current_user to LocalStorage
+  useEffect(() => {
+    localStorage.setItem('ocop_users', JSON.stringify(users));
+  }, [users]);
+
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem('ocop_current_user', JSON.stringify(currentUser));
+    } else {
+      localStorage.removeItem('ocop_current_user');
+    }
+  }, [currentUser]);
 
   // Cart
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -153,7 +247,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const setRole = (role: UserRole) => {
     setCurrentRole(role);
-    if (role === 'farmer') {
+    if (role === 'admin') {
+      setActiveScreen('admin_users');
+      showNotification('Đã chuyển sang quyền Quản trị viên Hệ thống (Admin)');
+    } else if (role === 'farmer') {
       setActiveScreen('orders');
       showNotification('Đã chuyển sang giao diện Chú Ba Tư (50 tuổi) - Chữ to, nút lớn');
     } else if (role === 'youth') {
@@ -162,6 +259,107 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     } else {
       setActiveScreen('home');
       showNotification('Đã chuyển sang vai trò Khách hàng (TP.HCM)');
+    }
+  };
+
+  // Auth & RBAC Handlers
+  const login = (phone: string, pass: string) => {
+    const user = users.find(u => u.phone === phone.trim());
+    if (!user) {
+      return { success: false, message: 'Số điện thoại / Tên đăng nhập không tồn tại!' };
+    }
+    if (user.pass !== pass) {
+      return { success: false, message: 'Mật khẩu không chính xác!' };
+    }
+    if (user.status === 'locked') {
+      return { success: false, message: '⛔ Tài khoản này đã bị Admin khóa quyền truy cập!' };
+    }
+    if (user.status === 'pending') {
+      return { success: false, message: '⏳ Tài khoản đang chờ Quản trị viên (Admin) xét duyệt!' };
+    }
+
+    setCurrentUser(user);
+    setRole(user.role);
+    showNotification(`👋 Đăng nhập thành công! Xin chào ${user.name}`);
+    return { success: true, message: 'Đăng nhập thành công', user };
+  };
+
+  const quickLogin = (role: UserRole) => {
+    const demoUser = users.find(u => u.role === role);
+    if (demoUser) {
+      if (demoUser.status === 'locked') {
+        showNotification('Tài khoản demo này đang bị khóa!');
+        return;
+      }
+      setCurrentUser(demoUser);
+      setRole(demoUser.role);
+      showNotification(`🚀 Đã đăng nhập nhanh với vai trò: ${demoUser.name}`);
+    } else {
+      showNotification('Không tìm thấy tài khoản demo phù hợp!');
+    }
+  };
+
+  const logout = () => {
+    setCurrentUser(null);
+    setCurrentRole('buyer');
+    setActiveScreen('home');
+    showNotification('Đã đăng xuất khỏi hệ thống.');
+  };
+
+  const registerUser = (userData: Omit<AppUser, 'id' | 'status' | 'createdAt'>) => {
+    // Check if phone exists
+    const exists = users.some(u => u.phone === userData.phone.trim());
+    if (exists) {
+      return { success: false, message: 'Số điện thoại này đã được đăng ký trên hệ thống!' };
+    }
+
+    const newUserStatus: UserStatus = userData.role === 'buyer' ? 'active' : 'pending';
+    const newUser: AppUser = {
+      ...userData,
+      id: `U_${Date.now()}`,
+      status: newUserStatus,
+      createdAt: new Date().toISOString().split('T')[0]
+    };
+
+    setUsers(prev => [newUser, ...prev]);
+
+    if (newUserStatus === 'active') {
+      setCurrentUser(newUser);
+      setRole('buyer');
+      return {
+        success: true,
+        message: '🎉 Đăng ký thành công! Bạn đã được tự động đăng nhập.'
+      };
+    } else {
+      return {
+        success: true,
+        message: '📋 Đăng ký thành công! Tài khoản của bạn đang ở trạng thái CHỜ ADMIN DUYỆT.'
+      };
+    }
+  };
+
+  const updateUserStatus = (userId: string, newStatus: UserStatus) => {
+    setUsers(prev => prev.map(u => u.id === userId ? { ...u, status: newStatus } : u));
+    const targetUser = users.find(u => u.id === userId);
+    const actionLabel = newStatus === 'active' ? 'Phê duyệt kích hoạt' : newStatus === 'locked' ? 'Khóa' : 'Chờ duyệt';
+    showNotification(`Đã ${actionLabel} tài khoản: ${targetUser?.name || userId}`);
+
+    // If current logged in user was locked, log them out
+    if (currentUser?.id === userId && newStatus === 'locked') {
+      logout();
+    }
+  };
+
+  const deleteUser = (userId: string) => {
+    if (userId === 'U_ADMIN') {
+      showNotification('Không thể xóa tài khoản Quản trị viên cấp cao!');
+      return;
+    }
+    const targetUser = users.find(u => u.id === userId);
+    setUsers(prev => prev.filter(u => u.id !== userId));
+    showNotification(`Đã xóa tài khoản: ${targetUser?.name || userId}`);
+    if (currentUser?.id === userId) {
+      logout();
     }
   };
 
@@ -327,6 +525,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setQrModalProduct,
         tourModalOpen,
         setTourModalOpen,
+        currentUser,
+        users,
+        login,
+        quickLogin,
+        logout,
+        registerUser,
+        updateUserStatus,
+        deleteUser,
         cart,
         addToCart,
         updateCartQty,

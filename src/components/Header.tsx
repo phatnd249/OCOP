@@ -13,54 +13,85 @@ import {
   Award,
   Sparkles,
   User,
-  LogIn,
-  UserPlus
+  ShieldAlert,
+  LogOut
 } from 'lucide-react';
-import { Dialog } from 'primereact/dialog';
-import { InputText } from 'primereact/inputtext';
-import { Button } from 'primereact/button';
+import { ModalAuth } from './ModalAuth';
 
 export const Header: React.FC = () => {
   const {
     currentRole,
-    setRole,
     activeScreen,
     setActiveScreen,
     cartCount,
-    showNotification
+    currentUser,
+    logout
   } = useApp();
 
-  const [authDialogOpen, setAuthDialogOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
-  const [authPhone, setAuthPhone] = useState('');
-  const [authPassword, setAuthPassword] = useState('');
-  const [authName, setAuthName] = useState('');
-  const [currentUser, setCurrentUser] = useState<string | null>(null);
+  const [authModalVisible, setAuthModalVisible] = useState(false);
+  const [authDefaultMode, setAuthDefaultMode] = useState<'login' | 'register'>('login');
 
-  const handleAuthSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (authMode === 'login') {
-      const userDisplayName = authPhone || '0903.889.123';
-      setCurrentUser(userDisplayName);
-      showNotification(`👋 Đăng nhập thành công! Xin chào ${userDisplayName}`);
-    } else {
-      const userDisplayName = authName || 'Khách hàng mới';
-      setCurrentUser(userDisplayName);
-      showNotification(`🎉 Đăng ký tài khoản thành công! Xin chào ${userDisplayName}`);
+  // RBAC Menu Filtering theo yêu cầu
+  const getNavItems = () => {
+    // 1. Admin Menu
+    if (currentRole === 'admin') {
+      return [
+        { id: 'admin_users' as ScreenId, label: 'Quản Lý Tài Khoản (Admin)', icon: <ShieldAlert className="w-4 h-4 text-red-600" /> },
+        { id: 'home' as ScreenId, label: 'Xem Trang Chủ', icon: <Home className="w-4 h-4" /> },
+        { id: 'orders' as ScreenId, label: 'Tổng Quan Đơn Hàng', icon: <Package className="w-4 h-4" /> },
+        { id: 'volunteer' as ScreenId, label: 'Tổng Giờ Tình Nguyện', icon: <Award className="w-4 h-4" /> },
+        { id: 'live' as ScreenId, label: 'Quản Lý Livestream', icon: <Video className="w-4 h-4" /> }
+      ];
     }
-    setAuthDialogOpen(false);
+
+    // 2. Chủ Nhà Vườn (Farmer) Menu
+    if (currentRole === 'farmer') {
+      return [
+        { id: 'orders' as ScreenId, label: '📦 Đơn Hàng Vườn Mình', icon: <Package className="w-4 h-4" /> },
+        { id: 'garden' as ScreenId, label: '🏡 Hồ Sơ Vườn Ba Tư', icon: <Store className="w-4 h-4" /> },
+        { id: 'quick_post' as ScreenId, label: '🎙️ Đăng Nhanh (Giọng Nói)', icon: <Mic className="w-4 h-4" /> },
+        { id: 'home' as ScreenId, label: 'Xem Mặt Trước Sàn', icon: <Home className="w-4 h-4" /> },
+        { id: 'live' as ScreenId, label: 'Xem Lịch Live Cùng Đoàn', icon: <Video className="w-4 h-4" /> }
+      ];
+    }
+
+    // 3. Thanh Niên Hỗ Trợ (Youth) Menu
+    if (currentRole === 'youth') {
+      return [
+        { id: 'quick_post' as ScreenId, label: '🎙️ Đăng Nhanh (AI/Voice)', icon: <Mic className="w-4 h-4" /> },
+        { id: 'live' as ScreenId, label: '📹 Lịch & Phòng Live', icon: <Video className="w-4 h-4" /> },
+        { id: 'orders' as ScreenId, label: '📦 Xử Lý Đơn Hộ Vườn', icon: <Package className="w-4 h-4" /> },
+        { id: 'volunteer' as ScreenId, label: '🎖️ Giờ Tình Nguyện Của Tôi', icon: <Award className="w-4 h-4" /> },
+        { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4" /> },
+        { id: 'garden' as ScreenId, label: 'Hồ Sơ Vườn', icon: <Store className="w-4 h-4" /> }
+      ];
+    }
+
+    // 4. Người Mua (Buyer) hoặc Khách vãng lai
+    return [
+      { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4" /> },
+      { id: 'garden' as ScreenId, label: 'Hồ Sơ Nhà Vườn', icon: <Store className="w-4 h-4" /> },
+      { id: 'product_detail' as ScreenId, label: 'Sản Phẩm & QR', icon: <QrCode className="w-4 h-4" /> },
+      { id: 'live' as ScreenId, label: 'Livestream', icon: <Video className="w-4 h-4" /> },
+      { id: 'map' as ScreenId, label: 'Bản Đồ Tour', icon: <MapPin className="w-4 h-4" /> },
+      { id: 'volunteer' as ScreenId, label: 'Giờ Tình Nguyện', icon: <Award className="w-4 h-4" /> }
+    ];
   };
 
-  const navItems: { id: ScreenId; label: string; icon: React.ReactNode }[] = [
-    { id: 'home', label: 'Trang Chủ', icon: <Home className="w-4 h-4" /> },
-    { id: 'garden', label: 'Hồ Sơ Vườn', icon: <Store className="w-4 h-4" /> },
-    { id: 'product_detail', label: 'Sản Phẩm & QR', icon: <QrCode className="w-4 h-4" /> },
-    { id: 'quick_post', label: 'Đăng Nhanh (Voice/AI)', icon: <Mic className="w-4 h-4" /> },
-    { id: 'orders', label: 'Quản Lý Đơn', icon: <Package className="w-4 h-4" /> },
-    { id: 'live', label: 'Livestream', icon: <Video className="w-4 h-4" /> },
-    { id: 'map', label: 'Bản Đồ Tour', icon: <MapPin className="w-4 h-4" /> },
-    { id: 'volunteer', label: 'Giờ Tình Nguyện', icon: <Award className="w-4 h-4" /> }
-  ];
+  const navItems = getNavItems();
+
+  const getRoleBadge = (role: UserRole) => {
+    switch (role) {
+      case 'admin':
+        return <span className="text-[10px] bg-red-600 text-white font-black px-1.5 py-0.5 rounded">ADMIN</span>;
+      case 'youth':
+        return <span className="text-[10px] bg-blue-600 text-white font-black px-1.5 py-0.5 rounded">ĐOÀN VIÊN</span>;
+      case 'farmer':
+        return <span className="text-[10px] bg-green-700 text-white font-black px-1.5 py-0.5 rounded">CHỦ VƯỜN</span>;
+      case 'buyer':
+        return <span className="text-[10px] bg-amber-600 text-white font-black px-1.5 py-0.5 rounded">NGƯỜI MUA</span>;
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur shadow-sm">
@@ -89,28 +120,40 @@ export const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Right actions: Account (Login/Register) + Cart */}
+        {/* Right actions: Account Button (Left of Cart) + Cart */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Nút Tài khoản (Đăng nhập / Đăng ký) bên trái giỏ hàng */}
+          {/* Nút Tài khoản / Đăng nhập / Đăng ký */}
           {currentUser ? (
-            <button
-              onClick={() => {
-                if (window.confirm('Bạn có muốn đăng xuất không?')) {
-                  setCurrentUser(null);
-                  showNotification('Đã đăng xuất tài khoản.');
-                }
-              }}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl border border-green-200 bg-cream hover:bg-green-100 text-xs sm:text-sm font-bold text-green-900 transition"
-              title="Bấm để đăng xuất"
-            >
-              <User className="w-4 h-4 text-green-700" />
-              <span className="max-w-[100px] truncate">{currentUser}</span>
-            </button>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-green-300 bg-cream text-xs font-bold text-green-950 shadow-sm">
+                <User className="w-4 h-4 text-green-700 shrink-0" />
+                <div className="flex flex-col text-left">
+                  <div className="flex items-center gap-1">
+                    <span className="max-w-[130px] truncate leading-tight">{currentUser.name}</span>
+                    {getRoleBadge(currentUser.role)}
+                  </div>
+                  <span className="text-[10px] text-gray-400 font-normal">{currentUser.phone}</span>
+                </div>
+              </div>
+
+              {/* Nút Đăng xuất */}
+              <button
+                onClick={() => {
+                  if (window.confirm('Bạn có chắc chắn muốn đăng xuất khỏi tài khoản này?')) {
+                    logout();
+                  }
+                }}
+                className="p-2 rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 transition border border-gray-200"
+                title="Đăng xuất"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
           ) : (
             <button
               onClick={() => {
-                setAuthMode('login');
-                setAuthDialogOpen(true);
+                setAuthDefaultMode('login');
+                setAuthModalVisible(true);
               }}
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border-2 border-green-700 text-green-800 hover:bg-green-50 text-xs sm:text-sm font-bold transition shadow-sm"
             >
@@ -119,23 +162,25 @@ export const Header: React.FC = () => {
             </button>
           )}
 
-          {/* Cart button */}
-          <button
-            onClick={() => setActiveScreen('cart')}
-            className="relative flex items-center gap-2 bg-gradient-to-r from-green-700 to-green-800 text-white px-4 py-2 rounded-xl font-bold text-xs sm:text-sm shadow hover:from-green-800 hover:to-green-900 transition"
-          >
-            <ShoppingBag className="w-4 h-4" />
-            <span>Giỏ hàng</span>
-            {cartCount > 0 && (
-              <span className="bg-sun text-earth-dark text-xs px-2 py-0.5 rounded-full font-black ml-1 shadow-sm animate-bounce">
-                {cartCount}
-              </span>
-            )}
-          </button>
+          {/* Cart button (Ẩn khi đang là Admin) */}
+          {currentRole !== 'admin' && (
+            <button
+              onClick={() => setActiveScreen('cart')}
+              className="relative flex items-center gap-2 bg-gradient-to-r from-green-700 to-green-800 text-white px-4 py-2 rounded-xl font-bold text-xs sm:text-sm shadow hover:from-green-800 hover:to-green-900 transition"
+            >
+              <ShoppingBag className="w-4 h-4" />
+              <span className="hidden sm:inline">Giỏ hàng</span>
+              {cartCount > 0 && (
+                <span className="bg-sun text-earth-dark text-xs px-2 py-0.5 rounded-full font-black ml-1 shadow-sm animate-bounce">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+          )}
         </div>
       </div>
 
-      {/* Navigation tabs */}
+      {/* Navigation tabs (Phân quyền linh hoạt theo UserRole) */}
       <div className="bg-cream/80 border-t border-b border-green-100 overflow-x-auto scrollbar-none">
         <div className="max-w-7xl mx-auto px-4 flex space-x-1 py-1.5 min-w-max">
           {navItems.map(item => {
@@ -158,100 +203,12 @@ export const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Auth Dialog (Đăng nhập / Đăng ký) */}
-      <Dialog
-        visible={authDialogOpen}
-        onHide={() => setAuthDialogOpen(false)}
-        header={
-          <div className="flex items-center gap-2 text-green-900 font-bold text-base">
-            <User className="w-5 h-5 text-green-700" />
-            <span>{authMode === 'login' ? 'Đăng Nhập Tài Khoản' : 'Đăng Ký Tài Khoản Mới'}</span>
-          </div>
-        }
-        className="w-full max-w-md"
-        modal
-      >
-        <form onSubmit={handleAuthSubmit} className="space-y-4 pt-2">
-          {/* Switch Tab login / register */}
-          <div className="flex rounded-xl bg-gray-100 p-1 text-xs font-bold">
-            <button
-              type="button"
-              onClick={() => setAuthMode('login')}
-              className={`flex-1 py-2 rounded-lg transition ${
-                authMode === 'login' ? 'bg-white text-green-800 shadow-sm' : 'text-gray-500'
-              }`}
-            >
-              Đăng Nhập
-            </button>
-            <button
-              type="button"
-              onClick={() => setAuthMode('register')}
-              className={`flex-1 py-2 rounded-lg transition ${
-                authMode === 'register' ? 'bg-white text-green-800 shadow-sm' : 'text-gray-500'
-              }`}
-            >
-              Đăng Ký
-            </button>
-          </div>
-
-          {authMode === 'register' && (
-            <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1">Họ và tên:</label>
-              <InputText
-                value={authName}
-                onChange={e => setAuthName(e.target.value)}
-                placeholder="Ví dụ: Nguyễn Văn A"
-                className="w-full text-sm"
-                required
-              />
-            </div>
-          )}
-
-          <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1">Số điện thoại:</label>
-            <InputText
-              type="tel"
-              value={authPhone}
-              onChange={e => setAuthPhone(e.target.value)}
-              placeholder="Ví dụ: 0903.889.xxx"
-              className="w-full text-sm"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1">Mật khẩu:</label>
-            <InputText
-              type="password"
-              value={authPassword}
-              onChange={e => setAuthPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full text-sm"
-              required
-            />
-          </div>
-
-          <Button
-            type="submit"
-            icon={authMode === 'login' ? 'pi pi-sign-in' : 'pi pi-user-plus'}
-            label={authMode === 'login' ? 'Đăng Nhập Ngay' : 'Hoàn Tất Đăng Ký'}
-            className="w-full p-button-success font-bold text-sm shadow mt-2"
-          />
-
-          <div className="text-center pt-2">
-            <span className="text-xs text-gray-500">
-              {authMode === 'login' ? 'Chưa có tài khoản? ' : 'Đã có tài khoản? '}
-            </span>
-            <button
-              type="button"
-              onClick={() => setAuthMode(authMode === 'login' ? 'register' : 'login')}
-              className="text-xs text-green-800 font-bold hover:underline"
-            >
-              {authMode === 'login' ? 'Đăng ký miễn phí' : 'Đăng nhập ngay'}
-            </button>
-          </div>
-        </form>
-      </Dialog>
+      {/* Modal Auth */}
+      <ModalAuth
+        visible={authModalVisible}
+        onHide={() => setAuthModalVisible(false)}
+        defaultMode={authDefaultMode}
+      />
     </header>
   );
 };

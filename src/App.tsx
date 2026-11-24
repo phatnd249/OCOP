@@ -17,9 +17,10 @@ import { OrderManagement } from './pages/OrderManagement';
 import { LiveStream } from './pages/LiveStream';
 import { EcoMap } from './pages/EcoMap';
 import { YouthHonor } from './pages/YouthHonor';
+import { AdminUsers } from './pages/AdminUsers';
 
 export const App: React.FC = () => {
-  const { activeScreen } = useApp();
+  const { activeScreen, currentRole } = useApp();
 
   const renderActiveScreen = () => {
     switch (activeScreen) {
@@ -43,13 +44,19 @@ export const App: React.FC = () => {
         return <EcoMap />;
       case 'volunteer':
         return <YouthHonor />;
+      case 'admin_users':
+        return <AdminUsers />;
       default:
         return <Home />;
     }
   };
 
+  const isElderlyFarmer = currentRole === 'farmer';
+
   return (
-    <div className="min-h-screen flex flex-col bg-cream text-ink font-sans selection:bg-green-100 selection:text-green-800">
+    <div className={`min-h-screen flex flex-col bg-cream text-ink font-sans selection:bg-green-100 selection:text-green-800 ${
+      isElderlyFarmer ? 'text-lg md:text-xl' : ''
+    }`}>
       <Header />
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 sm:py-10">
         {renderActiveScreen()}

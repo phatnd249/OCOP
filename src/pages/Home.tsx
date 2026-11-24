@@ -36,6 +36,7 @@ export const Home: React.FC = () => {
     youthSupporters,
     currentRole,
     setRole,
+    quickLogin,
     setActiveScreen,
     setSelectedProductId,
     addToCart,
@@ -196,36 +197,46 @@ export const Home: React.FC = () => {
           {/* Nút chuyển nhanh góc nhìn Demo & Đăng bán nhanh */}
           <div className="flex items-center gap-2 w-full lg:w-auto justify-end flex-wrap">
             <div className="bg-green-50 p-1 rounded-2xl border border-green-200 flex items-center gap-1 text-xs">
-              <span className="px-2 font-bold text-gray-500 hidden sm:inline">Góc nhìn:</span>
+              <span className="px-2 font-bold text-gray-500 hidden sm:inline">Demo vai trò:</span>
               <button
-                onClick={() => setRole('customer')}
+                onClick={() => quickLogin('buyer')}
                 className={`px-3 py-1.5 rounded-xl font-bold transition ${
-                  currentRole === 'customer'
-                    ? 'bg-green-700 text-white shadow-sm'
+                  currentRole === 'buyer'
+                    ? 'bg-amber-600 text-white shadow-sm'
                     : 'text-gray-700 hover:bg-green-200'
                 }`}
               >
-                Khách TP.HCM
+                🟠 Khách TP.HCM
               </button>
               <button
-                onClick={() => setRole('farmer')}
+                onClick={() => quickLogin('farmer')}
                 className={`px-3 py-1.5 rounded-xl font-bold transition ${
                   currentRole === 'farmer'
                     ? 'bg-green-700 text-white shadow-sm'
                     : 'text-gray-700 hover:bg-green-200'
                 }`}
               >
-                🌾 Chú Ba Tư (50t)
+                🟢 Chú Ba Tư
               </button>
               <button
-                onClick={() => setRole('youth')}
+                onClick={() => quickLogin('youth')}
                 className={`px-3 py-1.5 rounded-xl font-bold transition ${
                   currentRole === 'youth'
-                    ? 'bg-green-700 text-white shadow-sm'
+                    ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-gray-700 hover:bg-green-200'
                 }`}
               >
-                🌟 Đoàn viên
+                🔵 Đoàn viên
+              </button>
+              <button
+                onClick={() => quickLogin('admin')}
+                className={`px-3 py-1.5 rounded-xl font-bold transition ${
+                  currentRole === 'admin'
+                    ? 'bg-red-700 text-white shadow-sm'
+                    : 'text-gray-700 hover:bg-red-100'
+                }`}
+              >
+                🔴 Admin
               </button>
             </div>
 
