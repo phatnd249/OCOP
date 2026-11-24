@@ -71,12 +71,12 @@ export const Header: React.FC = () => {
     // 3. Thanh Niên Hỗ Trợ (Youth) Menu
     if (currentRole === 'youth') {
       return [
-        { id: 'quick_post' as ScreenId, label: 'Thêm Sản Phẩm (AI)', icon: <Plus className="w-4 h-4 shrink-0" /> },
-        { id: 'live' as ScreenId, label: 'Lịch & Phòng Live', icon: <Video className="w-4 h-4 shrink-0" /> },
         { id: 'orders' as ScreenId, label: 'Xử Lý Đơn Hộ Vườn', icon: <Package className="w-4 h-4 shrink-0" /> },
-        { id: 'gardens' as ScreenId, label: 'Hồ Sơ Nhà Vườn', icon: <Store className="w-4 h-4 shrink-0" /> },
-        { id: 'volunteer' as ScreenId, label: 'Giờ Tình Nguyện', icon: <Award className="w-4 h-4 shrink-0" /> },
-        { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4 shrink-0" /> }
+        { id: 'volunteer' as ScreenId, label: 'Giờ Tình Nguyện Của Tôi', icon: <Award className="w-4 h-4 shrink-0" /> },
+        { id: 'gardens' as ScreenId, label: 'Hồ Sơ Vườn', icon: <Store className="w-4 h-4 shrink-0" /> },
+        { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4 shrink-0" /> },
+        { id: 'quick_post' as ScreenId, label: 'Thêm Sản Phẩm (AI)', icon: <Plus className="w-4 h-4 shrink-0" /> },
+        { id: 'live' as ScreenId, label: 'Lịch & Phòng Live', icon: <Video className="w-4 h-4 shrink-0" /> }
       ];
     }
 
@@ -130,8 +130,8 @@ export const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Navigation tabs ở giữa trên cùng 1 hàng */}
-        <nav className="flex items-center justify-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar py-1 flex-1 min-w-0 px-2">
+        {/* Navigation tabs ở giữa: dùng justify-start md:justify-center để không bao giờ bị cắt chữ bên trái khi tràn */}
+        <nav className="flex items-center justify-start md:justify-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-1 flex-1 min-w-0 px-1">
           {navItems.map(item => {
             const isActive =
               activeScreen === item.id ||

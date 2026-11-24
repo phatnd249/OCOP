@@ -207,40 +207,78 @@ export const LiveStream: React.FC = () => {
 
   return (
     <div className="space-y-8 animate-fadeIn">
-      {/* Title & Action Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="inline-flex items-center gap-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-1 shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-            <span>TRỰC TIẾP TẠI GỐC CÂY CÁC NHÀ VƯỜN</span>
+      {/* Hero Banner: TRUNG TÂM LIVESTREAM NÔNG SẢN CÁC NHÀ VƯỜN ĐỒNG NAI */}
+      <div className="bg-[#164e23] text-white p-6 sm:p-8 rounded-3xl shadow-md border border-[#1b5e20] space-y-6">
+        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
+          <div className="space-y-3 max-w-3xl">
+            <div className="inline-flex items-center gap-2 bg-[#d32f2f] text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+              <span>TRUNG TÂM LIVESTREAM NÔNG SẢN CÁC NHÀ VƯỜN ĐỒNG NAI</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
+              Tổng Hợp Luồng Live Tận Gốc Các Nhà Vườn
+            </h1>
+            <p className="text-xs sm:text-sm text-green-100 leading-relaxed font-normal">
+              Kênh truyền hình số hóa nông nghiệp: Đoàn viên thanh niên hỗ trợ livestream trực tiếp tại vườn của các hộ nông dân tại các phường/xã. Người tiêu dùng TP.HCM mắt thấy tai nghe, chốt đơn hái tại cây chuyển xe lạnh giao trong ngày.
+            </p>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-ink">
-            Tổng Hợp Livestream Tận Vườn Các Phường / Xã
-          </h1>
-          <p className="text-xs text-gray-500 mt-0.5">
-            Xem luồng phát trực tiếp từ các nhà vườn Đồng Nai, tương tác và chốt đơn hái tại cây
-          </p>
+
+          {/* Action Button: Rõ ràng, nền sáng tương phản cao, không bị chìm */}
+          <button
+            type="button"
+            onClick={() => setCreateModalOpen(true)}
+            className="group inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-white hover:bg-green-50 text-green-950 font-bold text-xs sm:text-sm shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all self-start lg:self-auto shrink-0 border-2 border-white"
+            title="Đoàn viên & Nhà vườn đăng ký lịch phát sóng livestream"
+          >
+            <div className="w-9 h-9 rounded-xl bg-green-700 flex items-center justify-center text-white group-hover:scale-105 transition-transform shrink-0">
+              <Video className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex flex-col text-left">
+              <div className="flex items-center gap-1.5 leading-tight">
+                <span className="font-black text-sm tracking-tight text-green-950">Đăng Ký Phiên Live Vườn</span>
+                <span className="inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+              </div>
+              <span className="text-[11px] text-green-800 font-bold mt-0.5">
+                Hỗ trợ kỹ thuật • +2h tình nguyện
+              </span>
+            </div>
+          </button>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setCreateModalOpen(true)}
-          className="group inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-green-700 hover:bg-green-800 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all self-start sm:self-auto shrink-0 border border-green-600/30"
-          title="Đoàn viên & Nhà vườn đăng ký lịch phát sóng livestream"
-        >
-          <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-white group-hover:scale-105 transition-transform shrink-0">
-            <Video className="w-4 h-4 text-white" />
-          </div>
-          <div className="flex flex-col text-left">
-            <div className="flex items-center gap-1.5 leading-tight">
-              <span className="font-black text-sm tracking-tight text-white">Đăng Ký Phiên Live Vườn</span>
-              <span className="inline-block w-2 h-2 rounded-full bg-sun animate-pulse"></span>
+        {/* 4 Thẻ Thống Kê Tổng Quan */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-2 border-t border-green-800/60">
+          <div className="bg-[#0f3d1b] border border-white/10 rounded-2xl p-3 sm:p-4 text-white">
+            <span className="text-[11px] text-green-200 font-medium block mb-1">Nhà vườn đang phát</span>
+            <div className="text-base sm:text-lg font-black text-sun flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+              <span>{allStreams.filter(s => s.isLiveNow).length || 1} Vườn</span>
             </div>
-            <span className="text-[11px] text-green-100 font-medium mt-0.5">
-              Hỗ trợ kỹ thuật • +2h tình nguyện
-            </span>
           </div>
-        </button>
+
+          <div className="bg-[#0f3d1b] border border-white/10 rounded-2xl p-3 sm:p-4 text-white">
+            <span className="text-[11px] text-green-200 font-medium block mb-1">Khách đang xem live</span>
+            <div className="text-base sm:text-lg font-black text-sun flex items-center gap-2">
+              <Users className="w-4 h-4 text-green-300" />
+              <span>{totalViewers > 0 ? totalViewers.toLocaleString('vi-VN') : '1.428'}</span>
+            </div>
+          </div>
+
+          <div className="bg-[#0f3d1b] border border-white/10 rounded-2xl p-3 sm:p-4 text-white">
+            <span className="text-[11px] text-green-200 font-medium block mb-1">Khu vực phường/xã</span>
+            <div className="text-base sm:text-lg font-black text-sun flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-green-300" />
+              <span>8 Địa bàn</span>
+            </div>
+          </div>
+
+          <div className="bg-[#0f3d1b] border border-white/10 rounded-2xl p-3 sm:p-4 text-white">
+            <span className="text-[11px] text-green-200 font-medium block mb-1">Đơn chốt hôm nay</span>
+            <div className="text-base sm:text-lg font-black text-sun flex items-center gap-2">
+              <ShoppingBag className="w-4 h-4 text-green-300" />
+              <span>450+ Đơn</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* FILTER BAR: WARD / COMMUNE FILTER + STATUS FILTER + SEARCH */}
@@ -771,11 +809,12 @@ export const LiveStream: React.FC = () => {
                 <Store className="w-3.5 h-3.5 text-green-700 shrink-0" />
                 <span>Tên Nhà Vườn / Hợp Tác Xã:</span>
               </label>
-              <InputText
+              <input
+                type="text"
                 value={newFarmName}
                 onChange={e => setNewFarmName(e.target.value)}
                 placeholder="Ví dụ: Vườn Sầu Riêng Chú Ba"
-                className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
+                className="w-full text-sm py-2.5 px-3.5 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition font-medium shadow-2xs"
                 required
               />
             </div>
@@ -784,11 +823,12 @@ export const LiveStream: React.FC = () => {
                 <User className="w-3.5 h-3.5 text-green-700 shrink-0" />
                 <span>Tên Bác Chủ Vườn:</span>
               </label>
-              <InputText
+              <input
+                type="text"
                 value={newFarmerName}
                 onChange={e => setNewFarmerName(e.target.value)}
                 placeholder="Ví dụ: Bác Ba Cần"
-                className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
+                className="w-full text-sm py-2.5 px-3.5 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition font-medium shadow-2xs"
                 required
               />
             </div>
@@ -804,7 +844,7 @@ export const LiveStream: React.FC = () => {
                 value={newWard}
                 onChange={e => setNewWard(e.value)}
                 options={modalWardOptions}
-                className="w-full text-sm rounded-xl border border-gray-300 bg-white focus:border-green-600 transition"
+                className="w-full text-sm rounded-xl border border-gray-300 bg-white focus:border-green-600 transition !min-h-[44px] flex items-center font-medium"
               />
             </div>
             <div>
@@ -812,11 +852,12 @@ export const LiveStream: React.FC = () => {
                 <Clock className="w-3.5 h-3.5 text-green-700 shrink-0" />
                 <span>Thời gian phát sóng:</span>
               </label>
-              <InputText
+              <input
+                type="text"
                 value={newTime}
                 onChange={e => setNewTime(e.target.value)}
                 placeholder="Ví dụ: Tối nay 19:30"
-                className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
+                className="w-full text-sm py-2.5 px-3.5 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition font-medium shadow-2xs"
                 required
               />
             </div>
@@ -827,11 +868,12 @@ export const LiveStream: React.FC = () => {
               <Radio className="w-3.5 h-3.5 text-green-700 shrink-0" />
               <span>Tiêu đề buổi Livestream:</span>
             </label>
-            <InputText
+            <input
+              type="text"
               value={newTitle}
               onChange={e => setNewTitle(e.target.value)}
               placeholder="Ví dụ: Cắt Sầu Riêng Chín Cây & Chôm Chôm Nhãn Mùa Vụ Mới"
-              className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
+              className="w-full text-sm py-2.5 px-3.5 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition font-medium shadow-2xs"
               required
             />
           </div>
@@ -842,11 +884,12 @@ export const LiveStream: React.FC = () => {
                 <ShoppingBag className="w-3.5 h-3.5 text-green-700 shrink-0" />
                 <span>Sản phẩm OCOP ghim chốt:</span>
               </label>
-              <InputText
+              <input
+                type="text"
                 value={newProduct}
                 onChange={e => setNewProduct(e.target.value)}
                 placeholder="Ví dụ: Sầu riêng Ri6 hạt lép"
-                className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
+                className="w-full text-sm py-2.5 px-3.5 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition font-medium shadow-2xs"
                 required
               />
             </div>
@@ -855,11 +898,12 @@ export const LiveStream: React.FC = () => {
                 <TagIcon className="w-3.5 h-3.5 text-green-700 shrink-0" />
                 <span>Mức giá ưu đãi trên Live:</span>
               </label>
-              <InputText
+              <input
+                type="text"
                 value={newDealPrice}
                 onChange={e => setNewDealPrice(e.target.value)}
                 placeholder="Ví dụ: 105.000 đ/kg"
-                className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
+                className="w-full text-sm py-2.5 px-3.5 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition font-medium shadow-2xs"
                 required
               />
             </div>
@@ -870,11 +914,12 @@ export const LiveStream: React.FC = () => {
               <CheckCircle2 className="w-3.5 h-3.5 text-green-700 shrink-0" />
               <span>Đoàn viên thanh niên phụ trách dẫn live:</span>
             </label>
-            <InputText
+            <input
+              type="text"
               value={newYouthHost}
               onChange={e => setNewYouthHost(e.target.value)}
               placeholder="Ví dụ: Nguyễn Văn Nam (Chi đoàn P. Suối Tre)"
-              className="w-full text-sm py-2 px-3 rounded-xl border border-gray-300 focus:border-green-600 focus:ring-1 focus:ring-green-600 outline-none bg-white text-gray-800 placeholder:text-gray-400 transition"
+              className="w-full text-sm py-2.5 px-3.5 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition font-medium shadow-2xs"
               required
             />
           </div>

@@ -550,10 +550,10 @@ export const Home: React.FC = () => {
               <span className="font-mono text-green-900 font-bold">{garden.ocopCertNo}</span>
             </div>
             <button
-              onClick={() => setActiveScreen('garden')}
+              onClick={() => setActiveScreen('gardens')}
               className="w-full py-2 bg-green-700 hover:bg-green-800 text-white rounded-xl font-bold text-xs shadow transition text-center block"
             >
-              Xem Toàn Bộ Câu Chuyện Nhà Vườn
+              Khám Phá Danh Sách Hồ Sơ Nhà Vườn
             </button>
           </div>
 
