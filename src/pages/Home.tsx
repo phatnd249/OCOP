@@ -42,7 +42,8 @@ export const Home: React.FC = () => {
     addToCart,
     setQrModalProduct,
     setTourModalOpen,
-    showNotification
+    showNotification,
+    currentUser
   } = useApp();
 
   // Search & Speech State
@@ -152,111 +153,13 @@ export const Home: React.FC = () => {
 
   return (
     <div className="space-y-10 pb-16">
-      
-      {/* =========================================================================
-          TẦNG 1: THANH TÌM KIẾM LỚN & CHUYỂN VAI TRÒ (HEADER BỀ MẶT)
-          ========================================================================= */}
-      <section className="bg-white rounded-3xl p-4 sm:p-6 border border-green-200 shadow-soft space-y-4">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
-          
-          {/* Ô tìm kiếm lớn ở giữa kèm nút tìm giọng nói */}
-          <div className="relative w-full lg:max-w-2xl">
-            <div className="relative flex items-center">
-              <Search className="w-5 h-5 text-gray-400 absolute left-4 pointer-events-none" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                placeholder="Tìm chôm chôm, sầu riêng Long Khánh, bưởi Tân Triều, hạt điều..."
-                className="w-full pl-12 pr-28 py-3.5 text-sm sm:text-base rounded-2xl border-2 border-green-600 focus:border-green-800 focus:ring-4 focus:ring-green-100 outline-none transition shadow-inner bg-cream"
-              />
-              <button
-                type="button"
-                onClick={handleVoiceSearch}
-                className={`absolute right-2 px-3 py-2 rounded-xl flex items-center gap-1.5 text-xs font-bold transition ${
-                  isListening
-                    ? 'bg-red-600 text-white animate-pulse'
-                    : 'bg-green-100 text-green-900 hover:bg-green-200'
-                }`}
-                title="Hỗ trợ giọng nói cho chủ vườn và khách hàng"
-              >
-                <Mic className="w-4 h-4 text-green-800" />
-                <span className="hidden sm:inline">{isListening ? 'Đang nghe...' : 'Giọng nói'}</span>
-              </button>
-            </div>
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="text-xs text-gray-400 hover:text-gray-600 absolute right-32 top-4"
-              >
-                Xóa
-              </button>
-            )}
-          </div>
-
-          {/* Nút chuyển nhanh góc nhìn Demo & Đăng bán nhanh */}
-          <div className="flex items-center gap-2 w-full lg:w-auto justify-end flex-wrap">
-            <div className="bg-green-50 p-1 rounded-2xl border border-green-200 flex items-center gap-1 text-xs">
-              <span className="px-2 font-bold text-gray-500 hidden sm:inline">Demo vai trò:</span>
-              <button
-                onClick={() => quickLogin('buyer')}
-                className={`px-3 py-1.5 rounded-xl font-bold transition ${
-                  currentRole === 'buyer'
-                    ? 'bg-amber-600 text-white shadow-sm'
-                    : 'text-gray-700 hover:bg-green-200'
-                }`}
-              >
-                🟠 Khách TP.HCM
-              </button>
-              <button
-                onClick={() => quickLogin('farmer')}
-                className={`px-3 py-1.5 rounded-xl font-bold transition ${
-                  currentRole === 'farmer'
-                    ? 'bg-green-700 text-white shadow-sm'
-                    : 'text-gray-700 hover:bg-green-200'
-                }`}
-              >
-                🟢 Chú Ba Tư
-              </button>
-              <button
-                onClick={() => quickLogin('youth')}
-                className={`px-3 py-1.5 rounded-xl font-bold transition ${
-                  currentRole === 'youth'
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'text-gray-700 hover:bg-green-200'
-                }`}
-              >
-                🔵 Đoàn viên
-              </button>
-              <button
-                onClick={() => quickLogin('admin')}
-                className={`px-3 py-1.5 rounded-xl font-bold transition ${
-                  currentRole === 'admin'
-                    ? 'bg-red-700 text-white shadow-sm'
-                    : 'text-gray-700 hover:bg-red-100'
-                }`}
-              >
-                🔴 Admin
-              </button>
-            </div>
-
-            {/* Nút Đăng bán nhanh */}
-            <Button
-              onClick={() => setActiveScreen('quick_post')}
-              icon="pi pi-plus"
-              label="Đăng Bán Nhanh (AI/Voice)"
-              className="p-button-warning font-bold text-xs p-button-sm shadow-md text-ink whitespace-nowrap"
-            />
-          </div>
-        </div>
-      </section>
 
       {/* =========================================================================
-          TẦNG 2: BANNER CHIẾN DỊCH & THANH CHỈ SỐ MINH BẠCH
+          TẦNG 1: BANNER CHIẾN DỊCH & THANH CHỈ SỐ MINH BẠCH
           ========================================================================= */}
       <section className="relative rounded-3xl overflow-hidden bg-green-800 text-white shadow-card">
         <div 
-          className="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-30" 
+          className="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-30"
           style={{ backgroundImage: `url(${garden.coverImage})` }}
         ></div>
         <div className="relative p-6 sm:p-10 md:p-12 max-w-3xl space-y-4">
@@ -266,12 +169,12 @@ export const Home: React.FC = () => {
           </div>
 
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tight">
-            Nông Sản OCOP Long Khánh <br />
-            <span className="text-sun">Minh Bạch Từ Vườn Cây Ba Tư Đến Bàn Ăn</span>
+            Nông Sản OCOP <br />
+            <span className="text-sun">Minh Bạch Từ Vườn Đến Bàn Ăn</span>
           </h1>
 
           <p className="text-green-100 text-xs sm:text-sm leading-relaxed max-w-xl">
-            Sầu riêng Ri6 cơm vàng bao ngọt, chôm chôm nhãn giòn ngọt thu hái sáng sớm tại Ấp Suối Tre (Long Khánh). Chuyến xe lạnh OCOP đưa thẳng về TP.HCM trong 3–4 tiếng.
+            Quy tụ đa dạng trái cây tươi ngon và đặc sản OCOP khắp các nhà vườn Đồng Nai: chôm chôm, sầu riêng, bưởi, mít, xoài, hạt điều, cà phê… Minh bạch mã QR nhật ký mùa vụ, giao tươi tận tay trong ngày hoặc đón khách trải nghiệm tại vườn.
           </p>
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -281,13 +184,6 @@ export const Home: React.FC = () => {
             >
               <MapPin className="w-4 h-4" />
               <span>Khám Phá Bản Đồ Nhà Vườn (Du Lịch Trải Nghiệm)</span>
-            </button>
-            <button
-              onClick={() => setActiveScreen('garden')}
-              className="bg-white/10 hover:bg-white/20 text-white font-bold px-5 py-3.5 rounded-2xl backdrop-blur transition flex items-center gap-2 text-xs sm:text-sm border border-white/20"
-            >
-              <span>Xem Hồ Sơ 2.5 ha Vườn Ba Tư</span>
-              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -310,7 +206,86 @@ export const Home: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          TẦNG 3: DẢI LIVESTREAM "ĐANG PHÁT & SẮP LÊN SÓNG" (NẰM NGANG)
+          THANH TÌM KIẾM THÔNG MINH (NẰM TRÊN MỤC LIVESTREAM)
+          Tính năng: 🎤 Nói để tìm (Khuyên dùng cho người 50-60 tuổi) & 🔍 Tìm kiếm
+          ========================================================================= */}
+      <section className="bg-gradient-to-r from-green-50/90 via-emerald-50/60 to-green-50/90 rounded-2xl sm:rounded-full p-2.5 sm:p-3 border border-green-200 shadow-sm">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+          
+          {/* Ô nhập từ khóa tìm kiếm */}
+          <div className="relative flex-1 w-full flex items-center">
+            <Search className="w-5 h-5 text-gray-400 absolute left-4 pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  showNotification(`Đang tìm: "${searchQuery}"`);
+                }
+              }}
+              placeholder="Tìm kiếm: chôm chôm, sầu riêng Long Khánh, bưởi Tân Triều, hạt điều..."
+              className="w-full pl-11 pr-20 py-3 text-xs sm:text-sm rounded-full border border-green-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition bg-white text-gray-800 placeholder-gray-400 shadow-inner"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="text-xs text-gray-400 hover:text-gray-600 absolute right-4"
+              >
+                Xóa
+              </button>
+            )}
+          </div>
+
+          {/* Cụm 2 nút hành động: Nói để tìm & Tìm kiếm */}
+          <div className="flex items-center gap-2 w-full md:w-auto justify-end shrink-0">
+            {/* Nút 1: Nói để tìm (Icon Micro + chữ Nói để tìm - Khuyên dùng) */}
+            <button
+              type="button"
+              onClick={handleVoiceSearch}
+              className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-bold text-xs sm:text-sm transition shadow-sm border ${
+                isListening
+                  ? 'bg-red-600 text-white animate-pulse border-red-700'
+                  : 'bg-amber-500 hover:bg-amber-600 text-white border-amber-600'
+              }`}
+              title="Hỗ trợ giọng nói cho người lớn tuổi 50–60 tuổi ngại gõ chữ"
+            >
+              <Mic className="w-4 h-4 text-white" />
+              <span>{isListening ? 'Đang lắng nghe...' : '🎤 Nói để tìm'}</span>
+            </button>
+
+            {/* Nút 2: Tìm kiếm (Icon kính lúp + chữ Tìm kiếm nền xanh đậm) */}
+            <button
+              type="button"
+              onClick={() => {
+                if (searchQuery.trim()) {
+                  showNotification(`Đang tìm: "${searchQuery}"`);
+                } else {
+                  showNotification('Vui lòng nhập tên nông sản hoặc dùng "Nói để tìm"');
+                }
+              }}
+              className="flex-1 md:flex-initial flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-green-800 hover:bg-green-900 text-white font-bold text-xs sm:text-sm shadow-sm transition"
+            >
+              <Search className="w-4 h-4 text-white" />
+              <span>Tìm kiếm</span>
+            </button>
+
+            {/* Nút Đăng Đài Nhanh: Dành riêng cho Chủ vườn (farmer) */}
+            {currentUser?.role === 'farmer' && (
+              <button
+                onClick={() => setActiveScreen('quick_post')}
+                className="hidden lg:flex items-center gap-1.5 px-3.5 py-2.5 rounded-full border border-green-300 bg-white hover:bg-green-50 text-green-800 text-xs font-bold shadow-sm transition ml-1"
+                title="Đăng sản phẩm mới bằng AI / Voice"
+              >
+                <span>🎙️ Đăng bài</span>
+              </button>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          TẦNG 2: DẢI LIVESTREAM "ĐANG PHÁT & SẮP LÊN SÓNG" (NẰM NGANG)
           ========================================================================= */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
@@ -337,11 +312,10 @@ export const Home: React.FC = () => {
             <div
               key={live.id}
               onClick={() => setActiveScreen('live')}
-              className={`rounded-2xl p-4 border transition cursor-pointer flex flex-col justify-between space-y-3 relative overflow-hidden group shadow-sm ${
-                live.isLiveNow
+              className={`rounded-2xl p-4 border transition cursor-pointer flex flex-col justify-between space-y-3 relative overflow-hidden group shadow-sm ${live.isLiveNow
                   ? 'bg-amber-50 border-amber-300 ring-2 ring-amber-400'
                   : 'bg-white border-green-200 hover:border-green-400'
-              }`}
+                }`}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 shadow">
@@ -404,7 +378,7 @@ export const Home: React.FC = () => {
           TẦNG 4: KHU VỰC LỌC & DANH SÁCH SẢN PHẨM OCOP (CHIA 2 CỘT 25% - 75%)
           ========================================================================= */}
       <section className="pt-4 space-y-6">
-        
+
         {/* Tiêu đề & Quick Sort Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-green-200 pb-4">
           <div>
@@ -424,33 +398,29 @@ export const Home: React.FC = () => {
             </span>
             <button
               onClick={() => setSortBy('newest')}
-              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition ${
-                sortBy === 'newest' ? 'bg-green-700 text-white' : 'bg-white border text-gray-700 hover:bg-green-50'
-              }`}
+              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition ${sortBy === 'newest' ? 'bg-green-700 text-white' : 'bg-white border text-gray-700 hover:bg-green-50'
+                }`}
             >
               Mới thu hoạch
             </button>
             <button
               onClick={() => setSortBy('price_asc')}
-              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition ${
-                sortBy === 'price_asc' ? 'bg-green-700 text-white' : 'bg-white border text-gray-700 hover:bg-green-50'
-              }`}
+              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition ${sortBy === 'price_asc' ? 'bg-green-700 text-white' : 'bg-white border text-gray-700 hover:bg-green-50'
+                }`}
             >
               Giá thấp → cao
             </button>
             <button
               onClick={() => setSortBy('price_desc')}
-              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition ${
-                sortBy === 'price_desc' ? 'bg-green-700 text-white' : 'bg-white border text-gray-700 hover:bg-green-50'
-              }`}
+              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition ${sortBy === 'price_desc' ? 'bg-green-700 text-white' : 'bg-white border text-gray-700 hover:bg-green-50'
+                }`}
             >
               Giá cao → thấp
             </button>
             <button
               onClick={() => setSortBy('popular')}
-              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition ${
-                sortBy === 'popular' ? 'bg-green-700 text-white' : 'bg-white border text-gray-700 hover:bg-green-50'
-              }`}
+              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition ${sortBy === 'popular' ? 'bg-green-700 text-white' : 'bg-white border text-gray-700 hover:bg-green-50'
+                }`}
             >
               Nhiều lượt trải nghiệm nhất
             </button>
@@ -466,7 +436,7 @@ export const Home: React.FC = () => {
 
         {/* Bố cục 2 cột: Cột trái (25%) Bộ lọc thông minh - Cột phải (75%) Lưới sản phẩm */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
-          
+
           {/* CỘT TRÁI (25%): 5 NHÓM TIÊU CHÍ BỘ LỌC ĐẶC THÙ NÔNG SẢN ĐỒNG NAI */}
           <aside className="lg:col-span-1 bg-white p-5 rounded-3xl border border-green-200 shadow-soft space-y-6 sticky top-28">
             <div className="flex items-center justify-between pb-3 border-b border-green-200">
@@ -722,7 +692,7 @@ export const Home: React.FC = () => {
 
           {/* CỘT PHẢI (75%): LƯỚI THẺ SẢN PHẨM THEO KIỂU REMARKET */}
           <div className="lg:col-span-3 space-y-6">
-            
+
             {filteredProducts.length === 0 ? (
               <div className="p-12 text-center bg-white rounded-3xl border border-green-200">
                 <span className="text-4xl block mb-2">🔍</span>
@@ -865,7 +835,7 @@ export const Home: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
+
           {/* Cột 1: Thông tin Nhà Vườn Ba Tư */}
           <div className="md:col-span-1 bg-cream rounded-2xl p-5 border border-green-200 space-y-3">
             <div className="flex items-center gap-3">

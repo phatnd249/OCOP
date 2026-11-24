@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 export const Checkout: React.FC = () => {
-  const { cart, products, createOrder, setActiveScreen, showNotification } = useApp();
+  const { cart, products, createOrder, setActiveScreen, showNotification, currentUser } = useApp();
 
   const [customerName, setCustomerName] = useState('Chị Thảo My');
   const [phone, setPhone] = useState('0903.889.123');
@@ -50,6 +50,11 @@ export const Checkout: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!currentUser) {
+      showNotification('⚠️ Vui lòng Đăng nhập hoặc Đăng ký tài khoản để hoàn tất đơn hàng!');
+      return;
+    }
 
     if (cartDetails.length === 0) {
       showNotification('Giỏ hàng trống, vui lòng chọn nông sản trước!');
