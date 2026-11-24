@@ -27,7 +27,7 @@ export const EcoMap: React.FC = () => {
           <span>DU LỊCH NÔNG NGHIỆP TRẢI NGHIỆM</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-black text-ink">
-          Bản Đồ Nhà Vườn Sinh Thái Long Khánh
+          Bản Đồ Nhà Vườn Sinh Thái
         </h1>
         <p className="text-xs text-gray-500 mt-1">
           Bấm trực tiếp vào các điểm trên bản đồ để xem thông tin và đặt lịch đến vườn trải nghiệm
@@ -77,20 +77,18 @@ export const EcoMap: React.FC = () => {
                 title={`Bấm để đặt lịch đến ${loc.name}`}
               >
                 <div
-                  className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-black text-sm sm:text-base shadow-2xl transition-all duration-300 border-2 ${
-                    isSelected
+                  className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-black text-sm sm:text-base shadow-2xl transition-all duration-300 border-2 ${isSelected
                       ? 'bg-sun text-earth-dark border-white scale-125 ring-4 ring-amber-400/50'
                       : 'bg-white text-green-900 border-green-400 hover:scale-110'
-                  }`}
+                    }`}
                 >
                   {idx + 1}
                 </div>
                 <div
-                  className={`absolute top-full mt-1.5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-lg shadow backdrop-blur transition ${
-                    isSelected
+                  className={`absolute top-full mt-1.5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-lg shadow backdrop-blur transition ${isSelected
                       ? 'bg-sun text-earth-dark ring-2 ring-white/60'
                       : 'bg-black/80 text-white group-hover:bg-green-800'
-                  }`}
+                    }`}
                 >
                   {loc.name.split('(')[0]}
                   <span className="block text-[9px] font-normal text-amber-200">Bấm để đặt lịch</span>
