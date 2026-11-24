@@ -391,83 +391,88 @@ export const Home: React.FC = () => {
           ========================================================================= */}
       <section className="pt-4 space-y-6">
 
-        {/* Tiêu đề & Quick Sort Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-green-200 pb-4">
-          <div>
-            <h2 className="text-2xl font-black text-ink">
-              Nông Sản OCOP Đồng Nai Tuyển Chọn
-            </h2>
-            <p className="text-xs text-gray-500 mt-0.5">
-              Nông sản tươi sạch từ các nhà vườn đạt chuẩn OCOP • Đóng thùng giao xe lạnh về TP.HCM
-            </p>
+        {/* Tiêu đề & Thanh 4 Dropdown dàn đều 1 hàng ngang */}
+        <div className="space-y-4 border-b border-green-200 pb-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h2 className="text-2xl font-black text-ink">
+                Nông Sản OCOP Đồng Nai Tuyển Chọn
+              </h2>
+              <p className="text-xs text-gray-500 mt-0.5">
+                Nông sản tươi sạch từ các nhà vườn đạt chuẩn OCOP • Đóng thùng giao xe lạnh về TP.HCM
+              </p>
+            </div>
+            <span className="text-xs font-bold text-green-800 bg-green-50 px-3 py-1.5 rounded-full border border-green-200 self-start sm:self-auto">
+              Hiển thị: <strong>{filteredProducts.length}</strong> sản phẩm
+            </span>
           </div>
 
-          {/* 4 Nút Dropdown theo yêu cầu chuẩn */}
-          <div className="flex items-center gap-2 flex-wrap text-xs font-bold">
+          {/* Dàn đều 4 Nút Dropdown trên 1 hàng ngang (grid 4 cột bằng nhau, full width) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs font-bold w-full">
             {/* Nút 1: Loại nông sản */}
-            <div className="relative inline-block">
+            <div className="relative w-full">
               <select
                 value={categoryFilter}
                 onChange={e => setCategoryFilter(e.target.value as any)}
-                className="px-3.5 py-2 pr-7 rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-green-50 font-bold outline-none cursor-pointer appearance-none shadow-sm transition"
+                className="w-full px-4 py-2.5 pr-8 rounded-xl bg-white border border-green-300 text-gray-800 hover:bg-green-50/70 hover:border-green-600 font-bold outline-none cursor-pointer appearance-none shadow-sm transition truncate"
               >
                 <option value="all">Loại: Tất cả nông sản</option>
                 <option value="fresh_fruit">Trái cây tươi (Chôm chôm, Sầu riêng, Bưởi...)</option>
                 <option value="beans_coffee">Hạt & Cà phê</option>
                 <option value="processed">Đặc sản OCOP chế biến</option>
               </select>
-              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-green-700 text-[10px]">
                 ▼
               </span>
             </div>
 
             {/* Nút 2: Khoảng giá */}
-            <div className="relative inline-block">
+            <div className="relative w-full">
               <select
                 value={priceFilter}
                 onChange={e => setPriceFilter(e.target.value as any)}
-                className="px-3.5 py-2 pr-7 rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-green-50 font-bold outline-none cursor-pointer appearance-none shadow-sm transition"
+                className="w-full px-4 py-2.5 pr-8 rounded-xl bg-white border border-green-300 text-gray-800 hover:bg-green-50/70 hover:border-green-600 font-bold outline-none cursor-pointer appearance-none shadow-sm transition truncate"
               >
                 <option value="all">Giá: Tất cả mức giá</option>
                 <option value="under_50">Dưới 50.000đ/kg</option>
                 <option value="50_90">50.000 – 90.000đ/kg</option>
                 <option value="90_120">90.000 – 120.000đ/kg</option>
               </select>
-              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-green-700 text-[10px]">
                 ▼
               </span>
             </div>
 
             {/* Nút 3: Nhà vườn / vùng */}
-            <div className="relative inline-block">
+            <div className="relative w-full">
               <select
                 value={gardenFilter}
                 onChange={e => setGardenFilter(e.target.value as any)}
-                className="px-3.5 py-2 pr-7 rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-green-50 font-bold outline-none cursor-pointer appearance-none shadow-sm transition"
+                className="w-full px-4 py-2.5 pr-8 rounded-xl bg-white border border-green-300 text-gray-800 hover:bg-green-50/70 hover:border-green-600 font-bold outline-none cursor-pointer appearance-none shadow-sm transition truncate"
               >
                 <option value="all">Vườn: Tất cả nhà vườn</option>
                 <option value="ba_tu">Nhà vườn Ba Tư (Long Khánh)</option>
                 <option value="tan_trieu">Vườn bưởi Tân Triều</option>
                 <option value="others">Các vườn OCOP khác</option>
               </select>
-              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-green-700 text-[10px]">
                 ▼
               </span>
             </div>
 
             {/* Nút 4: Sắp xếp */}
-            <div className="relative inline-block">
+            <div className="relative w-full">
               <select
                 value={sortOption}
                 onChange={e => setSortOption(e.target.value as any)}
-                className="px-3.5 py-2 pr-7 rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-green-50 font-bold outline-none cursor-pointer appearance-none shadow-sm transition"
+                className="w-full px-4 py-2.5 pr-8 rounded-xl bg-white border border-green-300 text-gray-800 hover:bg-green-50/70 hover:border-green-600 font-bold outline-none cursor-pointer appearance-none shadow-sm transition truncate"
               >
                 <option value="newest">Sắp xếp: Mới thu hoạch</option>
                 <option value="price_asc">Giá thấp đến cao</option>
                 <option value="price_desc">Giá cao đến thấp</option>
                 <option value="has_tour">Có lịch trải nghiệm vườn</option>
               </select>
-              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-green-700 text-[10px]">
                 ▼
               </span>
             </div>
