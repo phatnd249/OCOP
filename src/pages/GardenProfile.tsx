@@ -22,12 +22,23 @@ import {
   Eye,
   Mic,
   Camera,
-  ExternalLink
+  ExternalLink,
+  Pencil,
+  Store,
+  User,
+  FileText,
+  X
 } from 'lucide-react';
+import { Dialog } from 'primereact/dialog';
+import { InputText } from 'primereact/inputtext';
+import { Dropdown } from 'primereact/dropdown';
 
 export const GardenProfile: React.FC = () => {
   const {
     garden,
+    updateGarden,
+    currentRole,
+    currentUser,
     youthSupporters,
     products,
     liveStreams,
@@ -38,6 +49,84 @@ export const GardenProfile: React.FC = () => {
     setTourModalOpen,
     showNotification
   } = useApp();
+
+  // Kiểm tra vai trò nông dân (chủ nhà vườn)
+  const isFarmer = currentRole === 'farmer' || currentUser?.role === 'farmer';
+
+  // State cho Popup Chỉnh Sửa Hồ Sơ (tính năng từ develop)
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editName, setEditName] = useState(garden.name);
+  const [editOwner, setEditOwner] = useState(garden.owner);
+  const [editLocation, setEditLocation] = useState(garden.location);
+  const [editArea, setEditArea] = useState(garden.area);
+  const [editCrops, setEditCrops] = useState(
+    Array.isArray(garden.crops) ? garden.crops.join(', ') : (garden.crops || '')
+  );
+  const [editOcopRating, setEditOcopRating] = useState(garden.ocopRating || 4);
+  const [editOcopCertNo, setEditOcopCertNo] = useState(garden.ocopCertNo);
+  const [editStory, setEditStory] = useState(garden.story);
+  const [editPhone, setEditPhone] = useState(garden.phone);
+  const [formError, setFormError] = useState<string | null>(null);
+
+  // Mở modal và đồng bộ dữ liệu hiện tại
+  const handleOpenEdit = () => {
+    setEditName(garden.name);
+    setEditOwner(garden.owner);
+    setEditLocation(garden.location);
+    setEditArea(garden.area);
+    setEditCrops(
+      Array.isArray(garden.crops) ? garden.crops.join(', ') : (garden.crops || '')
+    );
+    setEditOcopRating(garden.ocopRating || 4);
+    setEditOcopCertNo(garden.ocopCertNo);
+    setEditStory(garden.story);
+    setEditPhone(garden.phone);
+    setFormError(null);
+    setEditModalOpen(true);
+  };
+
+  // Xử lý lưu hồ sơ và kiểm tra validation 3 trường bắt buộc: Câu chuyện, Vị trí, Chứng nhận OCOP
+  const handleSaveGarden = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormError(null);
+
+    // 1. Kiểm tra Vị trí (Bắt buộc)
+    if (!editLocation.trim()) {
+      setFormError('Vui lòng nhập Vị trí địa lý nhà vườn (Trường bắt buộc).');
+      return;
+    }
+
+    // 2. Kiểm tra Chứng nhận OCOP (Bắt buộc)
+    if (!editOcopCertNo.trim()) {
+      setFormError('Vui lòng nhập Số chứng nhận OCOP của nhà vườn (Trường bắt buộc).');
+      return;
+    }
+
+    // 3. Kiểm tra Câu chuyện (Bắt buộc)
+    if (!editStory.trim()) {
+      setFormError('Vui lòng nhập Câu chuyện làm vườn của nhà vườn (Trường bắt buộc).');
+      return;
+    }
+
+    const cropsArray = editCrops
+      .split(',')
+      .map(c => c.trim())
+      .filter(Boolean);
+
+    updateGarden({
+      name: editName.trim() || garden.name,
+      owner: editOwner.trim() || garden.owner,
+      location: editLocation.trim(),
+      area: editArea.trim() || garden.area,
+      crops: cropsArray.length > 0 ? cropsArray : garden.crops,
+      ocopRating: Number(editOcopRating),
+      ocopCertNo: editOcopCertNo.trim(),
+      story: editStory.trim(),
+      phone: editPhone.trim() || garden.phone
+    });
+
+    setEditModalOpen(false);
+  };
 
   // Tab phụ bên trong trang Hồ sơ vườn
   const [currentSubTab, setCurrentSubTab] = useState<'profile_listings' | 'live_tour'>('profile_listings');
@@ -169,12 +258,27 @@ export const GardenProfile: React.FC = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => setTourModalOpen(true)}
-                    className="bg-sun hover:bg-amber-500 text-earth-dark font-black px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition"
-                  >
-                    Đặt Lịch Ghé Vườn
-                  </button>
+                  {/* Nút Chỉnh Sửa Hồ Sơ dành riêng cho vai trò Chủ nhà vườn (commit 68ac3bd) */}
+                  {isFarmer && (
+                    <button
+                      type="button"
+                      onClick={handleOpenEdit}
+                      className="bg-white hover:bg-green-50 text-green-900 border border-green-300 font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center gap-1.5"
+                    >
+                      <Pencil className="w-4 h-4 text-green-700" />
+                      <span>Chỉnh Sửa Hồ Sơ Vườn</span>
+                    </button>
+                  )}
+
+                  {/* Nút Đặt Lịch Ghé Vườn chỉ hiển thị cho khách hàng (commit 3d04487) */}
+                  {!isFarmer && (
+                    <button
+                      onClick={() => setTourModalOpen(true)}
+                      className="bg-sun hover:bg-amber-500 text-earth-dark font-black px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition"
+                    >
+                      Đặt Lịch Ghé Vườn
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -605,6 +709,198 @@ export const GardenProfile: React.FC = () => {
           </div>
         </div>
       )}
+      {/* MODAL CHỈNH SỬA HỒ SƠ NHÀ VƯỜN (CHO VAI TRÒ CHỦ VƯỜN) */}
+      <Dialog
+        visible={editModalOpen}
+        onHide={() => setEditModalOpen(false)}
+        header={
+          <div className="flex items-center gap-2.5 text-green-950 font-black text-base sm:text-lg">
+            <Store className="w-5 h-5 text-green-700" />
+            <span>Chỉnh Sửa Thông Tin Hồ Sơ Nhà Vườn OCOP</span>
+          </div>
+        }
+        className="w-full max-w-2xl shadow-2xl rounded-3xl overflow-hidden"
+        breakpoints={{ '960px': '85vw', '641px': '95vw' }}
+        modal
+      >
+        <form onSubmit={handleSaveGarden} className="space-y-4 pt-2">
+          {formError && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2 text-xs text-red-700 font-bold">
+              <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+              <span>{formError}</span>
+            </div>
+          )}
+
+          <div className="p-3 bg-green-50 border border-green-200 rounded-xl text-xs text-green-900 leading-relaxed">
+            🌿 <strong>Lưu ý cho Chủ vườn & Đoàn viên:</strong> Để hồ sơ được duyệt và xuất hiện chuẩn OCOP, bắt buộc phải cập nhật đủ <strong>Vị trí địa lý</strong>, <strong>Số chứng nhận OCOP</strong> và <strong>Câu chuyện làm vườn</strong>.
+          </div>
+
+          {/* Hàng 1: Tên vườn & Tên chủ vườn */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
+                <Store className="w-3.5 h-3.5 text-green-700" />
+                <span>Tên nhà vườn:</span>
+              </label>
+              <InputText
+                value={editName}
+                onChange={e => setEditName(e.target.value)}
+                placeholder="Ví dụ: Vườn Sầu Riêng & Chôm Chôm Ba Tư"
+                className="w-full text-xs rounded-xl"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
+                <User className="w-3.5 h-3.5 text-green-700" />
+                <span>Họ và tên chủ vườn:</span>
+              </label>
+              <InputText
+                value={editOwner}
+                onChange={e => setEditOwner(e.target.value)}
+                placeholder="Ví dụ: Chú Ba Tư (Nguyễn Văn Tư)"
+                className="w-full text-xs rounded-xl"
+                required
+              />
+            </div>
+          </div>
+
+          {/* TRƯỜNG BẮT BUỘC 1: VỊ TRÍ ĐỊA LÝ */}
+          <div>
+            <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-green-700" />
+                <span>Vị trí địa lý (Ấp / Xã / TP. Long Khánh):</span>
+              </span>
+              <span className="text-[11px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-200">
+                * Bắt buộc
+              </span>
+            </label>
+            <InputText
+              value={editLocation}
+              onChange={e => setEditLocation(e.target.value)}
+              placeholder="Ví dụ: Ấp Suối Tre, Xã Bình Lộc, TP. Long Khánh, Đồng Nai"
+              className="w-full text-xs rounded-xl"
+              required
+            />
+          </div>
+
+          {/* TRƯỜNG BẮT BUỘC 2: SỐ CHỨNG NHẬN OCOP & HẠNG SAO */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Số chứng nhận OCOP:</span>
+                </span>
+                <span className="text-[11px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-200">
+                  * Bắt buộc
+                </span>
+              </label>
+              <InputText
+                value={editOcopCertNo}
+                onChange={e => setEditOcopCertNo(e.target.value)}
+                placeholder="Ví dụ: OCOP-ĐN-2024-4S-089"
+                className="w-full text-xs rounded-xl font-mono"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
+                <Award className="w-3.5 h-3.5 text-green-700" />
+                <span>Hạng sao OCOP:</span>
+              </label>
+              <Dropdown
+                value={editOcopRating}
+                onChange={e => setEditOcopRating(e.value)}
+                options={[
+                  { label: '⭐ OCOP 3 Sao', value: 3 },
+                  { label: '⭐ OCOP 4 Sao (Tiêu biểu)', value: 4 },
+                  { label: '⭐ OCOP 5 Sao (Quốc gia)', value: 5 }
+                ]}
+                className="w-full text-xs font-medium rounded-xl"
+              />
+            </div>
+          </div>
+
+          {/* TRƯỜNG BẮT BUỘC 3: CÂU CHUYỆN LÀM VƯỜN */}
+          <div>
+            <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <FileText className="w-3.5 h-3.5 text-green-700" />
+                <span>Câu chuyện làm vườn & phương thức canh tác:</span>
+              </span>
+              <span className="text-[11px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-200">
+                * Bắt buộc
+              </span>
+            </label>
+            <textarea
+              value={editStory}
+              onChange={e => setEditStory(e.target.value)}
+              rows={4}
+              placeholder="Chia sẻ về nguồn gốc giống cây, tâm huyết chăm sóc thuận tự nhiên, gìn giữ đất đỏ bazan và sự đồng hành của thanh niên số hóa..."
+              className="w-full text-xs sm:text-sm p-3 rounded-xl border border-gray-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition leading-relaxed bg-white"
+              required
+            />
+          </div>
+
+          {/* Các trường bổ trợ */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1">
+                Diện tích canh tác:
+              </label>
+              <InputText
+                value={editArea}
+                onChange={e => setEditArea(e.target.value)}
+                placeholder="Ví dụ: 2.5 ha"
+                className="w-full text-xs rounded-xl"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1">
+                Số điện thoại liên hệ:
+              </label>
+              <InputText
+                value={editPhone}
+                onChange={e => setEditPhone(e.target.value)}
+                placeholder="0918.345.678"
+                className="w-full text-xs rounded-xl"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1">
+                Cây trồng chủ lực:
+              </label>
+              <InputText
+                value={editCrops}
+                onChange={e => setEditCrops(e.target.value)}
+                placeholder="Sầu riêng Ri6, Chôm chôm..."
+                className="w-full text-xs rounded-xl"
+              />
+            </div>
+          </div>
+
+          {/* Footer nút hành động */}
+          <div className="pt-3 border-t border-gray-100 flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setEditModalOpen(false)}
+              className="w-1/3 h-11 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs sm:text-sm transition flex items-center justify-center gap-1.5"
+            >
+              <X className="w-4 h-4" />
+              <span>Hủy / Đóng</span>
+            </button>
+            <button
+              type="submit"
+              className="flex-1 h-11 rounded-xl bg-green-700 hover:bg-green-800 active:scale-[0.99] text-white font-bold text-xs sm:text-sm transition shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+            >
+              <Check className="w-4 h-4 stroke-[2.5]" />
+              <span>Lưu Thay Đổi Hồ Sơ</span>
+            </button>
+          </div>
+        </form>
+      </Dialog>
     </div>
   );
 };

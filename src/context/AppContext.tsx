@@ -108,7 +108,10 @@ interface AppContextType {
     image: string;
     description: string;
     origin?: string;
-  }) => void;
+    star?: number;
+    minOrder?: number;
+    inStock?: number;
+  }) => string;
 
   // Orders
   orders: Order[];
@@ -126,6 +129,7 @@ interface AppContextType {
 
   // Data
   garden: GardenInfo;
+  updateGarden: (updated: Partial<GardenInfo>) => void;
   youthSupporters: YouthSupporter[];
   liveStreams: LiveStream[];
   likeLiveStream: (liveId: string) => void;
@@ -210,7 +214,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   // Garden
-  const [garden] = useState<GardenInfo>(INITIAL_GARDEN);
+  const [garden, setGarden] = useState<GardenInfo>(() => {
+    const saved = localStorage.getItem('ocop_garden');
+    return saved ? JSON.parse(saved) : INITIAL_GARDEN;
+  });
+
+  const updateGarden = (updated: Partial<GardenInfo>) => {
+    setGarden(prev => {
+      const next = { ...prev, ...updated };
+      localStorage.setItem('ocop_garden', JSON.stringify(next));
+      return next;
+    });
+    showNotification('Cập nhật hồ sơ nhà vườn thành công!');
+  };
 
   // LiveStreams
   const [liveStreams, setLiveStreams] = useState<LiveStream[]>(() => {
@@ -482,21 +498,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     image: string;
     description: string;
     origin?: string;
+    star?: number;
+    minOrder?: number;
+    inStock?: number;
   }) => {
     const id = `sp-${Date.now().toString().slice(-4)}`;
     const qrCodeId = `QR-${Date.now().toString().slice(-6)}`;
     const created: Product = {
       id,
       name: newProd.name,
-      star: 4,
+      star: newProd.star ?? 4,
       category: newProd.category || 'Nông sản OCOP Đồng Nai',
       price: newProd.price,
       unit: newProd.unit,
-      minOrder: 1,
+      minOrder: newProd.minOrder ?? 1,
       origin: newProd.origin || 'Nhà vườn Ba Tư, Long Khánh, Đồng Nai',
       image: newProd.image,
       description: newProd.description,
-      inStock: 500,
+      inStock: newProd.inStock ?? 500,
       qrCodeId,
       seasonDiary: [
         { date: 'Hôm nay', stage: 'Số hóa sản phẩm & tạo mã QR truy xuất', note: 'Đoàn viên thanh niên hỗ trợ nhập bằng giọng nói & AI', status: 'completed' },
@@ -516,6 +535,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     );
 
     showNotification(`🎉 Đăng thành công "${newProd.name}" lên TRẠM VƯỜN SỐ! (+2 giờ tình nguyện)`);
+    return id;
   };
 
   const createOrder = (orderData: {
@@ -622,6 +642,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         createOrder,
         updateOrderStatus,
         garden,
+        updateGarden,
         youthSupporters,
         liveStreams,
         likeLiveStream,

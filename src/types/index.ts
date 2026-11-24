@@ -126,20 +126,27 @@ export interface LiveStreamComment {
 export interface LiveStream {
   id: string;
   title: string;
-  hostName: string;
+  farmName: string;          // Tên nhà vườn (Nhà vườn Ba Tư, Vườn Chú Sáu Dân...)
+  farmerName: string;        // Tên bác chủ vườn (Chú Ba Tư, Bác Sáu Dân...)
+  ward: string;              // Phường / Xã (P. Suối Tre, Xã Bình Lộc, P. Xuân An...)
+  district: string;          // TP. Long Khánh, Huyện Vĩnh Cửu...
+  hostName: string;          // Người dẫn / Đoàn viên tiếp sức
   hostAvatar: string;
   time: string;
+  status: 'live' | 'upcoming' | 'ended';
   isLiveNow: boolean;
   viewers: number;
   likes: number;
   location: string;
   cover: string;
+  category: string;          // 'durian' | 'rambutan' | 'pomelo' | 'cashew' | 'mixed'
   featuredProduct?: {
     id: string;
     name: string;
     dealPrice: string;
     originalPrice: string;
     coupon: string;
+    image?: string;
   };
   mockComments?: LiveStreamComment[];
   description?: string;

@@ -9,11 +9,12 @@ import {
   ArrowRight,
   Filter,
   CheckCircle2,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Plus
 } from 'lucide-react';
 
 export const ProductsList: React.FC = () => {
-  const { products, openProductDetail, addToCart, setQrModalProduct, garden } = useApp();
+  const { products, openProductDetail, addToCart, setQrModalProduct, garden, setActiveScreen, currentUser } = useApp();
 
   const [searchKeyword, setSearchKeyword] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -44,16 +45,28 @@ export const ProductsList: React.FC = () => {
     <div className="space-y-8 animate-fadeIn">
       {/* Top Banner / Breadcrumb */}
       <div className="bg-white rounded-3xl p-6 sm:p-8 border border-green-200 shadow-soft space-y-4">
-        <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-green-700 bg-green-50 px-2.5 py-1 rounded inline-block mb-1">
-            SÀN NÔNG SẢN OCOP ĐỒNG NAI
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-black text-ink">
-            Danh Sách Sản Phẩm Nông Sản Đang Mở Bán
-          </h1>
-          <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
-            100% nông sản chính gốc Long Khánh, Tân Triều tuyển chọn thu hoạch tận vườn
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-wider text-green-700 bg-green-50 px-2.5 py-1 rounded inline-block mb-1">
+              SÀN NÔNG SẢN OCOP ĐỒNG NAI
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-black text-ink">
+              Danh Sách Sản Phẩm Nông Sản Đang Mở Bán
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
+              100% nông sản chính gốc Long Khánh, Tân Triều tuyển chọn thu hoạch tận vườn
+            </p>
+          </div>
+
+          {currentUser && (currentUser.role === 'farmer' || currentUser.role === 'youth' || currentUser.role === 'admin') && (
+            <button
+              onClick={() => setActiveScreen('quick_post')}
+              className="px-4 py-2.5 rounded-xl bg-green-700 hover:bg-green-800 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition self-start sm:self-auto shrink-0"
+            >
+              <Plus className="w-4 h-4" />
+              <span>+ Thêm Sản Phẩm Mới (AI)</span>
+            </button>
+          )}
         </div>
 
         {/* Search & Filter Bar */}
