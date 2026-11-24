@@ -222,7 +222,7 @@ export const Home: React.FC = () => {
           THANH TÌM KIẾM THÔNG MINH (NẰM TRÊN MỤC LIVESTREAM)
           Tính năng: 🎤 Nói để tìm (Khuyên dùng cho người 50-60 tuổi) & 🔍 Tìm kiếm
           ========================================================================= */}
-      <section className="bg-gradient-to-r from-green-50/90 via-emerald-50/60 to-green-50/90 rounded-2xl sm:rounded-full p-2.5 sm:p-3 border border-green-200 shadow-sm">
+      <section className="bg-white rounded-2xl sm:rounded-full p-2.5 sm:p-3 border border-green-200 shadow-sm">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
 
           {/* Ô nhập từ khóa tìm kiếm */}
@@ -296,9 +296,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* =========================================================================
-      {/* =========================================================================
           DANH SÁCH SẢN PHẨM OCOP (4 BÀI 1 HÀNG NGANG)
-          ========================================================================= */}
           ========================================================================= */}
       <section className="pt-4 space-y-6">
 
