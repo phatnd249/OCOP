@@ -23,7 +23,8 @@ export interface AppUser {
 export type ScreenId =
   | 'home'          // Trang chủ Chợ OCOP Đồng Nai
   | 'products'      // Danh sách các sản phẩm OCOP
-  | 'garden'        // Hồ sơ nhà vườn Ba Tự
+  | 'gardens'       // Danh sách các hồ sơ nhà vườn trên hệ thống (cho khách hàng)
+  | 'garden'        // Chi tiết hồ sơ nhà vườn được chọn
   | 'product_detail'// Chi tiết sản phẩm & QR truy xuất
   | 'cart'          // Giỏ hàng nông sản
   | 'checkout'      // Đặt hàng & Vận chuyển

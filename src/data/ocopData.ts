@@ -1,22 +1,111 @@
 import { GardenInfo, YouthSupporter, Product, Order, LiveStream, EcoMapLocation } from '../types';
 
-export const INITIAL_GARDEN: GardenInfo = {
-  id: "g-batu",
-  name: "Nhà Vườn Ba Tự - Long Khánh",
-  owner: "Chú Ba Tự (Nguyễn Văn Tư - 50 tuổi)",
-  avatar: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&auto=format&fit=crop&q=80",
-  coverImage: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&auto=format&fit=crop&q=80",
-  location: "Ấp Suối Tre, TP. Long Khánh, Tỉnh Đồng Nai",
-  coordinates: "10.9423° N, 107.2415° E",
-  area: "2.5 ha (25.000 m²)",
-  crops: ["Sầu riêng Ri6", "Chôm chôm Java", "Chôm chôm nhãn"],
-  ocopRating: 4,
-  ocopCertNo: "OCOP-ĐN-2024-4S-089",
-  story: "Với hơn 25 năm gắn bó với dải đất đỏ bazan màu mỡ Long Khánh, Chú Ba Tư luôn tâm huyết gìn giữ phương pháp canh tác thuận tự nhiên, 100% phân bón hữu cơ vi sinh, không hóa chất kích thích. Nhờ sự đồng hành số hóa từ Chi đoàn Thanh niên địa phương, nay quả ngọt vườn Ba Tư đã vươn xa tới người tiêu dùng TP.HCM với chất lượng tươi sạch chuẩn OCOP và nhật ký minh bạch từng cây trồng.",
-  phone: "0918.345.678",
-  tourismReady: true,
-  ecoTourPrice: "50.000 đ/người (Bao gồm ăn trái cây tại vườn và nghe đờn ca tài tử)"
-};
+export const INITIAL_GARDENS: GardenInfo[] = [
+  {
+    id: "g-batu",
+    name: "Nhà Vườn Ba Tự - Long Khánh",
+    owner: "Chú Ba Tự (Nguyễn Văn Tư - 50 tuổi)",
+    avatar: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&auto=format&fit=crop&q=80",
+    coverImage: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&auto=format&fit=crop&q=80",
+    location: "Ấp Suối Tre, TP. Long Khánh, Tỉnh Đồng Nai",
+    coordinates: "10.9423° N, 107.2415° E",
+    area: "2.5 ha (25.000 m²)",
+    crops: ["Sầu riêng Ri6", "Chôm chôm Java", "Chôm chôm nhãn"],
+    ocopRating: 4,
+    ocopCertNo: "OCOP-ĐN-2024-4S-089",
+    story: "Với hơn 25 năm gắn bó với dải đất đỏ bazan màu mỡ Long Khánh, Chú Ba Tư luôn tâm huyết gìn giữ phương pháp canh tác thuận tự nhiên, 100% phân bón hữu cơ vi sinh, không hóa chất kích thích. Nhờ sự đồng hành số hóa từ Chi đoàn Thanh niên địa phương, nay quả ngọt vườn Ba Tư đã vươn xa tới người tiêu dùng TP.HCM với chất lượng tươi sạch chuẩn OCOP và nhật ký minh bạch từng cây trồng.",
+    phone: "0918.345.678",
+    tourismReady: true,
+    ecoTourPrice: "50.000 đ/người (Bao gồm ăn trái cây tại vườn và nghe đờn ca tài tử)"
+  },
+  {
+    id: "g-saudan",
+    name: "Vườn Nông Sản Chú Sáu Dân - Bình Lộc",
+    owner: "Chú Sáu Dân (Trần Văn Dân - 54 tuổi)",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80",
+    coverImage: "https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?w=1200&auto=format&fit=crop&q=80",
+    location: "Xã Bình Lộc, TP. Long Khánh, Tỉnh Đồng Nai",
+    coordinates: "10.9512° N, 107.2641° E",
+    area: "3.2 ha chuyên canh",
+    crops: ["Sầu riêng Monthong", "Chôm chôm Thái", "Măng cụt"],
+    ocopRating: 4,
+    ocopCertNo: "OCOP-ĐN-2024-4S-104",
+    story: "Gia đình chú Sáu Dân là một trong những hộ tiên phong trồng sầu riêng Monthong theo tiêu chuẩn VietGAP tại xã Bình Lộc. Vườn nằm thoai thoải bên triền đồi, nguồn nước tưới từ suối tự nhiên trong vắt giúp trái cơm dày, ngọt béo thơm lừng.",
+    phone: "0913.567.890",
+    tourismReady: true,
+    ecoTourPrice: "60.000 đ/người (Thưởng thức sầu riêng và chôm chôm tại vườn)"
+  },
+  {
+    id: "g-tamhien",
+    name: "Vườn Cây Ăn Trái Bác Tám Hiền - Xuân Bình",
+    owner: "Bác Tám Hiền (Lê Văn Hiền - 58 tuổi)",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80",
+    coverImage: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=1200&auto=format&fit=crop&q=80",
+    location: "Phường Xuân Bình, TP. Long Khánh, Tỉnh Đồng Nai",
+    coordinates: "10.9388° N, 107.2389° E",
+    area: "1.8 ha",
+    crops: ["Mít ruột đỏ Indo", "Ổi nữ hoàng", "Bưởi da xanh"],
+    ocopRating: 4,
+    ocopCertNo: "OCOP-ĐN-2024-4S-112",
+    story: "Khu vườn trái cây Bác Tám Hiền áp dụng mô hình nông nghiệp tuần hoàn không rác thải. Bác tận dụng vỏ mít, lá cây ủ phân trùn quế bón ngược lại cho gốc ổi, tạo ra những quả ổi nữ hoàng giòn xốp ngọt mát không tì vết.",
+    phone: "0982.654.321",
+    tourismReady: false,
+    ecoTourPrice: "Chưa mở tour trải nghiệm"
+  },
+  {
+    id: "g-utdien",
+    name: "Vườn Trái Cây Sinh Thái Út Điền - Bảo Quang",
+    owner: "Anh Út Điền (Nguyễn Văn Điền - 38 tuổi)",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80",
+    coverImage: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1200&auto=format&fit=crop&q=80",
+    location: "Xã Bảo Quang, TP. Long Khánh, Tỉnh Đồng Nai",
+    coordinates: "10.9654° N, 107.2512° E",
+    area: "2.0 ha",
+    crops: ["Mãng cầu xiêm Thái", "Mãng cầu sấy dẻo", "Mít Thái siêu sớm"],
+    ocopRating: 3,
+    ocopCertNo: "OCOP-ĐN-2023-3S-045",
+    story: "Là thanh niên nông thôn trở về quê khởi nghiệp từ vườn cây của cha mẹ, anh Út Điền đã áp dụng hệ thống tưới nhỏ giọt tự động điều khiển qua smartphone và chế biến mãng cầu sấy dẻo đạt chuẩn OCOP 3 sao.",
+    phone: "0909.112.233",
+    tourismReady: true,
+    ecoTourPrice: "40.000 đ/người (Tham quan vườn công nghệ cao)"
+  },
+  {
+    id: "g-tantrieu",
+    name: "Làng Bưởi Tân Triều Năm Huệ - Vĩnh Cửu",
+    owner: "Ông Năm Huệ (Huỳnh Đức Huệ - 62 tuổi)",
+    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=80",
+    coverImage: "https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?w=1200&auto=format&fit=crop&q=80",
+    location: "Cù lao Tân Triều, Xã Tân Bình, Huyện Vĩnh Cửu, Tỉnh Đồng Nai",
+    coordinates: "11.0125° N, 106.8456° E",
+    area: "4.5 ha ven sông",
+    crops: ["Bưởi đường lá cam", "Bưởi da xanh Tân Triều", "Rượu bưởi OCOP"],
+    ocopRating: 5,
+    ocopCertNo: "OCOP-ĐN-2024-5S-001",
+    story: "Vườn bưởi Tân Triều nức tiếng hơn nửa thế kỷ trên đất phù sa sông Đồng Nai. Những trái bưởi đường lá cam tép mọng nước, vị ngọt thanh không the đắng, đã vinh dự đạt chứng nhận OCOP 5 sao cấp quốc gia.",
+    phone: "0918.889.900",
+    tourismReady: true,
+    ecoTourPrice: "80.000 đ/người (Thưởng thức gỏi bưởi và chè bưởi Tân Triều)"
+  },
+  {
+    id: "g-hanggon",
+    name: "Hợp Tác Xã Điều Vàng Hàng Gòn",
+    owner: "Chị Kim Loan (Chủ tịch HTX - 42 tuổi)",
+    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80",
+    coverImage: "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=1200&auto=format&fit=crop&q=80",
+    location: "Xã Hàng Gòn, TP. Long Khánh, Tỉnh Đồng Nai",
+    coordinates: "10.8956° N, 107.2891° E",
+    area: "15 ha vùng nguyên liệu",
+    crops: ["Hạt điều rang củi", "Hạt điều tỏi ớt", "Kẹo hạt điều"],
+    ocopRating: 4,
+    ocopCertNo: "OCOP-ĐN-2024-4S-078",
+    story: "HTX quy tụ hơn 20 hộ trồng điều xã Hàng Gòn, chế biến theo phương pháp rang củi thủ công giữ nguyên độ béo ngậy tự nhiên và độ giòn tan, bao bì hút chân không đạt chuẩn xuất khẩu.",
+    phone: "0977.334.455",
+    tourismReady: false,
+    ecoTourPrice: "Chưa mở tour trải nghiệm"
+  }
+];
+
+export const INITIAL_GARDEN: GardenInfo = INITIAL_GARDENS[0];
 
 export const INITIAL_YOUTH: YouthSupporter[] = [
   {

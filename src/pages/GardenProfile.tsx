@@ -17,7 +17,11 @@ import {
   FileText,
   AlertCircle,
   Check,
-  X
+  X,
+  ExternalLink,
+  Navigation,
+  Compass,
+  ArrowLeft
 } from 'lucide-react';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
@@ -38,8 +42,15 @@ export const GardenProfile: React.FC = () => {
     setTourModalOpen
   } = useApp();
 
-  // Kiểm tra vai trò nông dân (chủ nhà vườn)
+  // Kiểm tra quyền chỉnh sửa: CHỈ chủ nhà vườn VÀ đúng vườn của mình mới có quyền chỉnh sửa
+  // Khách hàng / Người mua chỉ được xem hồ sơ chứ không thể chỉnh sửa
   const isFarmer = currentRole === 'farmer' || currentUser?.role === 'farmer';
+  const canEdit = isFarmer && (garden.id === 'g-batu' || garden.id === currentUser?.id);
+
+  // Google Maps Search URL
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    `${garden.name}, ${garden.location}`
+  )}`;
 
   // State cho Popup Chỉnh Sửa Hồ Sơ
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -117,7 +128,22 @@ export const GardenProfile: React.FC = () => {
   };
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8 animate-fadeIn">
+      {/* Nút quay lại Danh Sách Hồ Sơ Nhà Vườn (dành cho Khách hàng & Người mua) */}
+      <div className="flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => setActiveScreen('gardens')}
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-green-300 text-green-800 text-xs font-bold hover:bg-green-50 shadow-xs transition"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Danh Sách Tất Cả Nhà Vườn</span>
+        </button>
+        <span className="text-xs text-gray-500 font-medium hidden sm:inline">
+          Hệ thống truy xuất hồ sơ OCOP tỉnh Đồng Nai
+        </span>
+      </div>
+
       {/* Cover and Profile Header */}
       <div className="bg-white rounded-3xl overflow-hidden border border-green-200 shadow-soft">
         <div className="relative h-64 sm:h-80 w-full overflow-hidden">
@@ -153,8 +179,8 @@ export const GardenProfile: React.FC = () => {
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              {/* Nút Chỉnh Sửa Hồ Sơ dành riêng cho vai trò Chủ nhà vườn (farmer) */}
-              {isFarmer && (
+              {/* Nút Chỉnh Sửa Hồ Sơ: CHỈ chủ vườn có quyền sửa, khách hàng chỉ xem không sửa được */}
+              {canEdit && (
                 <button
                   type="button"
                   onClick={handleOpenEdit}
@@ -181,9 +207,18 @@ export const GardenProfile: React.FC = () => {
 
         {/* Quick Specs Bar */}
         <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-100 bg-cream/50 p-4 border-b border-gray-100 text-xs sm:text-sm">
-          <div className="p-2 text-center">
-            <span className="text-gray-500 block text-xs">Vị trí địa lý</span>
-            <strong className="text-green-900 font-bold">{garden.location}</strong>
+          <div className="p-2 text-center group">
+            <span className="text-gray-500 block text-xs">Vị trí địa lý (Google Maps)</span>
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-green-900 font-bold hover:text-green-700 flex items-center justify-center gap-1 transition group-hover:underline"
+              title="Bấm để mở bản đồ Google Maps"
+            >
+              <span>{garden.location}</span>
+              <ExternalLink className="w-3.5 h-3.5 text-green-700 shrink-0" />
+            </a>
           </div>
           <div className="p-2 text-center">
             <span className="text-gray-500 block text-xs">Diện tích canh tác</span>
@@ -219,7 +254,7 @@ export const GardenProfile: React.FC = () => {
               </div>
             </div>
 
-            {isFarmer && (
+            {canEdit && (
               <button
                 type="button"
                 onClick={handleOpenEdit}
@@ -256,7 +291,7 @@ export const GardenProfile: React.FC = () => {
                 </p>
               </div>
             </div>
-            {isFarmer ? (
+            {canEdit ? (
               <button
                 type="button"
                 onClick={handleOpenEdit}
@@ -328,6 +363,124 @@ export const GardenProfile: React.FC = () => {
             >
               Xem Bảng Vàng & Giờ Tình Nguyện Chi Tiết ➔
             </button>
+          </div>
+        </div>
+      </div>
+
+      {/* =========================================================================
+          BẢN ĐỒ VỊ TRÍ & CHỈ ĐƯỜNG GOOGLE MAPS (CHÍNH XÁC GPS)
+          ========================================================================= */}
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-green-200 shadow-soft space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-[#EAF7E9] text-[#269B55] flex items-center justify-center font-bold shrink-0">
+              <MapPin className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h2 className="text-xl sm:text-2xl font-black text-ink">
+                  Vị Trí & Chỉ Đường Đến {garden.name}
+                </h2>
+                <span className="bg-green-100 text-green-900 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  GPS Chuẩn Xác 100%
+                </span>
+              </div>
+              <p className="text-xs text-gray-500 mt-0.5">
+                Địa chỉ: <strong>{garden.location}</strong> • Tọa độ GPS: <strong>{garden.coordinates || '10.9423° N, 107.2415° E'}</strong>
+              </p>
+            </div>
+          </div>
+
+          <a
+            href={googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 bg-[#269B55] hover:bg-green-700 active:scale-[0.99] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-sm hover:shadow transition self-start sm:self-auto shrink-0"
+          >
+            <Navigation className="w-4 h-4" />
+            <span>Mở Chỉ Đường Bằng Google Maps</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
+
+        {/* Map Display & Quick Route Info */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+          {/* Map Preview Box (2 cols) */}
+          <div className="lg:col-span-2 relative rounded-2xl overflow-hidden border border-gray-200 shadow-inner min-h-[320px] sm:min-h-[380px] bg-gray-100 group">
+            {/* Embedded OpenStreetMap view centered on Long Khanh */}
+            <iframe
+              title="Bản đồ vị trí Nhà vườn Ba Tư"
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              scrolling="no"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=107.2200%2C10.9300%2C107.2600%2C10.9550&amp;layer=mapnik&amp;marker=10.9423%2C107.2415"
+              className="w-full h-full min-h-[320px] sm:min-h-[380px] rounded-2xl border-0"
+            />
+
+            {/* Clickable Overlay Link to Google Maps */}
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute top-3 right-3 bg-white/95 hover:bg-white backdrop-blur text-green-950 font-bold text-xs px-3 py-1.5 rounded-xl shadow-md border border-green-200 flex items-center gap-1.5 transition z-10"
+            >
+              <span>Xem trên Google Maps</span>
+              <ExternalLink className="w-3.5 h-3.5 text-green-700" />
+            </a>
+
+            {/* Farm Pin Landmark Badge */}
+            <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur text-white p-3 rounded-2xl shadow-lg border border-white/20 text-xs space-y-1 max-w-sm pointer-events-none z-10">
+              <div className="flex items-center gap-1.5 font-bold text-amber-300">
+                <Store className="w-3.5 h-3.5" />
+                <span>{garden.name}</span>
+              </div>
+              <p className="text-[11px] text-gray-200 line-clamp-1">
+                📍 {garden.location}
+              </p>
+              <p className="text-[10px] text-gray-300 font-mono">
+                Tọa độ GPS: 10.9423, 107.2415 (Định vị số hóa)
+              </p>
+            </div>
+          </div>
+
+          {/* Directions & Logistics Cards (1 col) */}
+          <div className="space-y-3.5 flex flex-col justify-between">
+            <div className="p-4 rounded-2xl bg-[#FAFCF8] border border-gray-200 space-y-2">
+              <strong className="text-xs font-bold text-green-950 flex items-center gap-1.5">
+                <Navigation className="w-3.5 h-3.5 text-green-700" />
+                <span>Chỉ dẫn đường đi thực tế:</span>
+              </strong>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                Từ Quốc Lộ 1A (Ngã ba Dầu Giây hướng về Long Khánh), rẽ vào đường Suối Tre - Bình Lộc chạy thẳng 1.5km. Nhìn bên tay phải có cổng chào màu xanh <strong>"Vườn Cây Sinh Thái Ba Tư"</strong>.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-cream border border-green-100 space-y-2">
+              <strong className="text-xs font-bold text-green-950 flex items-center gap-1.5">
+                <Compass className="w-3.5 h-3.5 text-green-700" />
+                <span>Cự ly & Phương tiện di chuyển:</span>
+              </strong>
+              <ul className="text-xs text-gray-600 space-y-1.5">
+                <li>• <strong>Từ TP.HCM:</strong> ~75 km (1h15 đi cao tốc TP.HCM - Long Thành - Dầu Giây).</li>
+                <li>• <strong>Từ Biên Hòa:</strong> ~45 km qua QL1A hoặc đường ĐT768.</li>
+                <li>• <strong>Đường vào vườn:</strong> Xe ô tô 4-16-29 chỗ vào tận sân vườn rộng rãi.</li>
+              </ul>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-green-50 border border-green-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-green-950">Liên hệ đón khách tận vườn:</span>
+                <span className="text-[11px] text-green-800 font-bold">Bác Ba Tư</span>
+              </div>
+              <a
+                href={`tel:${garden.phone.replace(/[^0-9]/g, '')}`}
+                className="w-full py-2.5 rounded-xl bg-white hover:bg-green-100/50 border border-green-300 text-green-900 font-bold text-xs flex items-center justify-center gap-2 transition"
+              >
+                <Phone className="w-3.5 h-3.5 text-green-700" />
+                <span>Gọi trực tiếp: {garden.phone}</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

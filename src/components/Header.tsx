@@ -35,10 +35,12 @@ export const Header: React.FC = () => {
 
   // RBAC Menu Filtering theo yêu cầu
   const getNavItems = () => {
-    // 0. Khi chưa đăng ký / đăng nhập: chỉ hiện Trang chủ, Livestream, Bản đồ
+    // 0. Khi chưa đăng ký / đăng nhập:
     if (!currentUser) {
       return [
         { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4 shrink-0" /> },
+        { id: 'products' as ScreenId, label: 'Sản Phẩm OCOP', icon: <Package className="w-4 h-4 shrink-0" /> },
+        { id: 'gardens' as ScreenId, label: 'Hồ Sơ Nhà Vườn', icon: <Store className="w-4 h-4 shrink-0" /> },
         { id: 'live' as ScreenId, label: 'Livestream', icon: <Video className="w-4 h-4 shrink-0" /> },
         { id: 'map' as ScreenId, label: 'Bản Đồ Tour', icon: <MapPin className="w-4 h-4 shrink-0" /> }
       ];
@@ -72,6 +74,7 @@ export const Header: React.FC = () => {
         { id: 'quick_post' as ScreenId, label: 'Thêm Sản Phẩm (AI)', icon: <Plus className="w-4 h-4 shrink-0" /> },
         { id: 'live' as ScreenId, label: 'Lịch & Phòng Live', icon: <Video className="w-4 h-4 shrink-0" /> },
         { id: 'orders' as ScreenId, label: 'Xử Lý Đơn Hộ Vườn', icon: <Package className="w-4 h-4 shrink-0" /> },
+        { id: 'gardens' as ScreenId, label: 'Hồ Sơ Nhà Vườn', icon: <Store className="w-4 h-4 shrink-0" /> },
         { id: 'volunteer' as ScreenId, label: 'Giờ Tình Nguyện', icon: <Award className="w-4 h-4 shrink-0" /> },
         { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4 shrink-0" /> }
       ];
@@ -81,7 +84,7 @@ export const Header: React.FC = () => {
     return [
       { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4 shrink-0" /> },
       { id: 'products' as ScreenId, label: 'Sản Phẩm OCOP', icon: <Package className="w-4 h-4 shrink-0" /> },
-      { id: 'garden' as ScreenId, label: 'Hồ Sơ Nhà Vườn', icon: <Store className="w-4 h-4 shrink-0" /> },
+      { id: 'gardens' as ScreenId, label: 'Hồ Sơ Nhà Vườn', icon: <Store className="w-4 h-4 shrink-0" /> },
       { id: 'live' as ScreenId, label: 'Livestream', icon: <Video className="w-4 h-4 shrink-0" /> },
       { id: 'map' as ScreenId, label: 'Bản Đồ Tour', icon: <MapPin className="w-4 h-4 shrink-0" /> },
       { id: 'volunteer' as ScreenId, label: 'Giờ Tình Nguyện', icon: <Award className="w-4 h-4 shrink-0" /> }
@@ -130,7 +133,9 @@ export const Header: React.FC = () => {
         {/* Navigation tabs ở giữa trên cùng 1 hàng */}
         <nav className="flex items-center justify-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar py-1 flex-1 min-w-0 px-2">
           {navItems.map(item => {
-            const isActive = activeScreen === item.id;
+            const isActive =
+              activeScreen === item.id ||
+              (item.id === 'gardens' && activeScreen === 'garden');
             return (
               <button
                 key={item.id}

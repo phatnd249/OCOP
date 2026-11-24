@@ -10,6 +10,7 @@ import { Toast } from './components/Toast';
 import { Home } from './pages/Home';
 import { ProductsList } from './pages/ProductsList';
 import { ProductDetail } from './pages/ProductDetail';
+import { GardensList } from './pages/GardensList';
 import { GardenProfile } from './pages/GardenProfile';
 import { Cart } from './pages/Cart';
 import { Checkout } from './pages/Checkout';
@@ -31,6 +32,8 @@ export const App: React.FC = () => {
         return <ProductsList />;
       case 'product_detail':
         return <ProductDetail />;
+      case 'gardens':
+        return <GardensList />;
       case 'garden':
         return <GardenProfile />;
       case 'cart':
