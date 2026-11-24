@@ -18,7 +18,9 @@ export const Cart: React.FC = () => {
     removeFromCart,
     clearCart,
     setActiveScreen,
-    openProductDetail
+    openProductDetail,
+    currentUser,
+    showNotification
   } = useApp();
 
   const cartDetails = cart.map(item => {
@@ -181,7 +183,13 @@ export const Cart: React.FC = () => {
             </div>
 
             <button
-              onClick={() => setActiveScreen('checkout')}
+              onClick={() => {
+                if (!currentUser) {
+                  showNotification('⚠️ Vui lòng Đăng nhập hoặc Đăng ký tài khoản để tiến hành đặt hàng!');
+                  return;
+                }
+                setActiveScreen('checkout');
+              }}
               className="w-full py-4 rounded-2xl bg-sun hover:bg-amber-500 text-earth-dark font-black text-base shadow transition flex items-center justify-center gap-2"
             >
               <span>Tiến Hành Đặt Hàng (K7)</span>

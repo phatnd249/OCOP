@@ -92,7 +92,7 @@ interface AppContextType {
   
   // Cart
   cart: CartItem[];
-  addToCart: (productId: string, qty?: number) => void;
+  addToCart: (productId: string, qty?: number) => boolean | void;
   updateCartQty: (productId: string, qty: number) => void;
   removeFromCart: (productId: string) => void;
   clearCart: () => void;
@@ -427,6 +427,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const addToCart = (productId: string, qty = 1) => {
+    // Ràng buộc bảo vệ: Chỉ người dùng đã đăng ký / đăng nhập mới được thêm giỏ hàng
+    if (!currentUser) {
+      showNotification('⚠️ Vui lòng Đăng nhập hoặc Đăng ký tài khoản để thêm vào giỏ và mua hàng!');
+      return false;
+    }
+
     setCart(prev => {
       const idx = prev.findIndex(item => item.productId === productId);
       if (idx > -1) {
@@ -438,6 +444,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
     const p = products.find(prod => prod.id === productId);
     showNotification(`Đã thêm ${qty} ${p?.unit || 'phần'} "${p?.name || 'sản phẩm'}" vào giỏ hàng!`);
+    return true;
   };
 
   const updateCartQty = (productId: string, qty: number) => {

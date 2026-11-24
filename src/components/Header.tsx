@@ -67,7 +67,6 @@ export const Header: React.FC = () => {
     // 3. Thanh Niên Hỗ Trợ (Youth) Menu
     if (currentRole === 'youth') {
       return [
-        { id: 'quick_post' as ScreenId, label: '🎙️ Đăng Nhanh (AI/Voice)', icon: <Mic className="w-4 h-4" /> },
         { id: 'live' as ScreenId, label: '📹 Lịch & Phòng Live', icon: <Video className="w-4 h-4" /> },
         { id: 'orders' as ScreenId, label: '📦 Xử Lý Đơn Hộ Vườn', icon: <Package className="w-4 h-4" /> },
         { id: 'volunteer' as ScreenId, label: '🎖️ Giờ Tình Nguyện Của Tôi', icon: <Award className="w-4 h-4" /> },
@@ -189,8 +188,8 @@ export const Header: React.FC = () => {
             </button>
           )}
 
-          {/* Cart button (Ẩn khi đang là Admin) */}
-          {currentRole !== 'admin' && (
+          {/* Cart button (Chỉ hiển thị cho người dùng đã đăng nhập và không phải Admin) */}
+          {currentUser && currentRole !== 'admin' && (
             <button
               onClick={() => setActiveScreen('cart')}
               className="relative flex items-center gap-1.5 bg-green-800 text-white px-4 py-2 rounded-full font-bold text-xs sm:text-sm shadow hover:bg-green-900 transition"

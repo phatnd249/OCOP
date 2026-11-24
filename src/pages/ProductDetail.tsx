@@ -25,7 +25,9 @@ export const ProductDetail: React.FC = () => {
     openProductDetail,
     addToCart,
     setQrModalProduct,
-    setActiveScreen
+    setActiveScreen,
+    currentUser,
+    showNotification
   } = useApp();
 
   const [qty, setQty] = useState(2);
@@ -33,8 +35,14 @@ export const ProductDetail: React.FC = () => {
     products.find(p => p.id === selectedProductId) || products[0];
 
   const handleBuyNow = () => {
-    addToCart(currentProduct.id, qty);
-    setActiveScreen('cart');
+    if (!currentUser) {
+      showNotification('⚠️ Vui lòng Đăng nhập hoặc Đăng ký tài khoản để mua hàng!');
+      return;
+    }
+    const added = addToCart(currentProduct.id, qty);
+    if (added) {
+      setActiveScreen('cart');
+    }
   };
 
   const relatedProducts = products.filter(p => p.id !== currentProduct.id);
