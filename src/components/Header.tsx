@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { ScreenId, UserRole } from '../types';
 import {
@@ -33,6 +33,15 @@ export const Header: React.FC = () => {
 
   // RBAC Menu Filtering theo yêu cầu
   const getNavItems = () => {
+    // 0. Khi chưa đăng ký / đăng nhập: chỉ hiện Trang chủ, Livestream, Bản đồ
+    if (!currentUser) {
+      return [
+        { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4" /> },
+        { id: 'live' as ScreenId, label: 'Livestream', icon: <Video className="w-4 h-4" /> },
+        { id: 'map' as ScreenId, label: 'Bản Đồ Tour', icon: <MapPin className="w-4 h-4" /> }
+      ];
+    }
+
     // 1. Admin Menu
     if (currentRole === 'admin') {
       return [
@@ -180,9 +189,9 @@ export const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Navigation tabs (Phân quyền linh hoạt theo UserRole) */}
+      {/* Navigation tabs (Phân quyền linh hoạt theo UserRole, cân bằng ở giữa khi chưa đăng nhập) */}
       <div className="bg-cream/80 border-t border-b border-green-100 overflow-x-auto scrollbar-none">
-        <div className="max-w-7xl mx-auto px-4 flex space-x-1 py-1.5 min-w-max">
+        <div className={`max-w-7xl mx-auto px-4 flex items-center space-x-2 py-1.5 min-w-max ${!currentUser ? 'justify-center' : 'justify-start sm:justify-center'}`}>
           {navItems.map(item => {
             const isActive = activeScreen === item.id;
             return (
