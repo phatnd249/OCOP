@@ -57,8 +57,9 @@ export const Home: React.FC = () => {
   const [selectedDelivery, setSelectedDelivery] = useState<string>('all');
   const [selectedRegion, setSelectedRegion] = useState<string>('all');
 
-  // Quick Sort Bar
-  const [sortBy, setSortBy] = useState<'newest' | 'live' | 'price_asc' | 'price_desc' | 'popular'>('newest');
+  // Quick Sort & Filter Bar
+  const [sortBy, setSortBy] = useState<'newest' | 'name' | 'garden' | 'popular'>('newest');
+  const [priceFilter, setPriceFilter] = useState<'all' | 'under_50' | '50_100' | 'above_100'>('all');
 
   // Speech Recognition Search
   const handleVoiceSearch = () => {
@@ -129,27 +130,21 @@ export const Home: React.FC = () => {
         if (selectedStandard === 'has_diary' && (!p.seasonDiary || p.seasonDiary.length === 0)) return false;
       }
 
-      // 4. Khoảng Giá (35.000 - 120.000 VNĐ/kg)
-      if (selectedPriceRange !== 'all') {
-        if (selectedPriceRange === 'under_50' && p.price >= 50000) return false;
-        if (selectedPriceRange === '50_90' && (p.price < 50000 || p.price > 90000)) return false;
-        if (selectedPriceRange === '90_120' && p.price < 90000) return false;
-      }
-
-      // 5. Khu vực nhà vườn
-      if (selectedRegion !== 'all') {
-        if (selectedRegion === 'long_khanh' && !p.origin.toLowerCase().includes('long khánh')) return false;
-        if (selectedRegion === 'vinh_cuu' && !p.origin.toLowerCase().includes('tân triều') && !p.origin.toLowerCase().includes('vĩnh cửu')) return false;
+      // 4. Khoảng Giá (Lọc theo dropdown: dưới 50k, 50k-100k, trên 100k)
+      if (priceFilter !== 'all') {
+        if (priceFilter === 'under_50' && p.price >= 50000) return false;
+        if (priceFilter === '50_100' && (p.price < 50000 || p.price > 100000)) return false;
+        if (priceFilter === 'above_100' && p.price <= 100000) return false;
       }
 
       return true;
     }).sort((a, b) => {
-      if (sortBy === 'price_asc') return a.price - b.price;
-      if (sortBy === 'price_desc') return b.price - a.price;
+      if (sortBy === 'name') return a.name.localeCompare(b.name, 'vi');
+      if (sortBy === 'garden') return (a.origin || '').localeCompare(b.origin || '', 'vi');
       if (sortBy === 'popular') return b.inStock - a.inStock;
       return 0; // default newest
     });
-  }, [products, searchQuery, selectedCategory, selectedStandard, selectedPriceRange, selectedDelivery, selectedRegion, sortBy]);
+  }, [products, searchQuery, priceFilter, sortBy]);
 
   return (
     <div className="space-y-10 pb-16">
@@ -211,7 +206,7 @@ export const Home: React.FC = () => {
           ========================================================================= */}
       <section className="bg-gradient-to-r from-green-50/90 via-emerald-50/60 to-green-50/90 rounded-2xl sm:rounded-full p-2.5 sm:p-3 border border-green-200 shadow-sm">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
-          
+
           {/* Ô nhập từ khóa tìm kiếm */}
           <div className="relative flex-1 w-full flex items-center">
             <Search className="w-5 h-5 text-gray-400 absolute left-4 pointer-events-none" />
@@ -243,11 +238,10 @@ export const Home: React.FC = () => {
             <button
               type="button"
               onClick={handleVoiceSearch}
-              className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-bold text-xs sm:text-sm transition shadow-sm border ${
-                isListening
+              className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-bold text-xs sm:text-sm transition shadow-sm border ${isListening
                   ? 'bg-red-600 text-white animate-pulse border-red-700'
                   : 'bg-amber-500 hover:bg-amber-600 text-white border-amber-600'
-              }`}
+                }`}
               title="Hỗ trợ giọng nói cho người lớn tuổi 50–60 tuổi ngại gõ chữ"
             >
               <Mic className="w-4 h-4 text-white" />
@@ -313,8 +307,8 @@ export const Home: React.FC = () => {
               key={live.id}
               onClick={() => setActiveScreen('live')}
               className={`rounded-2xl p-4 border transition cursor-pointer flex flex-col justify-between space-y-3 relative overflow-hidden group shadow-sm ${live.isLiveNow
-                  ? 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-300 ring-2 ring-amber-400'
-                  : 'bg-white border-green-200 hover:border-green-400'
+                ? 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-300 ring-2 ring-amber-400'
+                : 'bg-white border-green-200 hover:border-green-400'
                 }`}
             >
               <div className="flex items-start justify-between gap-3">
@@ -380,435 +374,186 @@ export const Home: React.FC = () => {
       <section className="pt-4 space-y-6">
 
         {/* Tiêu đề & Quick Sort Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-green-200 pb-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-green-200 pb-4">
           <div>
-            <h2 className="text-2xl font-black text-ink flex items-center gap-2">
-              <span>Nông Sản OCOP Đồng Nai Tuyển Chọn</span>
-              <Tag value={`${filteredProducts.length} sản phẩm`} severity="success" className="text-xs font-bold" />
+            <h2 className="text-2xl font-black text-ink">
+              Nông Sản OCOP Đồng Nai Tuyển Chọn
             </h2>
             <p className="text-xs text-gray-500 mt-0.5">
-              Giá chuẩn đề bài: 35.000 – 120.000 đ/kg • Đóng thùng tươi giao ngay lên TP.HCM
+              Nông sản tươi sạch từ các nhà vườn đạt chuẩn OCOP • Đóng thùng giao xe lạnh về TP.HCM
             </p>
           </div>
 
-          {/* Thanh sắp xếp nhanh (Sort Bar) */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs font-bold">
-            <span className="text-gray-400 whitespace-nowrap flex items-center gap-1 mr-1">
-              <ArrowUpDown className="w-3.5 h-3.5" /> Sắp xếp:
-            </span>
+          {/* Thanh công cụ: Mới thu hoạch, Giá (dropdown), Tên nông sản, Nhà vườn */}
+          <div className="flex items-center gap-2 flex-wrap text-xs font-bold">
+            {/* 1. Mới thu hoạch */}
             <button
               onClick={() => setSortBy('newest')}
-              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition ${sortBy === 'newest' ? 'bg-green-700 text-white' : 'bg-white border text-gray-700 hover:bg-green-50'
-                }`}
+              className={`px-3.5 py-2 rounded-xl transition shadow-sm ${
+                sortBy === 'newest'
+                  ? 'bg-green-700 text-white'
+                  : 'bg-white border border-gray-200 text-gray-700 hover:bg-green-50'
+              }`}
             >
               Mới thu hoạch
             </button>
-            <button
-              onClick={() => setSortBy('price_asc')}
-              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition ${sortBy === 'price_asc' ? 'bg-green-700 text-white' : 'bg-white border text-gray-700 hover:bg-green-50'
-                }`}
-            >
-              Giá thấp → cao
-            </button>
-            <button
-              onClick={() => setSortBy('price_desc')}
-              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition ${sortBy === 'price_desc' ? 'bg-green-700 text-white' : 'bg-white border text-gray-700 hover:bg-green-50'
-                }`}
-            >
-              Giá cao → thấp
-            </button>
-            <button
-              onClick={() => setSortBy('popular')}
-              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition ${sortBy === 'popular' ? 'bg-green-700 text-white' : 'bg-white border text-gray-700 hover:bg-green-50'
-                }`}
-            >
-              Nhiều lượt trải nghiệm nhất
-            </button>
-            <button
-              onClick={() => setActiveScreen('products')}
-              className="px-3.5 py-1.5 rounded-xl whitespace-nowrap transition bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 font-bold flex items-center gap-1 shadow-sm"
-            >
-              <span>Xem toàn bộ ({products.length} sản phẩm)</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
 
-        {/* Bố cục 2 cột: Cột trái (25%) Bộ lọc thông minh - Cột phải (75%) Lưới sản phẩm */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
-
-          {/* CỘT TRÁI (25%): 5 NHÓM TIÊU CHÍ BỘ LỌC ĐẶC THÙ NÔNG SẢN ĐỒNG NAI */}
-          <aside className="lg:col-span-1 bg-white p-5 rounded-3xl border border-green-200 shadow-soft space-y-6 sticky top-28">
-            <div className="flex items-center justify-between pb-3 border-b border-green-200">
-              <h3 className="font-bold text-sm text-ink flex items-center gap-1.5">
-                <Filter className="w-4 h-4 text-green-700" />
-                <span>Bộ Lọc Nông Sản OCOP</span>
-              </h3>
-              <button
-                onClick={() => {
-                  setSelectedCategory('all');
-                  setSelectedStandard('all');
-                  setSelectedPriceRange('all');
-                  setSelectedDelivery('all');
-                  setSelectedRegion('all');
-                  setSearchQuery('');
-                  showNotification('Đã đặt lại tất cả bộ lọc');
-                }}
-                className="text-[11px] text-green-700 font-semibold hover:underline"
+            {/* 2. Giá (Dropdown: Dưới 50.000đ, 50.000đ - 100.000đ, Trên 100.000đ) */}
+            <div className="relative inline-block">
+              <select
+                value={priceFilter}
+                onChange={e => setPriceFilter(e.target.value as any)}
+                className="px-3.5 py-2 pr-8 rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-green-50 font-bold outline-none cursor-pointer appearance-none shadow-sm transition"
               >
-                Đặt lại
-              </button>
+                <option value="all">Giá: Tất cả mức giá</option>
+                <option value="under_50">Dưới 50.000 đ</option>
+                <option value="50_100">50.000 đ – 100.000 đ</option>
+                <option value="above_100">Trên 100.000 đ</option>
+              </select>
+              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">
+                ▼
+              </span>
             </div>
 
-            {/* Nhóm 1: Nhóm đặc sản Đồng Nai */}
-            <div className="space-y-2">
-              <span className="text-xs font-bold text-green-900 block">1. Nhóm đặc sản Đồng Nai</span>
-              <div className="space-y-1.5 text-xs text-gray-700">
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="cat"
-                    checked={selectedCategory === 'all'}
-                    onChange={() => setSelectedCategory('all')}
-                    className="accent-green-700"
-                  />
-                  <span>Tất cả đặc sản ({products.length})</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="cat"
-                    checked={selectedCategory === 'long_khanh'}
-                    onChange={() => setSelectedCategory('long_khanh')}
-                    className="accent-green-700"
-                  />
-                  <span>Trái cây Long Khánh (Sầu riêng, Chôm chôm)</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="cat"
-                    checked={selectedCategory === 'tan_trieu'}
-                    onChange={() => setSelectedCategory('tan_trieu')}
-                    className="accent-green-700"
-                  />
-                  <span>Bưởi da xanh Tân Triều</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="cat"
-                    checked={selectedCategory === 'hat_dieu'}
-                    onChange={() => setSelectedCategory('hat_dieu')}
-                    className="accent-green-700"
-                  />
-                  <span>Hạt điều rang muối vỏ lụa</span>
-                </label>
-              </div>
-            </div>
+            {/* 3. Tên nông sản */}
+            <button
+              onClick={() => setSortBy('name')}
+              className={`px-3.5 py-2 rounded-xl transition shadow-sm ${
+                sortBy === 'name'
+                  ? 'bg-green-700 text-white'
+                  : 'bg-white border border-gray-200 text-gray-700 hover:bg-green-50'
+              }`}
+            >
+              Tên nông sản
+            </button>
 
-            {/* Nhóm 2: Tiêu chuẩn & Minh bạch */}
-            <div className="space-y-2 pt-2 border-t border-green-100">
-              <span className="text-xs font-bold text-green-900 block">2. Tiêu chuẩn & Minh bạch</span>
-              <div className="space-y-1.5 text-xs text-gray-700">
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="std"
-                    checked={selectedStandard === 'all'}
-                    onChange={() => setSelectedStandard('all')}
-                    className="accent-green-700"
-                  />
-                  <span>Tất cả chứng nhận</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="std"
-                    checked={selectedStandard === '4_star'}
-                    onChange={() => setSelectedStandard('4_star')}
-                    className="accent-green-700"
-                  />
-                  <span>⭐ Chuẩn OCOP 4 Sao</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="std"
-                    checked={selectedStandard === '3_star'}
-                    onChange={() => setSelectedStandard('3_star')}
-                    className="accent-green-700"
-                  />
-                  <span>⭐ Chuẩn OCOP 3 Sao</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="std"
-                    checked={selectedStandard === 'has_qr'}
-                    onChange={() => setSelectedStandard('has_qr')}
-                    className="accent-green-700"
-                  />
-                  <span>✓ Có mã QR truy xuất nguồn gốc</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="std"
-                    checked={selectedStandard === 'has_diary'}
-                    onChange={() => setSelectedStandard('has_diary')}
-                    className="accent-green-700"
-                  />
-                  <span>✓ Có nhật ký mùa vụ sinh học</span>
-                </label>
-              </div>
-            </div>
-
-            {/* Nhóm 3: Khoảng giá (Khớp dữ liệu mẫu 35k - 120k/kg) */}
-            <div className="space-y-2 pt-2 border-t border-green-100">
-              <span className="text-xs font-bold text-green-900 block">3. Khoảng giá (VNĐ/kg)</span>
-              <div className="space-y-1.5 text-xs text-gray-700">
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="price"
-                    checked={selectedPriceRange === 'all'}
-                    onChange={() => setSelectedPriceRange('all')}
-                    className="accent-green-700"
-                  />
-                  <span>Tất cả mức giá</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="price"
-                    checked={selectedPriceRange === 'under_50'}
-                    onChange={() => setSelectedPriceRange('under_50')}
-                    className="accent-green-700"
-                  />
-                  <span>Dưới 50.000 đ/kg (Chôm chôm 35k - 45k)</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="price"
-                    checked={selectedPriceRange === '50_90'}
-                    onChange={() => setSelectedPriceRange('50_90')}
-                    className="accent-green-700"
-                  />
-                  <span>50.000 – 90.000 đ/kg (Bưởi Tân Triều)</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="price"
-                    checked={selectedPriceRange === '90_120'}
-                    onChange={() => setSelectedPriceRange('90_120')}
-                    className="accent-green-700"
-                  />
-                  <span>90.000 – 120.000 đ/kg (Sầu riêng Ri6)</span>
-                </label>
-              </div>
-            </div>
-
-            {/* Nhóm 4: Hình thức nhận & Trải nghiệm */}
-            <div className="space-y-2 pt-2 border-t border-green-100">
-              <span className="text-xs font-bold text-green-900 block">4. Hình thức nhận hàng</span>
-              <div className="space-y-1.5 text-xs text-gray-700">
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="del"
-                    checked={selectedDelivery === 'all'}
-                    onChange={() => setSelectedDelivery('all')}
-                    className="accent-green-700"
-                  />
-                  <span>Tất cả hình thức</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="del"
-                    checked={selectedDelivery === 'express'}
-                    onChange={() => setSelectedDelivery('express')}
-                    className="accent-green-700"
-                  />
-                  <span>⚡ Giao siêu tốc xe lạnh TP.HCM (3h)</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="del"
-                    checked={selectedDelivery === 'garden'}
-                    onChange={() => {
-                      setSelectedDelivery('garden');
-                      setTourModalOpen(true);
-                    }}
-                    className="accent-green-700"
-                  />
-                  <span>🌴 Nhận tại vườn + Du lịch trải nghiệm</span>
-                </label>
-              </div>
-            </div>
-
-            {/* Nhóm 5: Khu vực nhà vườn */}
-            <div className="space-y-2 pt-2 border-t border-green-100">
-              <span className="text-xs font-bold text-green-900 block">5. Khu vực nhà vườn</span>
-              <div className="space-y-1.5 text-xs text-gray-700">
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="reg"
-                    checked={selectedRegion === 'all'}
-                    onChange={() => setSelectedRegion('all')}
-                    className="accent-green-700"
-                  />
-                  <span>Toàn tỉnh Đồng Nai</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="reg"
-                    checked={selectedRegion === 'long_khanh'}
-                    onChange={() => setSelectedRegion('long_khanh')}
-                    className="accent-green-700"
-                  />
-                  <span>TP. Long Khánh (Nhà vườn Ba Tư)</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:text-green-800">
-                  <input
-                    type="radio"
-                    name="reg"
-                    checked={selectedRegion === 'vinh_cuu'}
-                    onChange={() => setSelectedRegion('vinh_cuu')}
-                    className="accent-green-700"
-                  />
-                  <span>Huyện Vĩnh Cửu (Làng bưởi Tân Triều)</span>
-                </label>
-              </div>
-            </div>
-
-          </aside>
-
-          {/* CỘT PHẢI (75%): LƯỚI THẺ SẢN PHẨM THEO KIỂU REMARKET */}
-          <div className="lg:col-span-3 space-y-6">
-
-            {filteredProducts.length === 0 ? (
-              <div className="p-12 text-center bg-white rounded-3xl border border-green-200">
-                <span className="text-4xl block mb-2">🔍</span>
-                <h4 className="font-bold text-base text-gray-800">Không tìm thấy nông sản phù hợp bộ lọc</h4>
-                <p className="text-xs text-gray-500 mt-1">Hãy thử xóa bộ lọc hoặc tìm với từ khóa khác</p>
-                <button
-                  onClick={() => {
-                    setSelectedCategory('all');
-                    setSelectedStandard('all');
-                    setSelectedPriceRange('all');
-                    setSelectedRegion('all');
-                    setSearchQuery('');
-                  }}
-                  className="mt-4 px-4 py-2 bg-green-700 text-white font-bold text-xs rounded-xl"
-                >
-                  Xem tất cả nông sản
-                </button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map(p => {
-                  // Gán tên đoàn viên hỗ trợ cho từng sản phẩm
-                  const youthSupporterName = p.id === 'sp-01' || p.id === 'sp-03' ? 'ĐV Văn Nam' : 'ĐV Thị Mai';
-
-                  return (
-                    <div
-                      key={p.id}
-                      className="bg-white rounded-3xl border border-green-200 hover:border-green-700 shadow-soft hover:shadow-card transition flex flex-col justify-between overflow-hidden group"
-                    >
-                      {/* Top Image + Badges */}
-                      <div onClick={() => openProductDetail(p.id)} className="relative aspect-[4/3] overflow-hidden bg-cream cursor-pointer">
-                        <img
-                          src={p.image}
-                          alt={p.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                        />
-                        <div className="absolute top-2.5 left-2.5 flex flex-col gap-1">
-                          <span className="bg-green-700 text-white font-black text-[11px] px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1">
-                            ⭐ OCOP {p.star} SAO
-                          </span>
-                          <span className="bg-black/70 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
-                            Kho: {p.inStock} {p.unit}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Content Body */}
-                      <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
-                        <div>
-                          <div className="flex items-center gap-1 text-[11px] text-gray-500 mb-1">
-                            <MapPin className="w-3 h-3 text-green-700 shrink-0" />
-                            <span className="truncate">{p.origin}</span>
-                          </div>
-
-                          <h3
-                            onClick={() => {
-                              openProductDetail(p.id);
-                            }}
-                            className="font-bold text-sm sm:text-base text-ink line-clamp-2 hover:text-green-800 cursor-pointer leading-snug"
-                          >
-                            {p.name}
-                          </h3>
-
-                          <p className="text-xs text-gray-500 line-clamp-2 mt-1">
-                            {p.description}
-                          </p>
-                        </div>
-
-                        {/* Price & Unit */}
-                        <div className="pt-2 border-t border-dashed border-gray-200 flex items-baseline justify-between">
-                          <div>
-                            <span className="font-black text-lg text-green-900">
-                              {p.price.toLocaleString('vi-VN')} đ
-                            </span>
-                            <span className="text-xs text-gray-500 font-medium"> / {p.unit}</span>
-                          </div>
-                          <span className="text-[10px] text-gray-400 font-bold">
-                            Tối thiểu: {p.minOrder} {p.unit}
-                          </span>
-                        </div>
-
-                        {/* 2 Nút hành động đắt giá theo yêu cầu: Quét QR Nhật Ký & + Giỏ Hàng */}
-                        <div className="grid grid-cols-2 gap-2 pt-1">
-                          <Button
-                            onClick={() => setQrModalProduct(p)}
-                            icon="pi pi-qrcode"
-                            label="Mã QR"
-                            outlined
-                            className="p-button-success p-button-sm text-xs font-bold"
-                          />
-                          <Button
-                            onClick={() => addToCart(p.id, 1)}
-                            icon="pi pi-cart-plus"
-                            label="+ Giỏ hàng"
-                            className="p-button-warning text-xs font-black text-ink p-button-sm shadow-sm"
-                          />
-                        </div>
-                      </div>
-
-                      {/* DẢI TAG ĐÁY THỂ HIỆN BẢN SẮC "CẦU NỐI SỐ" CỦA ĐỀ BÀI */}
-                      <div className="bg-cream border-t border-green-100 px-3.5 py-2 text-[11px] text-earth font-medium flex items-center justify-between">
-                        <span className="flex items-center gap-1 text-green-950 font-bold">
-                          🌾 <em>Nhà vườn Ba Tư</em>
-                        </span>
-                        <span className="text-green-800 font-bold">
-                          🤝 <em>Hỗ trợ bởi: {youthSupporterName}</em>
-                        </span>
-                      </div>
-
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+            {/* 4. Nhà vườn */}
+            <button
+              onClick={() => setSortBy('garden')}
+              className={`px-3.5 py-2 rounded-xl transition shadow-sm ${
+                sortBy === 'garden'
+                  ? 'bg-green-700 text-white'
+                  : 'bg-white border border-gray-200 text-gray-700 hover:bg-green-50'
+              }`}
+            >
+              Nhà vườn
+            </button>
           </div>
         </div>
+
+        {/* Lưới sản phẩm OCOP: 4 bài 1 hàng ngang */}
+        {filteredProducts.length === 0 ? (
+          <div className="p-12 text-center bg-white rounded-3xl border border-green-200">
+            <span className="text-4xl block mb-2">🔍</span>
+            <h4 className="font-bold text-base text-gray-800">Không tìm thấy nông sản phù hợp</h4>
+            <p className="text-xs text-gray-500 mt-1">Hãy thử chọn lại mức giá hoặc từ khóa tìm kiếm</p>
+            <button
+              onClick={() => {
+                setPriceFilter('all');
+                setSortBy('newest');
+                setSearchQuery('');
+              }}
+              className="mt-4 px-4 py-2 bg-green-700 text-white font-bold text-xs rounded-xl"
+            >
+              Xem lại tất cả nông sản
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
+            {filteredProducts.map(p => {
+              const youthSupporterName = p.id === 'sp-01' || p.id === 'sp-03' ? 'ĐV Văn Nam' : 'ĐV Thị Mai';
+
+              return (
+                <div
+                  key={p.id}
+                  className="bg-white rounded-3xl border border-green-200 hover:border-green-700 shadow-soft hover:shadow-card transition flex flex-col justify-between overflow-hidden group"
+                >
+                  {/* Top Image + Badges */}
+                  <div onClick={() => openProductDetail(p.id)} className="relative aspect-[4/3] overflow-hidden bg-cream cursor-pointer">
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                    />
+                    <div className="absolute top-2.5 left-2.5 flex flex-col gap-1">
+                      <span className="bg-green-700 text-white font-black text-[11px] px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+                        ⭐ OCOP {p.star} SAO
+                      </span>
+                      <span className="bg-black/70 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                        Kho: {p.inStock} {p.unit}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Content Body */}
+                  <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-1 text-[11px] text-gray-500 mb-1">
+                        <MapPin className="w-3 h-3 text-green-700 shrink-0" />
+                        <span className="truncate">{p.origin}</span>
+                      </div>
+
+                      <h3
+                        onClick={() => {
+                          openProductDetail(p.id);
+                        }}
+                        className="font-bold text-sm sm:text-base text-ink line-clamp-1 hover:text-green-800 cursor-pointer leading-snug"
+                        title={p.name}
+                      >
+                        {p.name}
+                      </h3>
+
+                      <p className="text-xs text-gray-500 line-clamp-2 mt-1">
+                        {p.description}
+                      </p>
+                    </div>
+
+                    {/* Price & Unit */}
+                    <div className="pt-2 border-t border-dashed border-gray-200 flex items-baseline justify-between">
+                      <div>
+                        <span className="font-black text-base sm:text-lg text-green-900">
+                          {p.price.toLocaleString('vi-VN')} đ
+                        </span>
+                        <span className="text-xs text-gray-500 font-medium"> / {p.unit}</span>
+                      </div>
+                      <span className="text-[10px] text-gray-400 font-bold">
+                        Tối thiểu: {p.minOrder} {p.unit}
+                      </span>
+                    </div>
+
+                    {/* 2 Nút hành động: Quét QR & + Giỏ Hàng */}
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      <Button
+                        onClick={() => setQrModalProduct(p)}
+                        icon="pi pi-qrcode"
+                        label="Mã QR"
+                        outlined
+                        className="p-button-success p-button-sm text-xs font-bold"
+                      />
+                      <Button
+                        onClick={() => addToCart(p.id, 1)}
+                        icon="pi pi-cart-plus"
+                        label="+ Giỏ hàng"
+                        className="p-button-warning text-xs font-black text-ink p-button-sm shadow-sm"
+                      />
+                    </div>
+                  </div>
+
+                  {/* DẢI TAG ĐÁY */}
+                  <div className="bg-cream border-t border-green-100 px-3.5 py-2 text-[11px] text-earth font-medium flex items-center justify-between">
+                    <span className="flex items-center gap-1 text-green-950 font-bold truncate max-w-[120px]">
+                      🌾 <em>{p.origin?.includes('Long Khánh') ? 'Nhà vườn Ba Tư' : 'Hợp tác xã OCOP'}</em>
+                    </span>
+                    <span className="text-green-800 font-bold text-[10px]">
+                      🤝 <em>{youthSupporterName}</em>
+                    </span>
+                  </div>
+
+                </div>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       {/* =========================================================================
