@@ -14,7 +14,8 @@ import {
   Sparkles,
   User,
   ShieldAlert,
-  LogOut
+  LogOut,
+  Sprout
 } from 'lucide-react';
 import { ModalAuth } from './ModalAuth';
 
@@ -45,7 +46,7 @@ export const Header: React.FC = () => {
     // 1. Admin Menu
     if (currentRole === 'admin') {
       return [
-        { id: 'admin_users' as ScreenId, label: 'Quản Lý Tài Khoản', icon: <ShieldAlert className="w-4 h-4 text-red-600 shrink-0" /> },
+        { id: 'admin_users' as ScreenId, label: 'Quản Lý Tài Khoản', icon: <ShieldAlert className="w-4 h-4 shrink-0" /> },
         { id: 'home' as ScreenId, label: 'Trang Chủ', icon: <Home className="w-4 h-4 shrink-0" /> },
         { id: 'orders' as ScreenId, label: 'Tổng Quan Đơn Hàng', icon: <Package className="w-4 h-4 shrink-0" /> },
         { id: 'volunteer' as ScreenId, label: 'Giờ Tình Nguyện', icon: <Award className="w-4 h-4 shrink-0" /> },
@@ -110,8 +111,8 @@ export const Header: React.FC = () => {
           onClick={() => setActiveScreen('home')}
           className="flex items-center gap-2.5 cursor-pointer group shrink-0"
         >
-          <div className="w-10 h-10 rounded-xl bg-green-700 flex items-center justify-center text-white text-xl shadow-md group-hover:scale-105 transition-transform">
-            🌱
+          <div className="w-10 h-10 rounded-xl bg-green-700 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+            <Sprout className="w-5 h-5 text-white" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">

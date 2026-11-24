@@ -288,7 +288,8 @@ export const Home: React.FC = () => {
                 className="hidden lg:flex items-center gap-1.5 px-3.5 py-2.5 rounded-full border border-green-300 bg-white hover:bg-green-50 text-green-800 text-xs font-bold shadow-sm transition ml-1"
                 title="Đăng sản phẩm mới bằng AI / Voice"
               >
-                <span>🎙️ Đăng bài</span>
+                <Mic className="w-3.5 h-3.5" />
+                <span>Đăng bài</span>
               </button>
             )}
           </div>

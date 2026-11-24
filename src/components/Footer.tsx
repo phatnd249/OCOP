@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
         {/* Col 1 */}
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 mb-4">
-            <span className="text-2xl">🌱</span>
+            <Sprout className="w-6 h-6 text-sun shrink-0" />
             <span className="text-xl font-black text-white tracking-tight">TRẠM VƯỜN SỐ - CHỢ OCOP THANH NIÊN</span>
             <span className="bg-sun text-earth-dark text-xs font-black px-2 py-0.5 rounded">ĐỒNG NAI</span>
           </div>
