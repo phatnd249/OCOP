@@ -21,7 +21,12 @@ import {
   PlusCircle,
   Store,
   ChevronRight,
-  ExternalLink
+  ExternalLink,
+  Plus,
+  X,
+  Check,
+  User,
+  Tag as TagIcon
 } from 'lucide-react';
 import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
@@ -205,12 +210,25 @@ export const LiveStream: React.FC = () => {
           </p>
         </div>
 
-        <Button
+        <button
+          type="button"
           onClick={() => setCreateModalOpen(true)}
-          icon="pi pi-plus"
-          label="Đăng Ký Phiên Live Vườn"
-          className="p-button-success font-bold text-xs shadow-sm self-start sm:self-auto"
-        />
+          className="group inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-green-700 hover:bg-green-800 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all self-start sm:self-auto shrink-0 border border-green-600/30"
+          title="Đoàn viên & Nhà vườn đăng ký lịch phát sóng livestream"
+        >
+          <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-white group-hover:scale-105 transition-transform shrink-0">
+            <Video className="w-4 h-4 text-white" />
+          </div>
+          <div className="flex flex-col text-left">
+            <div className="flex items-center gap-1.5 leading-tight">
+              <span className="font-black text-sm tracking-tight text-white">Đăng Ký Phiên Live Vườn</span>
+              <span className="inline-block w-2 h-2 rounded-full bg-sun animate-pulse"></span>
+            </div>
+            <span className="text-[11px] text-green-100 font-medium mt-0.5">
+              Hỗ trợ kỹ thuật • +2h tình nguyện
+            </span>
+          </div>
+        </button>
       </div>
 
       {/* FILTER BAR: WARD / COMMUNE FILTER + STATUS FILTER + SEARCH */}
@@ -708,140 +726,163 @@ export const LiveStream: React.FC = () => {
         visible={createModalOpen}
         onHide={() => setCreateModalOpen(false)}
         header={
-          <div className="flex items-center gap-2 text-green-950 font-bold text-base">
-            <PlusCircle className="w-5 h-5 text-green-700" />
-            <span>Đăng Ký Phiên Livestream Mới Cho Nhà Vườn</span>
+          <div className="flex items-center gap-3 w-full pr-2">
+            <div className="w-10 h-10 rounded-2xl bg-green-100 flex items-center justify-center shrink-0 text-green-800">
+              <Video className="w-5 h-5 text-green-800" />
+            </div>
+            <div>
+              <h3 className="font-black text-base sm:text-lg text-green-950 leading-tight">
+                Đăng Ký Phiên Livestream Mới Cho Nhà Vườn
+              </h3>
+              <p className="text-xs text-gray-500 mt-0.5">
+                Đoàn viên thanh niên hỗ trợ kỹ thuật số, dựng máy & chốt đơn tại cây
+              </p>
+            </div>
           </div>
         }
-        className="w-full max-w-lg"
+        className="w-full max-w-lg shadow-2xl rounded-3xl overflow-hidden"
+        breakpoints={{ '960px': '85vw', '641px': '95vw' }}
         modal
       >
-        <form onSubmit={handleCreateStreamSubmit} className="space-y-4 pt-2">
-          <div className="p-3 bg-green-50 rounded-xl border border-green-200 text-xs text-green-900 leading-relaxed">
-            🌿 <strong>Tiếp sức nhà vườn:</strong> Đoàn viên thanh niên phối hợp cùng bà con nông dân dựng máy livestream ngay tại vườn, hỗ trợ tương tác số hóa và chốt đơn chuyển hàng.
+        <form onSubmit={handleCreateStreamSubmit} className="space-y-4 pt-1">
+          {/* Banner thông tin tiếp sức */}
+          <div className="p-3 bg-green-50 rounded-2xl border border-green-200 flex items-start gap-2.5">
+            <Sparkles className="w-4 h-4 text-green-700 shrink-0 mt-0.5" />
+            <div className="text-xs text-green-900 leading-relaxed">
+              <strong className="font-bold text-green-950">Tiếp sức nhà vườn:</strong> Đoàn viên thanh niên phối hợp cùng bà con nông dân dựng máy livestream ngay tại vườn, hỗ trợ tương tác số hóa và chốt đơn chuyển hàng.
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1">
-                Tên Nhà Vườn / Hợp Tác Xã:
+              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
+                <Store className="w-3.5 h-3.5 text-green-700" />
+                <span>Tên Nhà Vườn / Hợp Tác Xã:</span>
               </label>
               <InputText
                 value={newFarmName}
                 onChange={e => setNewFarmName(e.target.value)}
                 placeholder="Ví dụ: Vườn Sầu Riêng Chú Ba"
-                className="w-full text-xs"
+                className="w-full text-xs rounded-xl"
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1">
-                Tên Bác Chủ Vườn:
+              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
+                <User className="w-3.5 h-3.5 text-green-700" />
+                <span>Tên Bác Chủ Vườn:</span>
               </label>
               <InputText
                 value={newFarmerName}
                 onChange={e => setNewFarmerName(e.target.value)}
                 placeholder="Ví dụ: Bác Ba Cần"
-                className="w-full text-xs"
+                className="w-full text-xs rounded-xl"
                 required
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1">
-                Địa bàn Phường / Xã:
+              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-green-700" />
+                <span>Địa bàn Phường / Xã:</span>
               </label>
               <Dropdown
                 value={newWard}
                 onChange={e => setNewWard(e.value)}
                 options={availableWards.filter(w => w.value !== 'all')}
-                className="w-full text-xs font-medium"
+                className="w-full text-xs font-medium rounded-xl"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1">
-                Thời gian phát sóng dự kiến:
+              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
+                <Clock className="w-3.5 h-3.5 text-green-700" />
+                <span>Thời gian phát sóng:</span>
               </label>
               <InputText
                 value={newTime}
                 onChange={e => setNewTime(e.target.value)}
                 placeholder="Ví dụ: Tối nay 19:30"
-                className="w-full text-xs"
+                className="w-full text-xs rounded-xl"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1">
-              Tiêu đề buổi Livestream:
+            <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
+              <Radio className="w-3.5 h-3.5 text-green-700" />
+              <span>Tiêu đề buổi Livestream:</span>
             </label>
             <InputText
               value={newTitle}
               onChange={e => setNewTitle(e.target.value)}
               placeholder="Ví dụ: Cắt Sầu Riêng Chín Cây & Chôm Chôm Nhãn Mùa Vụ Mới"
-              className="w-full text-xs"
+              className="w-full text-xs rounded-xl"
               required
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1">
-                Sản phẩm OCOP ghim chốt đơn:
+              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
+                <ShoppingBag className="w-3.5 h-3.5 text-green-700" />
+                <span>Sản phẩm OCOP ghim chốt:</span>
               </label>
               <InputText
                 value={newProduct}
                 onChange={e => setNewProduct(e.target.value)}
                 placeholder="Ví dụ: Sầu riêng Ri6 hạt lép"
-                className="w-full text-xs"
+                className="w-full text-xs rounded-xl"
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1">
-                Mức giá khuyến mãi trên Live:
+              <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
+                <TagIcon className="w-3.5 h-3.5 text-green-700" />
+                <span>Mức giá ưu đãi trên Live:</span>
               </label>
               <InputText
                 value={newDealPrice}
                 onChange={e => setNewDealPrice(e.target.value)}
                 placeholder="Ví dụ: 105.000 đ/kg"
-                className="w-full text-xs"
+                className="w-full text-xs rounded-xl"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1">
-              Đoàn viên thanh niên phụ trách dẫn live:
+            <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-green-700" />
+              <span>Đoàn viên thanh niên phụ trách dẫn live:</span>
             </label>
             <InputText
               value={newYouthHost}
               onChange={e => setNewYouthHost(e.target.value)}
               placeholder="Ví dụ: Nguyễn Văn Nam (Chi đoàn P. Suối Tre)"
-              className="w-full text-xs"
+              className="w-full text-xs rounded-xl"
               required
             />
           </div>
 
-          <div className="pt-2 flex gap-3">
-            <Button
+          <div className="pt-3 border-t border-gray-100 flex items-center gap-3">
+            <button
               type="button"
-              label="Hủy"
-              severity="secondary"
-              outlined
               onClick={() => setCreateModalOpen(false)}
-              className="flex-1 text-xs"
-            />
-            <Button
+              className="w-1/3 h-11 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs sm:text-sm transition flex items-center justify-center gap-1.5"
+            >
+              <X className="w-4 h-4" />
+              <span>Hủy / Đóng</span>
+            </button>
+            <button
               type="submit"
-              label="Tạo Lịch Phát Sóng (+2 Giờ Đoàn Viên)"
-              icon="pi pi-check"
-              className="flex-1 p-button-success font-bold text-xs"
-            />
+              className="flex-1 h-11 rounded-xl bg-green-700 hover:bg-green-800 active:scale-[0.99] text-white font-bold text-xs sm:text-sm transition shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+            >
+              <Check className="w-4 h-4 stroke-[2.5]" />
+              <span>Tạo Lịch Live (+2h Đoàn Viên)</span>
+            </button>
           </div>
         </form>
       </Dialog>
