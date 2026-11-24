@@ -57,9 +57,11 @@ export const Home: React.FC = () => {
   const [selectedDelivery, setSelectedDelivery] = useState<string>('all');
   const [selectedRegion, setSelectedRegion] = useState<string>('all');
 
-  // Quick Sort & Filter Bar
-  const [sortBy, setSortBy] = useState<'newest' | 'name' | 'garden' | 'popular'>('newest');
-  const [priceFilter, setPriceFilter] = useState<'all' | 'under_50' | '50_100' | 'above_100'>('all');
+  // 4 Dropdown Filters & Sắp xếp theo yêu cầu
+  const [categoryFilter, setCategoryFilter] = useState<'all' | 'fresh_fruit' | 'beans_coffee' | 'processed'>('all');
+  const [priceFilter, setPriceFilter] = useState<'all' | 'under_50' | '50_90' | '90_120'>('all');
+  const [gardenFilter, setGardenFilter] = useState<'all' | 'ba_tu' | 'tan_trieu' | 'others'>('all');
+  const [sortOption, setSortOption] = useState<'newest' | 'price_asc' | 'price_desc' | 'has_tour'>('newest');
 
   // Speech Recognition Search
   const handleVoiceSearch = () => {
@@ -97,7 +99,7 @@ export const Home: React.FC = () => {
     }
   };
 
-  // Filter and Sort Logic
+  // Filter and Sort Logic với 4 Dropdown
   const filteredProducts = useMemo(() => {
     return products.filter(p => {
       // 1. Text Search
@@ -109,42 +111,58 @@ export const Home: React.FC = () => {
         if (!matchName && !matchOrigin && !matchDesc) return false;
       }
 
-      // 2. Nhóm Đặc Sản Đồng Nai
-      if (selectedCategory !== 'all') {
-        if (selectedCategory === 'long_khanh' && !p.name.toLowerCase().includes('chôm chôm') && !p.name.toLowerCase().includes('sầu riêng')) {
-          return false;
-        }
-        if (selectedCategory === 'tan_trieu' && !p.name.toLowerCase().includes('bưởi')) {
-          return false;
-        }
-        if (selectedCategory === 'hat_dieu' && !p.name.toLowerCase().includes('hạt điều')) {
-          return false;
+      // Nút 1: Loại nông sản
+      if (categoryFilter !== 'all') {
+        const nameLower = p.name.toLowerCase();
+        const catLower = p.category.toLowerCase();
+        if (categoryFilter === 'fresh_fruit') {
+          // Trái cây tươi (Chôm chôm, Sầu riêng, Bưởi...)
+          const isFruit = nameLower.includes('chôm chôm') || nameLower.includes('sầu riêng') || nameLower.includes('bưởi') || catLower.includes('trái cây') || nameLower.includes('chuối') || nameLower.includes('mít');
+          if (!isFruit) return false;
+        } else if (categoryFilter === 'beans_coffee') {
+          // Hạt & Cà phê
+          const isBeansOrCoffee = nameLower.includes('hạt điều') || nameLower.includes('cà phê') || catLower.includes('hạt') || catLower.includes('cà phê');
+          if (!isBeansOrCoffee) return false;
+        } else if (categoryFilter === 'processed') {
+          // Đặc sản OCOP chế biến
+          const isProcessed = catLower.includes('chế biến') || nameLower.includes('sấy') || nameLower.includes('rượu') || nameLower.includes('muối');
+          if (!isProcessed) return false;
         }
       }
 
-      // 3. Tiêu Chuẩn & Minh Bạch
-      if (selectedStandard !== 'all') {
-        if (selectedStandard === '4_star' && p.star !== 4) return false;
-        if (selectedStandard === '3_star' && p.star !== 3) return false;
-        if (selectedStandard === 'has_qr' && !p.qrCodeId) return false;
-        if (selectedStandard === 'has_diary' && (!p.seasonDiary || p.seasonDiary.length === 0)) return false;
-      }
-
-      // 4. Khoảng Giá (Lọc theo dropdown: dưới 50k, 50k-100k, trên 100k)
+      // Nút 2: Khoảng giá (Dưới 50.000đ/kg • 50.000 – 90.000đ/kg • 90.000 – 120.000đ/kg)
       if (priceFilter !== 'all') {
         if (priceFilter === 'under_50' && p.price >= 50000) return false;
-        if (priceFilter === '50_100' && (p.price < 50000 || p.price > 100000)) return false;
-        if (priceFilter === 'above_100' && p.price <= 100000) return false;
+        if (priceFilter === '50_90' && (p.price < 50000 || p.price > 90000)) return false;
+        if (priceFilter === '90_120' && (p.price < 90000 || p.price > 120000)) return false;
+      }
+
+      // Nút 3: Nhà vườn / vùng
+      if (gardenFilter !== 'all') {
+        const originLower = p.origin.toLowerCase();
+        if (gardenFilter === 'ba_tu') {
+          if (!originLower.includes('ba tư') && !originLower.includes('long khánh')) return false;
+        } else if (gardenFilter === 'tan_trieu') {
+          if (!originLower.includes('tân triều') && !originLower.includes('vĩnh cửu')) return false;
+        } else if (gardenFilter === 'others') {
+          if (originLower.includes('ba tư') || originLower.includes('long khánh') || originLower.includes('tân triều')) return false;
+        }
       }
 
       return true;
     }).sort((a, b) => {
-      if (sortBy === 'name') return a.name.localeCompare(b.name, 'vi');
-      if (sortBy === 'garden') return (a.origin || '').localeCompare(b.origin || '', 'vi');
-      if (sortBy === 'popular') return b.inStock - a.inStock;
+      // Nút 4: Sắp xếp
+      if (sortOption === 'price_asc') return a.price - b.price;
+      if (sortOption === 'price_desc') return b.price - a.price;
+      if (sortOption === 'has_tour') {
+        // Có lịch trải nghiệm vườn (ưu tiên nhà vườn Long Khánh / Tân Triều có tour)
+        const aTour = a.origin.toLowerCase().includes('long khánh') ? 1 : 0;
+        const bTour = b.origin.toLowerCase().includes('long khánh') ? 1 : 0;
+        return bTour - aTour;
+      }
       return 0; // default newest
     });
-  }, [products, searchQuery, priceFilter, sortBy]);
+  }, [products, searchQuery, categoryFilter, priceFilter, gardenFilter, sortOption]);
 
   return (
     <div className="space-y-10 pb-16">
@@ -384,60 +402,75 @@ export const Home: React.FC = () => {
             </p>
           </div>
 
-          {/* Thanh công cụ: Mới thu hoạch, Giá (dropdown), Tên nông sản, Nhà vườn */}
+          {/* 4 Nút Dropdown theo yêu cầu chuẩn */}
           <div className="flex items-center gap-2 flex-wrap text-xs font-bold">
-            {/* 1. Mới thu hoạch */}
-            <button
-              onClick={() => setSortBy('newest')}
-              className={`px-3.5 py-2 rounded-xl transition shadow-sm ${
-                sortBy === 'newest'
-                  ? 'bg-green-700 text-white'
-                  : 'bg-white border border-gray-200 text-gray-700 hover:bg-green-50'
-              }`}
-            >
-              Mới thu hoạch
-            </button>
-
-            {/* 2. Giá (Dropdown: Dưới 50.000đ, 50.000đ - 100.000đ, Trên 100.000đ) */}
+            {/* Nút 1: Loại nông sản */}
             <div className="relative inline-block">
               <select
-                value={priceFilter}
-                onChange={e => setPriceFilter(e.target.value as any)}
-                className="px-3.5 py-2 pr-8 rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-green-50 font-bold outline-none cursor-pointer appearance-none shadow-sm transition"
+                value={categoryFilter}
+                onChange={e => setCategoryFilter(e.target.value as any)}
+                className="px-3.5 py-2 pr-7 rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-green-50 font-bold outline-none cursor-pointer appearance-none shadow-sm transition"
               >
-                <option value="all">Giá: Tất cả mức giá</option>
-                <option value="under_50">Dưới 50.000 đ</option>
-                <option value="50_100">50.000 đ – 100.000 đ</option>
-                <option value="above_100">Trên 100.000 đ</option>
+                <option value="all">Loại: Tất cả nông sản</option>
+                <option value="fresh_fruit">Trái cây tươi (Chôm chôm, Sầu riêng, Bưởi...)</option>
+                <option value="beans_coffee">Hạt & Cà phê</option>
+                <option value="processed">Đặc sản OCOP chế biến</option>
               </select>
               <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">
                 ▼
               </span>
             </div>
 
-            {/* 3. Tên nông sản */}
-            <button
-              onClick={() => setSortBy('name')}
-              className={`px-3.5 py-2 rounded-xl transition shadow-sm ${
-                sortBy === 'name'
-                  ? 'bg-green-700 text-white'
-                  : 'bg-white border border-gray-200 text-gray-700 hover:bg-green-50'
-              }`}
-            >
-              Tên nông sản
-            </button>
+            {/* Nút 2: Khoảng giá */}
+            <div className="relative inline-block">
+              <select
+                value={priceFilter}
+                onChange={e => setPriceFilter(e.target.value as any)}
+                className="px-3.5 py-2 pr-7 rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-green-50 font-bold outline-none cursor-pointer appearance-none shadow-sm transition"
+              >
+                <option value="all">Giá: Tất cả mức giá</option>
+                <option value="under_50">Dưới 50.000đ/kg</option>
+                <option value="50_90">50.000 – 90.000đ/kg</option>
+                <option value="90_120">90.000 – 120.000đ/kg</option>
+              </select>
+              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">
+                ▼
+              </span>
+            </div>
 
-            {/* 4. Nhà vườn */}
-            <button
-              onClick={() => setSortBy('garden')}
-              className={`px-3.5 py-2 rounded-xl transition shadow-sm ${
-                sortBy === 'garden'
-                  ? 'bg-green-700 text-white'
-                  : 'bg-white border border-gray-200 text-gray-700 hover:bg-green-50'
-              }`}
-            >
-              Nhà vườn
-            </button>
+            {/* Nút 3: Nhà vườn / vùng */}
+            <div className="relative inline-block">
+              <select
+                value={gardenFilter}
+                onChange={e => setGardenFilter(e.target.value as any)}
+                className="px-3.5 py-2 pr-7 rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-green-50 font-bold outline-none cursor-pointer appearance-none shadow-sm transition"
+              >
+                <option value="all">Vườn: Tất cả nhà vườn</option>
+                <option value="ba_tu">Nhà vườn Ba Tư (Long Khánh)</option>
+                <option value="tan_trieu">Vườn bưởi Tân Triều</option>
+                <option value="others">Các vườn OCOP khác</option>
+              </select>
+              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">
+                ▼
+              </span>
+            </div>
+
+            {/* Nút 4: Sắp xếp */}
+            <div className="relative inline-block">
+              <select
+                value={sortOption}
+                onChange={e => setSortOption(e.target.value as any)}
+                className="px-3.5 py-2 pr-7 rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-green-50 font-bold outline-none cursor-pointer appearance-none shadow-sm transition"
+              >
+                <option value="newest">Sắp xếp: Mới thu hoạch</option>
+                <option value="price_asc">Giá thấp đến cao</option>
+                <option value="price_desc">Giá cao đến thấp</option>
+                <option value="has_tour">Có lịch trải nghiệm vườn</option>
+              </select>
+              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">
+                ▼
+              </span>
+            </div>
           </div>
         </div>
 
@@ -449,8 +482,10 @@ export const Home: React.FC = () => {
             <p className="text-xs text-gray-500 mt-1">Hãy thử chọn lại mức giá hoặc từ khóa tìm kiếm</p>
             <button
               onClick={() => {
+                setCategoryFilter('all');
                 setPriceFilter('all');
-                setSortBy('newest');
+                setGardenFilter('all');
+                setSortOption('newest');
                 setSearchQuery('');
               }}
               className="mt-4 px-4 py-2 bg-green-700 text-white font-bold text-xs rounded-xl"
