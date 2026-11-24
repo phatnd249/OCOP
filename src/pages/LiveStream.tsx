@@ -48,10 +48,10 @@ export const LiveStream: React.FC = () => {
         <div>
           <div className="inline-flex items-center gap-1.5 bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full mb-1">
             <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
-            <span>MÀN HÌNH BẮT BUỘC SỐ 6 CỦA ĐỀ BÀI</span>
+            <span>PHÁT TRỰC TIẾP TẠI GỐC CÂY</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-ink">
-            Livestream Nông Sản OCOP Tại Vườn Ba Tư (TN7)
+            Livestream Bán Nông Sản Trực Tiếp Tại Vườn
           </h1>
           <p className="text-xs text-gray-500">
             Đoàn viên thanh niên hỗ trợ livestream trực tiếp tại gốc cây, chốt đơn hái tại vườn về TP.HCM

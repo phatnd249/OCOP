@@ -72,7 +72,7 @@ export const Auth: React.FC = () => {
       {/* Title */}
       <div className="text-center space-y-2">
         <div className="inline-flex items-center gap-1.5 bg-green-100 text-green-900 text-xs font-bold px-3 py-1 rounded-full mb-1">
-          <span>TRANG CHUNG C1 • ĐĂNG NHẬP & ĐĂNG KÝ HỆ THỐNG</span>
+          <span>HỆ THỐNG TÀI KHOẢN OCOP ĐỒNG NAI</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-black text-ink">
           Tài Khoản Chợ OCOP Thanh Niên

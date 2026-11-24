@@ -23,10 +23,10 @@ export const EcoMap: React.FC = () => {
         <div>
           <div className="inline-flex items-center gap-1.5 bg-green-100 text-green-900 text-xs font-bold px-3 py-1 rounded-full mb-1">
             <Sparkles className="w-3.5 h-3.5 text-sun" />
-            <span>TÍNH NĂNG ĐIỂM CỘNG 2 CỦA ĐỀ BÀI</span>
+            <span>DU LỊCH NÔNG NGHIỆP TRẢI NGHIỆM</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-ink">
-            Bản Đồ Số Nhà Vườn Kết Hợp Du Lịch Trải Nghiệm (K2)
+            Bản Đồ Nhà Vườn Sinh Thái Long Khánh
           </h1>
           <p className="text-xs text-gray-500">
             Khám phá 5 điểm dừng chân sinh thái tại Vườn Chú Ba Tư (2.5ha tại Suối Tre, TP. Long Khánh)

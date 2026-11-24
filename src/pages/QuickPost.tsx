@@ -131,13 +131,13 @@ export const QuickPost: React.FC = () => {
         <div>
           <div className="inline-flex items-center gap-1.5 bg-green-100 text-green-900 text-xs font-bold px-3 py-1 rounded-full mb-1">
             <Award className="w-3.5 h-3.5 text-sun" />
-            <span>MÀN HÌNH BẮT BUỘC 2 & ĐIỂM CỘNG 1 TRÍ TUỆ NHÂN TẠO</span>
+            <span>CÔNG CỤ SỐ HÓA NÔNG SẢN CHO ĐOÀN VIÊN</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-ink">
-            Đăng Nhanh Nông Sản Bằng Ảnh & Giọng Nói (TN4)
+            Đăng Nhanh Nông Sản Bằng Ảnh & Giọng Nói
           </h1>
           <p className="text-xs text-gray-500">
-            Dành cho Chú Ba Tư (chỉ cần bấm nói không cần gõ chữ) và Đoàn viên thanh niên hỗ trợ số
+            Hỗ trợ nhà vườn tạo sản phẩm mới bằng công nghệ giọng nói tiếng Việt và AI viết mô tả
           </p>
         </div>
       </div>

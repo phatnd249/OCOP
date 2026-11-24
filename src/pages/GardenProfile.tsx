@@ -52,7 +52,7 @@ export const GardenProfile: React.FC = () => {
               />
               <div>
                 <span className="text-xs uppercase tracking-wider text-sun font-bold">
-                  HỒ SƠ CHỦ THỂ OCOP (ĐỀ 3)
+                  NHÀ VƯỜN TIÊU BIỂU OCOP ĐỒNG NAI
                 </span>
                 <h1 className="text-2xl sm:text-3xl font-black">{garden.name}</h1>
                 <p className="text-sm text-green-200">

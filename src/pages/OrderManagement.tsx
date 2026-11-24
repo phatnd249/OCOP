@@ -42,13 +42,13 @@ export const OrderManagement: React.FC = () => {
           </div>
           <div>
             <span className="bg-white/20 text-white text-xs font-bold px-2.5 py-0.5 rounded uppercase">
-              MÀN HÌNH BẮT BUỘC SỐ 5 • GIAO DIỆN NGƯỜI LỚN TUỔI
+              CỔNG QUẢN LÝ NHÀ VƯỜN • CHẾ ĐỘ TIẾP CẬN DỄ ĐỌC
             </span>
             <h1 className="text-xl sm:text-2xl font-black mt-1">
-              Quản Lý Đơn Hàng Của Nhà Vườn Ba Tư
+              Quản Lý Đơn Hàng Cần Hái Tại Vườn Ba Tư
             </h1>
             <p className="text-amber-100 text-xs sm:text-sm mt-0.5">
-              Chữ to rõ ràng, nút bấm lớn một chạm, có trợ lý giọng nói đọc chi tiết đơn
+              Thiết kế chữ to rõ ràng, nút bấm lớn, có trợ lý giọng nói đọc chi tiết đơn hàng
             </p>
           </div>
         </div>
